@@ -1,0 +1,7 @@
+@media screen and (max-width: 700px) {
+  .favourites-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

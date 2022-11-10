@@ -1,0 +1,13 @@
+.radio-hide-input > input {
+  display: none;
+}
+.radio-hide-input > label {
+  display: inline-block;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.radio-hide-input > input:checked + label {
+  background-color: rgb(219, 216, 216);
+}

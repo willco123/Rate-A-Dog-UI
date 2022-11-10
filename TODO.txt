@@ -1,0 +1,44 @@
+Figure out why text isnt wrapping for dog-wrapper, but is for navbar,
+something to do with flex-direction perhaps
+DOG ceo never allows for horizontal scrolling, figure out why
+
+Having a set height caused sticky not to work
+Changing NavBar to fixed, fixed the issues.
+horizontal scrolling never occurss when the window shrinks
+likewise the text now wraps itself
+However the element is no longer in the document flow
+Probably to do with how sticky works, no idea really, save for future learning 
+
+Dogs:
+Sort out into sub-routes
+  /random:
+    Add fetch on button click
+  /breed:
+    see all breeds
+    Get random breed
+  /rated-dogs
+    See all dogs that have been rated
+
+Favourites:
+Redirects user user to login if not loged in
+Displays favourites allows user to sort favourites
+
+SignUp:
+If logged in display logout instead
+Create signup/login route
+
+Bonus:
+  Password reset
+
+Other Components:
+Paged-table
+  Pagination
+  sorting
+Search Function
+
+Logic:
+Remember Me - Cookie Stuff
+Validation
+Some navbar stuff, login/logout stuff
+
+Finally connect to back-end and launch with docker/or whatever

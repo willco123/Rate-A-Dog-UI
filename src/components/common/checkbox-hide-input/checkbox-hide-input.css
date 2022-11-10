@@ -1,0 +1,13 @@
+.checkbox-hide-input > input {
+  display: none;
+}
+.checkbox-hide-input > label {
+  display: inline-block;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.checkbox-hide-input > input:checked + label {
+  background-color: rgb(216, 216, 219);
+}

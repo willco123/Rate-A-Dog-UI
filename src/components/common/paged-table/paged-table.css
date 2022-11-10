@@ -1,0 +1,30 @@
+.paged-table {
+  --tableWidth: 500px;
+  background-color: unset;
+  table-layout: fixed;
+  width: var(--tableWidth);
+  /* width: 100%; */
+  border-collapse: collapse;
+}
+
+.paged-table tbody {
+  display: block;
+  overflow-y: auto;
+  width: var(--tableWidth);
+  height: 200px;
+}
+
+.paged-table tr thead {
+  display: block;
+}
+
+.paged-table td,
+.paged-table th {
+  position: sticky;
+  top: 0;
+  text-align: left;
+}
+
+.paged-table td:hover {
+  background-color: #f9f9f9;
+}
