@@ -29,6 +29,7 @@ Create signup/login route
 
 Bonus:
   Password reset
+  Advanced filtering for a table
 
 Other Components:
 Paged-table

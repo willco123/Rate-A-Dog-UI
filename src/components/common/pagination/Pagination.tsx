@@ -5,10 +5,14 @@ import "./pagination.css";
 import usePagination from "../../../custom-hooks/usePagination";
 
 type PageData = {
-  data: TableBodyData[];
+  data: TableData[];
   currentPage: number;
   itemsPerPage: number;
   onPageChange: (page: number) => void;
+};
+
+type TableData = {
+  [index: number]: string;
 };
 
 export default function Pagination({
@@ -18,17 +22,16 @@ export default function Pagination({
   onPageChange,
 }: PageData) {
   const paginationRange = usePagination({ currentPage, data, itemsPerPage });
-  console.log(paginationRange);
+
   return (
     <ul>
       {paginationRange.map((pageNumber) => {
-        console.log(pageNumber);
-        return (
-          <li disabled onClick={() => onPageChange(pageNumber)}>
-            {currentPage}
-          </li>
-        );
+        if (typeof pageNumber === "number")
+          return <li onClick={() => onPageChange(pageNumber)}>{pageNumber}</li>;
+        if (typeof pageNumber === "string") return <li>{pageNumber}</li>;
       })}
     </ul>
   );
 }
+
+// onClick={(pageNumber) => onPageChange(pageNumber)}

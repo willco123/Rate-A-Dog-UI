@@ -4,7 +4,7 @@ import Pagination from "../pagination/Pagination";
 import "./paged-table.css";
 
 export default function PagedTable({ theadData, tbodyData }: TableProps) {
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(7);
   const itemsPerPage = 2;
 
   return (
@@ -31,7 +31,7 @@ export default function PagedTable({ theadData, tbodyData }: TableProps) {
         data={tbodyData}
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
-        onPageChange={setCurrentPage}
+        onPageChange={(page: number) => setCurrentPage(page)}
       />
     </div>
   );
