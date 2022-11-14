@@ -12,3 +12,10 @@ export type TableBodyData = {
 export type TableRowProps = {
   data: TableBodyData;
 };
+
+export type PageData = {
+  data: TableBodyData[];
+  currentPage: number;
+  itemsPerPage: number;
+  setCurrentPage: (i: number) => void;
+};

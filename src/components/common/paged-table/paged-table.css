@@ -1,9 +1,9 @@
 .paged-table {
   --tableWidth: 500px;
+  --numberOfColumns: 3;
   background-color: unset;
   table-layout: fixed;
   width: var(--tableWidth);
-  /* width: 100%; */
   border-collapse: collapse;
 }
 
@@ -20,9 +20,9 @@
 
 .paged-table td,
 .paged-table th {
-  position: sticky;
-  top: 0;
   text-align: left;
+  width: calc(var(--tableWidth) / var(--numberOfColumns));
+  width: 166px;
 }
 
 .paged-table td:hover {

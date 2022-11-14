@@ -12,7 +12,7 @@ export default function RatedDogs() {
       <div className="title">For users ratings</div>
       <div className="title">and other filters</div>
       <PagedTable
-        key={"bigDickTable"}
+        key={"PagedTable"}
         theadData={["Breed", "Sub-Breed", "Rating"]}
         tbodyData={someData}
       />
@@ -21,11 +21,11 @@ export default function RatedDogs() {
 }
 
 const someData = [
-  { breed: "Test", subBreed: "TestSub", rating: 5 },
-  { subBreed: "TestSub", breed: "Test", rating: 5 },
-  { breed: "Test", subBreed: "TestSub", rating: 5 },
-  { breed: "Test", subBreed: "TestSub", rating: 5 },
-  { breed: "Test", subBreed: "TestSub", rating: 5 },
-  { breed: "Test", subBreed: "TestSub", rating: 5 },
-  { breed: "Test", subBreed: "TestSub", rating: 5 },
+  { breed: "Test1", subBreed: "TestSub1", rating: 1 },
+  { subBreed: "TestSub2", breed: "Test2", rating: 2 },
+  { breed: "Test3", subBreed: "TestSub3", rating: 3 },
+  { breed: "Test4", subBreed: "TestSub4", rating: 4 },
+  { breed: "Test5", subBreed: "TestSub5", rating: 5 },
+  { breed: "Test6", subBreed: "TestSub6", rating: 6 },
+  { breed: "Test7", subBreed: "TestSub7", rating: 7 },
 ];

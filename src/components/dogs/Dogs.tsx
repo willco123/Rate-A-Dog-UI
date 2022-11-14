@@ -14,7 +14,6 @@ function Home() {
       });
   }, []);
 
-  function handleClick() {}
   return (
     <div className="Dogs-wrapper">
       <h1 className="title">Dog Ceo Clone</h1>
@@ -22,7 +21,7 @@ function Home() {
 
       <FiveStarRating />
       <Table
-        key={"bigDickTable"}
+        key={"filter-table"}
         theadData={["Breed", "Sub-Breed"]}
         tbodyData={someData}
       />

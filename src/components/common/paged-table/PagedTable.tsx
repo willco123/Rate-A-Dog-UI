@@ -1,32 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { TableBodyData, TableProps, TableRowProps } from "./types";
+import { TableProps, TableRowProps, PageData } from "./types";
+import Pagination from "../pagination/Pagination";
 import "./paged-table.css";
 
 export default function PagedTable({ theadData, tbodyData }: TableProps) {
-  // const [breedData, setBreedData] = useState<TableBodyData[]>();
-  // function sortData() {}
-  // setBreedData(tbodyData);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 2;
 
   return (
-    <table className="paged-table">
-      <colgroup>
-        <col id="Breed" />
-        <col id="subBreed" />
-        <col id="rating" />
-      </colgroup>
-      <thead>
-        <tr>
-          {theadData.map((header) => {
-            return <TableHeadItem key={header} item={header} />;
+    <div>
+      <table className="paged-table">
+        <thead>
+          <tr>
+            {theadData.map((header) => {
+              return <TableHeadItem key={header} item={header} />;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {tbodyData.map((item) => {
+            const rowKey = item.subBreed
+              ? item.breed + item.subBreed
+              : item.breed;
+
+            return <TableRow key={rowKey} data={item} />;
           })}
-        </tr>
-      </thead>
-      <tbody>
-        {tbodyData.map((item, index) => {
-          return <TableRow key={theadData[index]} data={item} />;
-        })}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+      <Pagination
+        data={tbodyData}
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+        onPageChange={setCurrentPage}
+      />
+    </div>
   );
 }
 
@@ -38,7 +45,8 @@ function TableRow({ data }: TableRowProps) {
   return (
     <tr>
       {Object.entries(data).map((item) => {
-        return <td>{item[1]}</td>;
+        const [k, v] = item;
+        return <td key={v}>{v}</td>;
       })}
     </tr>
   );
