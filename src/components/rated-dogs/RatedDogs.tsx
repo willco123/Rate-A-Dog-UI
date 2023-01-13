@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./rated-dogs.css";
 import PagedTable from "../common/paged-table/PagedTable";
 
 export default function RatedDogs() {
+  const [tableData, setTableData] = useState(someData);
+
   return (
     <>
       <div className="title">Rated Dogs</div>
@@ -13,14 +15,22 @@ export default function RatedDogs() {
       <div className="title">and other filters</div>
       <PagedTable
         key={"PagedTable"}
+        setTableData={setTableData}
         theadData={["Breed", "Sub-Breed", "Rating"]}
-        tbodyData={someData}
+        tbodyData={tableData}
+        initialState={someData}
       />
     </>
   );
 }
 
-const someData = [
+type TableBodyData = {
+  breed: string;
+  subBreed: string | null;
+  rating: number;
+};
+
+const someData: TableBodyData[] = [
   { breed: "Test1", subBreed: "TestSub1", rating: 1 },
   { subBreed: "TestSub2", breed: "Test2", rating: 2 },
   { breed: "Test3", subBreed: "TestSub3", rating: 3 },

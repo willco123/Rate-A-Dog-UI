@@ -30,6 +30,7 @@ Create signup/login route
 Bonus:
   Password reset
   Advanced filtering for a table
+  Get available locations based on browsers location
 
 Other Components:
 Paged-table
