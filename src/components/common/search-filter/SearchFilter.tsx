@@ -6,18 +6,18 @@ type tableData = {
     React.SetStateAction<
       {
         breed: string;
-        subBreed: string | null;
-        rating: number;
+        subBreed: (string | null)[];
+        rating: number[];
       }[]
     >
   >;
-  initialState: TableBodyData[];
+  initialState: TableBodyData[] | [];
 };
 
 type TableBodyData = {
   breed: string;
-  subBreed: string | null;
-  rating: number;
+  subBreed: (string | null)[];
+  rating: number[];
 };
 
 export default function SearchFilter({
@@ -30,13 +30,14 @@ export default function SearchFilter({
     if (inputRef.current) inputRef.current.value = "";
   }
   function handleClick(e: React.MouseEvent<HTMLLabelElement, MouseEvent>) {
-    if (inputRef.current) filterTable(inputRef.current.value);
+    if (inputRef.current && initialState.length > 0)
+      filterTable(inputRef.current.value);
   }
 
   function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Enter") {
       const target = e.target as HTMLInputElement;
-      filterTable(target.value);
+      if (initialState.length > 0) filterTable(target.value);
     }
   }
 
@@ -44,9 +45,14 @@ export default function SearchFilter({
     const filteredShallowArray = initialState.filter((item) => {
       const tbodyDataRow = Object.values(item);
       const tbodyDataRowLower = tbodyDataRow.map((element) => {
-        if (typeof element === "string") return element.toLowerCase();
+        if (Array.isArray(element)) {
+          for (let i of element) {
+            if (typeof i === "string") return i.toLowerCase();
+            if (typeof i === "number") return i.toString();
+          }
+        }
       });
-      const filterValueLower = filterValue.toLocaleLowerCase();
+      const filterValueLower = filterValue.toLowerCase();
       return tbodyDataRowLower.indexOf(filterValueLower) > -1 ? 1 : 0;
     });
     const filteredArray = [...filteredShallowArray];

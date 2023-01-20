@@ -1,16 +1,22 @@
+import { table } from "console";
 import React, { useState, useEffect } from "react";
 import "./drop-down.css";
 
 type DropDownProps = {
   items: string[];
   isDisabled: boolean;
-  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  onChange: (
+    event: React.ChangeEvent<HTMLSelectElement>,
+    tableParentElement: string | undefined,
+  ) => void;
+  tableParentElement?: string;
 };
 
 export default function DropDown({
   items,
   onChange,
   isDisabled,
+  tableParentElement,
 }: DropDownProps) {
   function addItemsToList(items: string[]) {
     const listItems = items.map((item) => (
@@ -27,7 +33,7 @@ export default function DropDown({
         <select
           defaultValue="empty"
           // disabled={isDisabled}
-          onChange={(e) => onChange(e)}
+          onChange={(e) => onChange(e, tableParentElement)}
         >
           {addItemsToList(items)}
         </select>
@@ -35,3 +41,8 @@ export default function DropDown({
     </div>
   );
 }
+
+//Find sub-breed in assosicated breeds tbodydata
+//Get its index
+//Get associated rating using index
+//set state

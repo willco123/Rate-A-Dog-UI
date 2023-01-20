@@ -1,9 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./rated-dogs.css";
 import PagedTable from "../common/paged-table/PagedTable";
+import getBreeds from "../../services/get-breeds";
 
 export default function RatedDogs() {
-  const [tableData, setTableData] = useState(someData);
+  const [tableData, setTableData] = useState<TableData[] | []>([]);
+  const [initialState, setInitialState] = useState<TableData[] | []>([]);
+  console.log("Rated Dogs");
+  useEffect(() => {
+    (async () => {
+      //should grab data from the backend, using a hack for display purposes atm
+      const myBreeds = await getBreeds();
+
+      const hackyBreedsList: TableData[] = [];
+      console.log("Rated Dogs UE");
+      Object.entries(myBreeds).forEach((element: any) => {
+        const ratingArray: number[] = [];
+
+        if (element[1].length == 0) {
+          ratingArray.push(Math.floor(Math.random() * 10));
+        } else {
+          for (let i in element[1]) {
+            ratingArray.push(Math.floor(Math.random() * 10));
+          }
+        }
+
+        const breedObject: TableData = {
+          breed: element[0],
+          subBreed: element[1],
+          rating: [123],
+        };
+
+        hackyBreedsList.push(breedObject);
+      });
+      setTableData(hackyBreedsList);
+      setInitialState(hackyBreedsList);
+    })();
+  }, []);
 
   return (
     <>
@@ -17,39 +50,15 @@ export default function RatedDogs() {
         key={"PagedTable"}
         setTableData={setTableData}
         theadData={["Breed", "Sub-Breed", "Rating"]}
-        tbodyData={tableData}
-        initialState={someData}
+        tableData={tableData}
+        initialState={initialState}
       />
     </>
   );
 }
 
-type TableBodyData = {
+type TableData = {
   breed: string;
-  subBreed: string | null;
-  rating: number;
+  subBreed: (string | null)[];
+  rating: number[];
 };
-
-const someData: TableBodyData[] = [
-  { breed: "Test1", subBreed: "TestSub1", rating: 1 },
-  { subBreed: "TestSub2", breed: "Test2", rating: 2 },
-  { breed: "Test3", subBreed: "TestSub3", rating: 3 },
-  { breed: "Test4", subBreed: "TestSub4", rating: 4 },
-  { breed: "Test5", subBreed: "TestSub5", rating: 5 },
-  { breed: "Test6", subBreed: "TestSub6", rating: 6 },
-  { breed: "Test7", subBreed: "TestSub7", rating: 7 },
-  { breed: "Test1", subBreed: "TestSub1", rating: 1 },
-  { subBreed: "TestSub2", breed: "Test2", rating: 2 },
-  { breed: "Test3", subBreed: "TestSub3", rating: 3 },
-  { breed: "Test4", subBreed: "TestSub4", rating: 4 },
-  { breed: "Test5", subBreed: "TestSub5", rating: 5 },
-  { breed: "Test6", subBreed: "TestSub6", rating: 6 },
-  { breed: "Test7", subBreed: "TestSub7", rating: 7 },
-  { breed: "Test1", subBreed: "TestSub1", rating: 1 },
-  { subBreed: "TestSub2", breed: "Test2", rating: 2 },
-  { breed: "Test3", subBreed: "TestSub3", rating: 3 },
-  { breed: "Test4", subBreed: "TestSub4", rating: 4 },
-  { breed: "Test5", subBreed: "TestSub5", rating: 5 },
-  { breed: "Test6", subBreed: "TestSub6", rating: 6 },
-  { breed: "Test7", subBreed: "TestSub7", rating: 7 },
-];

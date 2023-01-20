@@ -23,7 +23,11 @@ export default function usePagination({
     const numberOfPages = Math.ceil(data.length / itemsPerPage);
     const displayedPages = siblingCount + 5;
 
-    if (currentPage > numberOfPages) throw new Error();
+    // if (currentPage > numberOfPages) {
+    //   console.log(data);
+    //   console.log("here");
+    //   throw new Error();
+    // }
 
     if (displayedPages >= numberOfPages) return _.range(1, numberOfPages + 1);
 
@@ -66,3 +70,5 @@ export default function usePagination({
 }
 
 //Code from https://www.freecodecamp.org/news/build-a-custom-pagination-component-in-react/
+//current page is exceedng number of pages
+//on re-render/search, page should be reset to 1, pass setcurrentpage to search filter

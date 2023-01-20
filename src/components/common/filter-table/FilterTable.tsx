@@ -6,7 +6,6 @@ import "./filter-table.css";
 
 export default function FilterTable({ theadData, tbodyData }: TableProps) {
   const [selectedBreed, setSelectedBreed] = useState<Breed[]>([null, null]);
-
   function isDropDownDisabled(item: [string, string[]]) {
     if (selectedBreed[0] === item[0]) return true;
     return false;

@@ -2,15 +2,22 @@ import React, { useEffect, useState } from "react";
 import "./dogs.css";
 import FiveStarRating from "../common/five-star-rating/FiveStarRating";
 import Table from "../common/filter-table/FilterTable";
+
 function Home() {
   const [dogUrl, setDogUrl] = useState("");
+  const [breedsList, setBreedsList] = useState({});
 
   useEffect(() => {
     fetch("https://dog.ceo/api/breeds/image/random")
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
         setDogUrl(response.message);
+      });
+
+    fetch("https://dog.ceo/api/breeds/list/all")
+      .then((response) => response.json())
+      .then((data) => {
+        setBreedsList(data.message);
       });
   }, []);
 
@@ -23,7 +30,7 @@ function Home() {
       <Table
         key={"filter-table"}
         theadData={["Breed", "Sub-Breed"]}
-        tbodyData={someData}
+        tbodyData={breedsList}
       />
 
       <button className="Dogs-button">Get a new Dog!</button>
