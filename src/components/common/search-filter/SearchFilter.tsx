@@ -2,31 +2,23 @@ import React, { useState, useRef } from "react";
 import "./search-filter.css";
 
 type tableData = {
-  setTableData: React.Dispatch<
-    React.SetStateAction<
-      {
-        breed: string;
-        subBreed: (string | null)[];
-        rating: number[];
-      }[]
-    >
-  >;
+  setTableBodyData: React.Dispatch<React.SetStateAction<TableBodyData[]>>;
   initialState: TableBodyData[] | [];
 };
 
 type TableBodyData = {
   breed: string;
   subBreed: (string | null)[];
-  rating: number[];
+  rating: number | null;
 };
 
 export default function SearchFilter({
-  setTableData,
+  setTableBodyData,
   initialState,
 }: tableData) {
   const inputRef = useRef<HTMLInputElement>(null);
   function clearInput() {
-    setTableData(initialState);
+    setTableBodyData(initialState);
     if (inputRef.current) inputRef.current.value = "";
   }
   function handleClick(e: React.MouseEvent<HTMLLabelElement, MouseEvent>) {
@@ -48,17 +40,17 @@ export default function SearchFilter({
         if (Array.isArray(element)) {
           for (let i of element) {
             if (typeof i === "string") return i.toLowerCase();
-            if (typeof i === "number") return i.toString();
           }
         }
+        if (typeof element === "number") return element.toString();
       });
       const filterValueLower = filterValue.toLowerCase();
       return tbodyDataRowLower.indexOf(filterValueLower) > -1 ? 1 : 0;
     });
     const filteredArray = [...filteredShallowArray];
     filteredArray.length != 0
-      ? setTableData(filteredArray)
-      : setTableData(initialState);
+      ? setTableBodyData(filteredArray)
+      : setTableBodyData(initialState);
   }
   return (
     <div className="search-filter-container">

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { TableBodyData } from "../paged-table/types";
 import _ from "lodash";
 import "./pagination.css";
 import usePagination from "../../../custom-hooks/usePagination";

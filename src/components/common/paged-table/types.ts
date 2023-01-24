@@ -1,48 +1,55 @@
-export type TableProps = {
-  tableData: TableData[] | [];
+export type PagedTableProps = {
+  tbodyData: PagedTableData[] | [];
   theadData: string[];
-  setTableData: React.Dispatch<
-    React.SetStateAction<
-      {
-        breed: string;
-        subBreed: (string | null)[];
-        rating: number[];
-      }[]
-    >
-  >;
-
-  initialState: TableData[] | [];
+  handleDropDownChange: (
+    event: React.ChangeEvent<HTMLSelectElement>,
+    tableParentElement: string | undefined,
+  ) => void;
 };
 
-export type TableBodyData = {
+export type PagedTableData = {
   breed: string;
   subBreed: (string | null)[];
   rating: number | null;
 };
 
-export type TableData = {
+export type BreedData = {
   breed: string;
   subBreed: (string | null)[];
   rating: number[];
 };
 
-export type TableRowProps = {
-  data: TableBodyData;
-  onDropDownChange: (
+export type PagedTableRowProps = {
+  data: PagedTableData;
+  handleDropDownChange: (
     event: React.ChangeEvent<HTMLSelectElement>,
     tableParentElement: string | undefined,
   ) => void;
   thead: string[];
-  setBreedRating: React.Dispatch<React.SetStateAction<(number | null)[]>>;
-  breedRating: (number | null)[];
+
   tableParentElement: string | undefined;
 };
 
 export type PageData = {
-  data: TableBodyData[];
+  data: PagedTableData[];
   currentPage: number;
   itemsPerPage: number;
   setCurrentPage: (i: number) => void;
 };
 
 export type Breed = string | null;
+
+// setTableData: React.Dispatch<
+// React.SetStateAction<
+//   {
+//     breed: string;
+//     subBreed: (string | null)[];
+//     rating: number[];
+//   }[]
+// >
+// >;
+
+// initialState: TableData[] | [];
+
+// setBreedRating: React.Dispatch<React.SetStateAction<(number | null)[]>>;
+// breedRating: (number | null)[];

@@ -24,7 +24,7 @@ export default function DropDown({
         {item}
       </option>
     ));
-    listItems.unshift(<option value={"empty"} key={"empty"} label=""></option>);
+    // listItems.unshift(<option value={"empty"} key={"empty"} label=""></option>);
     return listItems;
   }
   return (
@@ -41,8 +41,3 @@ export default function DropDown({
     </div>
   );
 }
-
-//Find sub-breed in assosicated breeds tbodydata
-//Get its index
-//Get associated rating using index
-//set state
