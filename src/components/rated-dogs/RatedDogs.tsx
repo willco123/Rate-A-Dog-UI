@@ -105,6 +105,7 @@ export default function RatedDogs() {
           <SearchFilter
             setTableBodyData={setTableData}
             initialState={initialTableData}
+            setCurrentPage={setCurrentPage}
           />
         }
       />
