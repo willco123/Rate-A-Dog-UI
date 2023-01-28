@@ -21,3 +21,7 @@ ul {
     padding-top: 50px;
   }
 }
+
+h1.title {
+  margin-bottom: 100px;
+}

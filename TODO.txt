@@ -44,3 +44,5 @@ Validation
 Some navbar stuff, login/logout stuff
 
 Finally connect to back-end and launch with docker/or whatever
+
+After search dropdown fumbles

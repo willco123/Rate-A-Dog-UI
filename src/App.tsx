@@ -1,12 +1,12 @@
 import React from "react";
 import "./App.css";
-import Dogs from "./components/dogs/Dogs";
+import Dogs from "./pages/dogs/Dogs";
 import Navbar from "./components/navbar/Navbar";
 import { Outlet, Routes, Route, useLocation } from "react-router-dom";
-import LoginModal from "./components/login/LoginModal";
-import Register from "./components/register/Register";
-import Favourites from "./components/favourites/Favourites";
-import RatedDogs from "./components/rated-dogs/RatedDogs";
+import LoginModal from "./pages/login/LoginModal";
+import Register from "./pages/register/Register";
+import Favourites from "./pages/favourites/Favourites";
+import RatedDogs from "./pages/rated-dogs/RatedDogs";
 
 export default function App() {
   const location = useLocation();
