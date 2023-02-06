@@ -27,3 +27,31 @@
   font-size: 1.6rem;
   font-weight: 600;
 }
+
+.Dogs-wrapper .table-component {
+  --tableWidth: 500px;
+  background-color: unset;
+  table-layout: fixed;
+  width: var(--tableWidth);
+  border-collapse: collapse;
+}
+
+.Dogs-wrapper .table-component tbody {
+  display: block;
+  overflow-y: auto;
+  width: var(--tableWidth);
+  height: 200px;
+}
+
+.Dogs-wrapper .table-component tr thead {
+  display: block;
+}
+
+.Dogs-wrapper .table-component td {
+  width: calc(var(--tableWidth) / 2);
+  text-align: left;
+}
+
+.Dogs-wrapper .table-component td:hover {
+  background-color: #f9f9f9;
+}

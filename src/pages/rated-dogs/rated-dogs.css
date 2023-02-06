@@ -5,3 +5,37 @@
   flex-direction: column;
   /* gap: 100px; */
 }
+
+.rated-dogs .table-container {
+  max-width: 500px;
+  position: relative;
+}
+
+.rated-dogs .table-component {
+  --tableWidth: 500px;
+  --numberOfColumns: 3;
+  background-color: unset;
+  table-layout: fixed;
+  width: var(--tableWidth);
+}
+
+.rated-dogs .table-component tbody {
+  display: block;
+  overflow-y: auto;
+  width: var(--tableWidth);
+  height: 200px;
+}
+
+.rated-dogs .table-component tr thead {
+  display: block;
+}
+
+.rated-dogs .table-component td {
+  text-align: left;
+  width: calc(var(--tableWidth) / var(--numberOfColumns));
+  width: 166px;
+}
+
+.rated-dogs .table-component td:hover {
+  background-color: #f9f9f9;
+}

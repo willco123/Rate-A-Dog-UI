@@ -1,55 +1,42 @@
 import React, { useRef } from "react";
 import "./search-filter.css";
-import filterArrayOfObjects from "../../utils/filter-array";
+import { BreedData } from "../../types";
 
 type SearchFilterProps = {
-  setTableBodyData: React.Dispatch<React.SetStateAction<TableData[]>>;
-  initialState: TableData[] | [];
+  filterTable: (filterValue: string, breedData: BreedData[]) => void;
+  breedData: BreedData[] | [];
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-};
-
-type TableData = {
-  breed: string;
-  subBreed: (string | null)[];
-  rating: number | null;
+  reInitTableData: (breedData: BreedData[]) => void;
 };
 
 export default function SearchFilter({
-  setTableBodyData,
-  initialState,
+  filterTable,
+  breedData,
   setCurrentPage,
+  reInitTableData,
 }: SearchFilterProps) {
   const inputRefObject = useRef<HTMLInputElement>(null);
   const searchInputRef = inputRefObject.current;
-  const isInitialState = initialState.length > 0;
+  const isbreedData = breedData.length > 0;
 
   function clearInput() {
-    setTableBodyData(initialState);
+    reInitTableData(breedData);
     if (searchInputRef) searchInputRef.value = "";
     setCurrentPage(1);
   }
 
   function handleClick() {
-    if (searchInputRef && isInitialState) filterTable(searchInputRef.value);
+    if (searchInputRef && isbreedData)
+      filterTable(searchInputRef.value, breedData);
   }
 
   function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Enter") {
       const searchInput = e.target as HTMLInputElement;
-      if (isInitialState) filterTable(searchInput.value);
+      if (isbreedData) filterTable(searchInput.value, breedData);
     }
   }
 
-  function filterTable(filterValue: string) {
-    const filteredArray = filterArrayOfObjects<TableData>(
-      initialState,
-      filterValue,
-    );
-    filteredArray.length != 0
-      ? setTableBodyData(filteredArray)
-      : setTableBodyData(initialState);
-    setCurrentPage(1);
-  }
   return (
     <div className="search-filter-container">
       <div className="search-filter-items">

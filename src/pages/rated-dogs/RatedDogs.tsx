@@ -1,29 +1,29 @@
 import React, { useEffect, useState, useMemo } from "react";
 import "./rated-dogs.css";
-import PagedTable from "../../features/display-ratings/paged-table/PagedTable";
+import TableComponent from "../../components/table-component/TableComponent";
 import { getBreeds } from "../../services/dog-ceo";
 import CollapsibleSpan from "../../components/collapsible-span/CollapsibleSpan";
 import SearchFilter from "../../components/search-filter/SearchFilter";
 import Pagination from "../../components/pagination/Pagination";
+import type { BreedData, TableData, TableDataJSX } from "../../types";
+import DropDown from "../../components/drop-down/DropDown";
+import filterArrayOfObjects from "../../utils/filter-array";
 
 export default function RatedDogs() {
   const [breedData, setBreedData] = useState<BreedData[] | []>([]);
   const [tableData, setTableData] = useState<TableData[] | []>([]);
-  const [initialTableData, setInitialTableData] = useState<TableData[] | []>(
-    [],
-  );
+  const [tableDataJSX, setTableDataJSX] = useState<TableDataJSX[] | []>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-
   const itemsPerPage = 5;
 
-  const currentTableData = useMemo(() => {
-    if (!tableData) return [];
+  const currentTableDataJSX = useMemo(() => {
+    if (!tableDataJSX) return [];
     const firstPageIndex = (currentPage - 1) * itemsPerPage;
     const lastPageIndex = firstPageIndex + itemsPerPage;
-    return tableData.length
-      ? tableData.slice(firstPageIndex, lastPageIndex)
+    return tableDataJSX.length
+      ? tableDataJSX.slice(firstPageIndex, lastPageIndex)
       : [];
-  }, [currentPage, tableData]);
+  }, [currentPage, tableDataJSX]);
 
   useEffect(() => {
     (async () => {
@@ -55,43 +55,125 @@ export default function RatedDogs() {
   }, []);
 
   useEffect(() => {
-    const breedDataClone = breedData.map((element) => {
-      return { ...element };
-    });
-
-    const dataOutput = breedDataClone.map((breedObject) => {
-      const ratingtoBeDisplayed = breedObject.rating[0];
-      const breedObjectCopy = breedObject as unknown as TableData;
-      breedObjectCopy.rating = ratingtoBeDisplayed;
-      return breedObjectCopy;
-    });
-
-    setTableData(dataOutput);
-    setInitialTableData(dataOutput);
+    const tableData = breedDataToTableData(breedData);
+    setTableData(tableData);
   }, [breedData]);
+
+  useEffect(() => {
+    const tableDataJSX = tableDataToJSX(tableData);
+    setTableDataJSX(tableDataJSX);
+  }, [tableData]);
+
+  function breedDataToTableData(breedData: BreedData[]) {
+    const tableData: TableData[] = breedData.map((breedObject) => {
+      const { breed, subBreed, rating } = breedObject;
+      const firstRating = rating[0];
+
+      const outputObject: TableData = {
+        breed: breed,
+        subBreed: subBreed,
+        rating: firstRating,
+      };
+
+      return outputObject;
+    });
+    return tableData;
+  }
+
+  function tableDataToJSX(tableData: TableData[]) {
+    const tableDataJSX: TableDataJSX[] = tableData.map((breedObject, index) => {
+      const { breed, rating } = breedObject;
+      const ratingNullToString = rating == null ? "null" : rating;
+
+      const breedJSX = setElementAsJSX(breed, breed, breed);
+      const subBreedJSX = setSubBreedAsJSX(breedObject, index);
+      const ratingJSX = setElementAsJSX(rating, "rating", ratingNullToString);
+
+      const outputObject: TableDataJSX = {
+        breed: breedJSX,
+        subBreed: subBreedJSX,
+        rating: ratingJSX,
+      };
+
+      return outputObject;
+    });
+    return tableDataJSX;
+  }
+
+  function setElementAsJSX(
+    element: string | number | null,
+    id: string,
+    key: string | number,
+  ) {
+    return (
+      <td id={id} key={key}>
+        {element}
+      </td>
+    );
+  }
+
+  function setSubBreedAsJSX(breedObject: TableData, index: number) {
+    const subBreedArray = breedObject.subBreed;
+    const tableParentElement = breedObject.breed;
+    let outputSubBreed: JSX.Element;
+
+    if (subBreedArray.length > 1) {
+      outputSubBreed = (
+        <DropDown
+          items={subBreedArray}
+          onChange={(e) => handleDropDownChange(e, tableParentElement, index)}
+          isDisabled={true}
+          key={tableParentElement + "subBreed"}
+        />
+      );
+    } else {
+      const singleElement = breedObject.subBreed[0];
+      outputSubBreed =
+        singleElement == null
+          ? setElementAsJSX(singleElement, "null", "null")
+          : setElementAsJSX(singleElement, singleElement, singleElement);
+    }
+    return outputSubBreed;
+  }
+
+  function filterTable(filterValue: string, breedData: BreedData[]) {
+    const filteredArray = filterArrayOfObjects<BreedData>(
+      breedData,
+      filterValue,
+    );
+    const filteredTableData: TableData[] = breedDataToTableData(filteredArray);
+    filteredArray.length != 0
+      ? setTableData(filteredTableData)
+      : reInitTableData(breedData);
+    setCurrentPage(1);
+  }
+
+  function reInitTableData(breedData: BreedData[]) {
+    const tableData = breedDataToTableData(breedData);
+    setTableData(tableData);
+  }
 
   function handleDropDownChange(
     e: React.ChangeEvent<HTMLSelectElement>,
-    tableParentElement: string | undefined,
-    index: number,
+    tableRowId: string,
+    breedDataRowIndex: number,
   ) {
     const selectedSubBreed = e.target.value;
-    if (tableParentElement) {
-      const rowIndex = breedData.findIndex(
-        (obj) => obj.breed === tableParentElement,
-      );
-      const targetBreed = Object.values(breedData[rowIndex]);
-      const subBreedArray = targetBreed[1] as string[];
-      const subBreedIndex = subBreedArray.indexOf(selectedSubBreed);
-      const ratingArray = targetBreed[2] as number[];
-      const associatedBreedRating = ratingArray[subBreedIndex];
+    const targetBreed = Object.values(breedData[breedDataRowIndex]);
+    const subBreedArray = targetBreed[1] as string[];
+    const subBreedIndex = subBreedArray.indexOf(selectedSubBreed);
+    const ratingArray = targetBreed[2] as number[];
+    const associatedBreedRating = ratingArray[subBreedIndex];
+    const currentTableDataRowIndex = tableData.findIndex(
+      (obj) => obj.breed === tableRowId,
+    );
 
-      const tableDataClone = tableData.map((element) => {
-        return { ...element };
-      });
-      tableDataClone[index].rating = associatedBreedRating;
+    const tableDataClone = tableData.map((element) => {
+      return { ...element };
+    });
+
+    (tableDataClone[currentTableDataRowIndex].rating = associatedBreedRating),
       setTableData(tableDataClone);
-    }
   }
 
   return (
@@ -100,23 +182,24 @@ export default function RatedDogs() {
       <CollapsibleSpan
         WrappedComponent={
           <SearchFilter
-            setTableBodyData={setTableData}
-            initialState={initialTableData}
+            filterTable={filterTable}
+            breedData={breedData}
             setCurrentPage={setCurrentPage}
+            reInitTableData={reInitTableData}
           />
         }
         displayedText={"Filter Breed"}
       />
-      <PagedTable
-        handleDropDownChange={handleDropDownChange}
-        key={"PagedTable"}
-        theadData={["Breed", "Sub-Breed", "Rating"]}
-        tbodyData={currentTableData}
-      />
-
+      <div className="table-container">
+        <TableComponent
+          key={"table-component"}
+          theadData={["Breed", "Sub-Breed", "Rating"]}
+          tbodyData={currentTableDataJSX}
+        />
+      </div>
       {tableData && (
         <Pagination
-          data={tableData}
+          dataLength={tableData.length}
           currentPage={currentPage}
           itemsPerPage={itemsPerPage}
           onPageChange={(page: number) => setCurrentPage(page)}
@@ -126,14 +209,22 @@ export default function RatedDogs() {
   );
 }
 
-type BreedData = {
-  breed: string;
-  subBreed: (string | null)[];
-  rating: number[];
-};
+// onChange={(e) =>
+//   handleDropDownChange(
+//     e,
+//     tableParentElement,
+//     currentTableDataRowIndex,
+//   )
+// }
 
-export type TableData = {
-  breed: string;
-  subBreed: (string | null)[];
-  rating: number | null;
-};
+//Test if
+
+// function initialiseRating(breedObject: BreedData) {
+//   const ratingtoBeDisplayed = breedObject.rating[0];
+//   const breedObjectCopy = breedObject as unknown as IntermittentTableData;
+//   breedObjectCopy.rating = ratingtoBeDisplayed;
+//   return breedObjectCopy;
+// }
+
+//tableDataClone[currentTableDataRowIndex] is undefined
+//tableData is empty for some reason

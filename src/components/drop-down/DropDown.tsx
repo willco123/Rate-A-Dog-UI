@@ -2,43 +2,36 @@ import React from "react";
 import "./drop-down.css";
 
 type DropDownProps = {
-  items: string[];
+  items: (string | null | number)[];
   isDisabled: boolean;
-  onChange: (
-    event: React.ChangeEvent<HTMLSelectElement>,
-    tableParentElement: string | undefined,
-    index: number,
-  ) => void;
-  tableParentElement?: string;
-  index: number;
+  onChange: React.ChangeEventHandler<HTMLSelectElement>;
 };
 
 export default function DropDown({
   items,
   onChange,
   isDisabled,
-  tableParentElement,
-  index,
 }: DropDownProps) {
-  function addItemsToList(items: string[]) {
-    const listItems = items.map((item) => (
-      <option key={item} value={item}>
-        {item}
-      </option>
-    ));
+  function addItemsToList(items: (string | null | number)[]) {
+    const listItems = items.map((item) => {
+      // console.log(item);
+      if (item == null) item = " ";
+      return (
+        <option key={item} value={item}>
+          {item}
+        </option>
+      );
+    });
 
     return listItems;
   }
   return (
-    <div className="drop-down">
+    <td className="drop-down" key={123}>
       {isDisabled && (
-        <select
-          defaultValue="empty"
-          onChange={(e) => onChange(e, tableParentElement, index)}
-        >
+        <select defaultValue="empty" onChange={onChange}>
           {addItemsToList(items)}
         </select>
       )}
-    </div>
+    </td>
   );
 }

@@ -1,26 +1,22 @@
 import { useMemo } from "react";
 import _ from "lodash";
 
-type PageHook = {
-  data: TableData[];
+export type PageHook = {
+  dataLength: number;
   currentPage: number;
   itemsPerPage: number;
   siblingCount?: number;
 };
 
-type TableData = {
-  [index: number]: string;
-};
-
 export default function usePagination({
-  data,
+  dataLength,
   currentPage,
   itemsPerPage,
   siblingCount = 1,
 }: PageHook) {
   const paginationRange = useMemo(() => {
     const dots = "...";
-    const numberOfPages = Math.ceil(data.length / itemsPerPage);
+    const numberOfPages = Math.ceil(dataLength / itemsPerPage);
     const displayedPages = siblingCount + 5;
 
     if (displayedPages >= numberOfPages) return _.range(1, numberOfPages + 1);
@@ -58,7 +54,7 @@ export default function usePagination({
       return [firstPageIndex, dots, ...middleRange, dots, lastPageIndex];
     }
     return [];
-  }, [data.length, itemsPerPage, currentPage]);
+  }, [dataLength, itemsPerPage, currentPage]);
 
   return paginationRange;
 }

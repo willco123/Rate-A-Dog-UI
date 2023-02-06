@@ -4,24 +4,24 @@ import "./pagination.css";
 import usePagination from "../../custom-hooks/usePagination";
 import classnames from "classnames";
 
-type PageData = {
-  data: TableData[];
+export type PageProps = {
+  dataLength: number;
   currentPage: number;
   itemsPerPage: number;
   onPageChange: (page: number) => void;
 };
 
-type TableData = {
-  [index: number]: string;
-};
-
 export default function Pagination({
-  data,
+  dataLength,
   currentPage,
   itemsPerPage,
   onPageChange,
-}: PageData) {
-  const paginationRange = usePagination({ currentPage, data, itemsPerPage });
+}: PageProps) {
+  const paginationRange = usePagination({
+    currentPage,
+    dataLength,
+    itemsPerPage,
+  });
   const lastPage = paginationRange[paginationRange.length - 1];
 
   const onNext = () => {

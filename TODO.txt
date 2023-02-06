@@ -45,4 +45,33 @@ Some navbar stuff, login/logout stuff
 
 Finally connect to back-end and launch with docker/or whatever
 
-After search dropdown fumbles
+Test if its possible to "partially" pass down props down a component tree into a function
+
+.table-component {
+  --tableWidth: 500px;
+  background-color: unset;
+  table-layout: fixed;
+  width: var(--tableWidth);
+  border-collapse: collapse;
+}
+
+.table-component tbody {
+  display: block;
+  overflow-y: auto;
+  width: var(--tableWidth);
+  height: 200px;
+}
+
+.table-component tr thead {
+  display: block;
+}
+
+.table-component td,
+.table-component th {
+  width: calc(var(--tableWidth) / 2);
+  text-align: left;
+}
+
+.table-component td:hover {
+  background-color: #f9f9f9;
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./favourites.css";
-import Table from "../../features/select-breeds/filter-table/FilterTable";
+import Table from "../../components/table-component/TableComponent";
 
 export default function Favourites() {
   return (

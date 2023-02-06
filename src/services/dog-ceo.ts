@@ -1,6 +1,4 @@
-export type Breeds = {
-  [key: string]: (string | null)[];
-};
+import { Breeds } from "../types";
 
 export async function getBreeds() {
   const response = await fetch("https://dog.ceo/api/breeds/list/all");
