@@ -4,7 +4,8 @@ import "./radio-hide-input.css";
 type RadioHideInputProps = {
   item: string;
   radioGroup: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  // onChange: (event: React.ChangeEvent<HTMLInputElement>, index: number) => void;
 };
 
 export default function RadioHideInput({
@@ -19,7 +20,7 @@ export default function RadioHideInput({
         value={item}
         id={item}
         name={radioGroup}
-        onChange={(e) => onChange(e)}
+        onChange={onChange}
       />
       <label htmlFor={item}>{item}</label>
     </div>

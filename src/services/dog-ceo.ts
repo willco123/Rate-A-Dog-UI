@@ -12,3 +12,20 @@ export async function getRandomDogImage() {
   const imageURL = await response.json();
   return imageURL.message as string;
 }
+
+export async function getRandomDogImageByBreed(
+  breed: string,
+  subBreed: string | null,
+) {
+  let response: Response;
+  if (subBreed)
+    response = await fetch(
+      "https://dog.ceo/api/breed/" + breed + "/" + subBreed + "/images/random",
+    );
+  else
+    response = await fetch(
+      "https://dog.ceo/api/breed/" + breed + "/images/random",
+    );
+  const imageURL = await response.json();
+  return imageURL.message as string;
+}

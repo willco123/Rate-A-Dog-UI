@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./dogs.css";
 import FiveStarRating from "../../components/five-star-rating/FiveStarRating";
 import TableComponent from "../../components/table-component/TableComponent";
-import { getBreeds, getRandomDogImage } from "../../services/dog-ceo";
+import {
+  getBreeds,
+  getRandomDogImage,
+  getRandomDogImageByBreed,
+} from "../../services/dog-ceo";
 import type { Breeds, TableDataJSX, TableData } from "../../types";
 import DropDown from "../../components/drop-down/DropDown";
 import RadioHideInput from "../../components/radio-hide-input/RadioHideInput";
@@ -17,6 +21,7 @@ function Home() {
 
   const [selectedBreed, setSelectedBreed] = useState<string | null>(null);
   const [selectedSubBreed, setSelectedSubBreed] = useState<string | null>(null);
+  const [rating, setRating] = useState<number>(0);
 
   function showSelection() {
     if (!selectedBreed) return " ";
@@ -46,7 +51,6 @@ function Home() {
 
   useEffect(() => {
     //basically forcing a re-render here upon changing selected breed
-    // selection = showSelection();
     const tableDataJSXFromTableData = tableDataToJSX(tableData);
     setTableDataJSX(tableDataJSXFromTableData);
   }, [selectedBreed]);
@@ -67,8 +71,13 @@ function Home() {
   function tableDataToJSX(tableData: Omit<TableData, "rating">[]) {
     const tableDataJSX = tableData.map((breedObject, index) => {
       const { breed } = breedObject;
-      const breedJSX = setElementAsRadioJSX(breed, "breed", handleRadioChange);
-      const subBreedJSX = setSubBreedAsJSX(breedObject, index);
+      const breedJSX = setElementAsRadioJSX(
+        breed,
+        "breed",
+        handleRadioChange,
+        index,
+      );
+      const subBreedJSX = setSubBreedAsJSX(breedObject);
 
       const outputObject = {
         breed: breedJSX,
@@ -92,10 +101,7 @@ function Home() {
     );
   }
 
-  function setSubBreedAsJSX(
-    breedObject: Omit<TableData, "rating">,
-    index: number,
-  ) {
+  function setSubBreedAsJSX(breedObject: Omit<TableData, "rating">) {
     const subBreedArray = breedObject.subBreed;
     const tableParentElement = breedObject.breed;
     let outputSubBreed: JSX.Element;
@@ -122,7 +128,11 @@ function Home() {
   function setElementAsRadioJSX(
     item: string,
     parentHeader: string,
-    handleRadioChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    handleRadioChange: (
+      e: React.ChangeEvent<HTMLInputElement>,
+      index: number,
+    ) => void,
+    index: number,
   ) {
     return (
       <td id={"Radio"} key={item}>
@@ -131,7 +141,7 @@ function Home() {
             key={item}
             radioGroup={parentHeader}
             item={item}
-            onChange={handleRadioChange}
+            onChange={(e) => handleRadioChange(e, index)}
           />
         }
       </td>
@@ -143,19 +153,35 @@ function Home() {
     return false;
   }
 
-  function handleRadioChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleRadioChange(
+    event: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) {
+    const firstSubBreed = tableData[index].subBreed[0];
     const newSelectedBreed = event.target.value;
     setSelectedBreed(newSelectedBreed);
-    setSelectedSubBreed(null);
+    setSelectedSubBreed(firstSubBreed);
   }
 
   function handleDropDownChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const newSelectedSubBreed = event.target.value;
+
     setSelectedSubBreed(newSelectedSubBreed);
   }
 
-  function handleClick() {
-    console.log("Search somer stuff init");
+  function handleGetClick() {
+    (async () => {
+      if (selectedBreed)
+        setDogImage(
+          await getRandomDogImageByBreed(selectedBreed, selectedSubBreed),
+        );
+      else setDogImage(await getRandomDogImage());
+    })();
+  }
+
+  function handleRateClick() {
+    console.log(rating);
+    console.log("send rating to user DB");
   }
 
   function clearSelection() {
@@ -163,11 +189,21 @@ function Home() {
     setSelectedSubBreed(null);
   }
 
+  function handleRatingChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const selectedRating = e.target.value;
+    const selectedRatingAsNumber = parseInt(selectedRating, 10);
+    setRating(selectedRatingAsNumber);
+  }
+
+  function handleFavClick() {
+    console.log("Send Dog to user favourites");
+  }
+
   return (
     <div className="Dogs-wrapper">
       <h1 className="title">Dog Ceo Clone</h1>
       {dogImage && <img src={dogImage} className="Dogs-dog-image" />}
-      <FiveStarRating />
+      <FiveStarRating onChange={handleRatingChange} />
       <span>{selection}</span>
       <span onClick={clearSelection}>Clear</span>
       <TableComponent
@@ -175,11 +211,15 @@ function Home() {
         theadData={["Breed", "Sub-Breed"]}
         tbodyData={tableDataJSX}
       />
-      <button onClick={handleClick} className="Dogs-button">
+      <button onClick={handleGetClick} className="Dogs-button">
         Get a new Dog!
       </button>
-      <button className="Dogs-button">Rate the Dog!</button>
-      <button className="Dogs-button">Add to favourites!</button>
+      <button onClick={handleRateClick} className="Dogs-button">
+        Rate the Dog!
+      </button>
+      <button onClick={handleFavClick} className="Dogs-button">
+        Add to favourites!
+      </button>
     </div>
   );
 }
