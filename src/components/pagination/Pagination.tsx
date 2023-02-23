@@ -35,6 +35,7 @@ export default function Pagination({
   return (
     <ul className="pagination-container">
       <li
+        key={"left-arrow"}
         className={classnames("pagination-container", {
           disabled: currentPage === 1,
         })}
@@ -42,12 +43,18 @@ export default function Pagination({
       >
         <div className="pagination-arrow left" />
       </li>
-      {paginationRange.map((pageNumber) => {
+      {paginationRange.map((pageNumber, index) => {
         if (typeof pageNumber === "number")
-          return <li onClick={() => onPageChange(pageNumber)}>{pageNumber}</li>;
-        if (typeof pageNumber === "string") return <li>{pageNumber}</li>;
+          return (
+            <li key={pageNumber} onClick={() => onPageChange(pageNumber)}>
+              {pageNumber}
+            </li>
+          );
+        if (typeof pageNumber === "string")
+          return <li key={"dots: " + index}>{pageNumber}</li>;
       })}
       <li
+        key={"right-arrow"}
         className={classnames("pagination-container", {
           disabled: currentPage === lastPage,
         })}

@@ -1,17 +1,13 @@
 import React from "react";
 import "./drop-down.css";
 
-type DropDownProps = {
+export type DropDownProps = {
   items: (string | null | number)[];
-  isDisabled: boolean;
+  isActive: boolean;
   onChange: React.ChangeEventHandler<HTMLSelectElement>;
 };
 
-export default function DropDown({
-  items,
-  onChange,
-  isDisabled,
-}: DropDownProps) {
+export default function DropDown({ items, onChange, isActive }: DropDownProps) {
   function addItemsToList(items: (string | null | number)[]) {
     const listItems = items.map((item) => {
       // console.log(item);
@@ -26,12 +22,12 @@ export default function DropDown({
     return listItems;
   }
   return (
-    <td className="drop-down" key={123}>
-      {isDisabled && (
+    <div className="drop-down">
+      {isActive && (
         <select defaultValue="empty" onChange={onChange}>
           {addItemsToList(items)}
         </select>
       )}
-    </td>
+    </div>
   );
 }

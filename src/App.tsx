@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Dogs from "./pages/dogs/Dogs";
+import Home from "./pages/home/Home";
 import Navbar from "./components/navbar/Navbar";
 import { Outlet, Routes, Route, useLocation } from "react-router-dom";
 import LoginModal from "./pages/login/LoginModal";
@@ -15,7 +15,7 @@ export default function App() {
     <>
       <Routes location={background || location}>
         <Route path="/" element={<LayoutsWithNavbar />}>
-          <Route index element={<Dogs />} />
+          <Route index element={<Home />} />
           <Route path="/favourites" element={<Favourites />} />
           <Route path="/dogs" element={<RatedDogs />} />
         </Route>
@@ -40,3 +40,5 @@ function LayoutsWithNavbar() {
     </>
   );
 }
+
+//for testing may have to split app and routes to allow for router to be rendered/redclared

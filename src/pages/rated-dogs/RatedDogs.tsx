@@ -6,8 +6,12 @@ import CollapsibleSpan from "../../components/collapsible-span/CollapsibleSpan";
 import SearchFilter from "../../components/search-filter/SearchFilter";
 import Pagination from "../../components/pagination/Pagination";
 import type { BreedData, TableData, TableDataJSX } from "../../types";
-import DropDown from "../../components/drop-down/DropDown";
 import filterArrayOfObjects from "../../utils/filter-array";
+import {
+  mimicDbDataFromFetch,
+  dataDBToTableData,
+  tableDataToTdJSXRatedDogs,
+} from "../../utils/format-data";
 
 export default function RatedDogs() {
   const [breedData, setBreedData] = useState<BreedData[] | []>([]);
@@ -28,120 +32,30 @@ export default function RatedDogs() {
   useEffect(() => {
     (async () => {
       //should grab data from the backend, using a hack for display purposes atm
-      const myBreeds = await getBreeds();
-      const hackyBreedsList: BreedData[] = [];
-
-      Object.entries(myBreeds).forEach((element: any) => {
-        const ratingArray: number[] = [];
-
-        if (element[1].length == 0) {
-          ratingArray.push(Math.floor(Math.random() * 10));
-        } else {
-          for (let i in element[1]) {
-            ratingArray.push(Math.floor(Math.random() * 10));
-          }
-        }
-
-        const breedObject: BreedData = {
-          breed: element[0],
-          subBreed: element[1],
-          rating: ratingArray,
-        };
-
-        hackyBreedsList.push(breedObject);
-      });
+      const hackyBreedsList = await mimicDbDataFromFetch();
       setBreedData(hackyBreedsList);
     })();
   }, []);
 
   useEffect(() => {
-    const tableData = breedDataToTableData(breedData);
+    const tableData = dataDBToTableData(breedData);
     setTableData(tableData);
   }, [breedData]);
 
   useEffect(() => {
-    const tableDataJSX = tableDataToJSX(tableData);
+    const tableDataJSX = tableDataToTdJSXRatedDogs(
+      tableData,
+      handleDropDownChange,
+    );
     setTableDataJSX(tableDataJSX);
   }, [tableData]);
-
-  function breedDataToTableData(breedData: BreedData[]) {
-    const tableData: TableData[] = breedData.map((breedObject) => {
-      const { breed, subBreed, rating } = breedObject;
-      const firstRating = rating[0];
-
-      const outputObject: TableData = {
-        breed: breed,
-        subBreed: subBreed,
-        rating: firstRating,
-      };
-
-      return outputObject;
-    });
-    return tableData;
-  }
-
-  function tableDataToJSX(tableData: TableData[]) {
-    const tableDataJSX: TableDataJSX[] = tableData.map((breedObject, index) => {
-      const { breed, rating } = breedObject;
-      const ratingNullToString = rating == null ? "null" : rating;
-
-      const breedJSX = setElementAsJSX(breed, breed, breed);
-      const subBreedJSX = setSubBreedAsJSX(breedObject, index);
-      const ratingJSX = setElementAsJSX(rating, "rating", ratingNullToString);
-
-      const outputObject: TableDataJSX = {
-        breed: breedJSX,
-        subBreed: subBreedJSX,
-        rating: ratingJSX,
-      };
-
-      return outputObject;
-    });
-    return tableDataJSX;
-  }
-
-  function setElementAsJSX(
-    element: string | number | null,
-    id: string,
-    key: string | number,
-  ) {
-    return (
-      <td id={id} key={key}>
-        {element}
-      </td>
-    );
-  }
-
-  function setSubBreedAsJSX(breedObject: TableData, index: number) {
-    const subBreedArray = breedObject.subBreed;
-    const tableParentElement = breedObject.breed;
-    let outputSubBreed: JSX.Element;
-
-    if (subBreedArray.length > 1) {
-      outputSubBreed = (
-        <DropDown
-          items={subBreedArray}
-          onChange={(e) => handleDropDownChange(e, tableParentElement, index)}
-          isDisabled={true}
-          key={tableParentElement + "subBreed"}
-        />
-      );
-    } else {
-      const singleElement = breedObject.subBreed[0];
-      outputSubBreed =
-        singleElement == null
-          ? setElementAsJSX(singleElement, "null", "null")
-          : setElementAsJSX(singleElement, singleElement, singleElement);
-    }
-    return outputSubBreed;
-  }
 
   function filterTable(filterValue: string, breedData: BreedData[]) {
     const filteredArray = filterArrayOfObjects<BreedData>(
       breedData,
       filterValue,
     );
-    const filteredTableData: TableData[] = breedDataToTableData(filteredArray);
+    const filteredTableData: TableData[] = dataDBToTableData(filteredArray);
     filteredArray.length != 0
       ? setTableData(filteredTableData)
       : reInitTableData(breedData);
@@ -149,7 +63,7 @@ export default function RatedDogs() {
   }
 
   function reInitTableData(breedData: BreedData[]) {
-    const tableData = breedDataToTableData(breedData);
+    const tableData = dataDBToTableData(breedData);
     setTableData(tableData);
   }
 

@@ -16,7 +16,7 @@ export default function FiveStarRating({
           id="5"
           onChange={onChange}
         />
-        <label htmlFor="5" />
+        <label htmlFor="5" aria-label="input-5" />
 
         <input
           type="radio"
@@ -25,7 +25,7 @@ export default function FiveStarRating({
           id="4"
           onChange={onChange}
         />
-        <label htmlFor="4" />
+        <label htmlFor="4" aria-label="input-4" />
 
         <input
           type="radio"
@@ -34,7 +34,7 @@ export default function FiveStarRating({
           id="3"
           onChange={onChange}
         />
-        <label htmlFor="3" />
+        <label htmlFor="3" aria-label="input-3" />
 
         <input
           type="radio"
@@ -43,7 +43,7 @@ export default function FiveStarRating({
           id="2"
           onChange={onChange}
         />
-        <label htmlFor="2" />
+        <label htmlFor="2" aria-label="input-2" />
 
         <input
           type="radio"
@@ -52,7 +52,7 @@ export default function FiveStarRating({
           id="1"
           onChange={onChange}
         />
-        <label htmlFor="1" />
+        <label htmlFor="1" aria-label="input-1" />
       </div>
     </>
   );

@@ -14,6 +14,7 @@ export default function CollapsibleSpan({
   return (
     <div className="collapsible">
       <span
+        role={"button"}
         className={classnames("rotating-arrow", {
           active: !isCollapsed,
         })}

@@ -1,7 +1,7 @@
 import React from "react";
 import "./radio-hide-input.css";
 
-type RadioHideInputProps = {
+export type RadioHideInputProps = {
   item: string;
   radioGroup: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -21,8 +21,14 @@ export default function RadioHideInput({
         id={item}
         name={radioGroup}
         onChange={onChange}
+        key={item}
       />
       <label htmlFor={item}>{item}</label>
     </div>
   );
 }
+
+//id seems to need to match value
+//id cannot clash with parent td id or radio won;'t work
+//might be some issue with the "htmlfor" not being able to pick
+//between the two elements with same id

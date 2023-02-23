@@ -1,0 +1,492 @@
+[
+  {
+    "breed": "<td id=affenpinscher key=affenpinscher>affenpinscher</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=1>1</td>"
+  },
+  {
+    "breed": "<td id=african key=african>african</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=8>8</td>"
+  },
+  {
+    "breed": "<td id=airedale key=airedale>airedale</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=7>7</td>"
+  },
+  {
+    "breed": "<td id=akita key=akita>akita</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=2>2</td>"
+  },
+  {
+    "breed": "<td id=appenzeller key=appenzeller>appenzeller</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=7>7</td>"
+  },
+  {
+    "breed": "<td id=australian key=australian>australian</td>",
+    "subBreed": "<td id=shepherd key=shepherd>shepherd</td>",
+    "rating": "<td id=rating key=3>3</td>"
+  },
+  {
+    "breed": "<td id=basenji key=basenji>basenji</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=2>2</td>"
+  },
+  {
+    "breed": "<td id=beagle key=beagle>beagle</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=1>1</td>"
+  },
+  {
+    "breed": "<td id=bluetick key=bluetick>bluetick</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=7>7</td>"
+  },
+  {
+    "breed": "<td id=borzoi key=borzoi>borzoi</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=9>9</td>"
+  },
+  {
+    "breed": "<td id=bouvier key=bouvier>bouvier</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=6>6</td>"
+  },
+  {
+    "breed": "<td id=boxer key=boxer>boxer</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=1>1</td>"
+  },
+  {
+    "breed": "<td id=brabancon key=brabancon>brabancon</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=5>5</td>"
+  },
+  {
+    "breed": "<td id=briard key=briard>briard</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=2>2</td>"
+  },
+  {
+    "breed": "<td id=buhund key=buhund>buhund</td>",
+    "subBreed": "<td id=norwegian key=norwegian>norwegian</td>",
+    "rating": "<td id=rating key=4>4</td>"
+  },
+  {
+    "breed": "<td id=bulldog key=bulldog>bulldog</td>",
+    "subBreed": "<td id=boston key=boston>boston</td>",
+    "rating": "<td id=rating key=5>5</td>"
+  },
+  {
+    "breed": "<td id=bullterrier key=bullterrier>bullterrier</td>",
+    "subBreed": "<td id=staffordshire key=staffordshire>staffordshire</td>",
+    "rating": "<td id=rating key=5>5</td>"
+  },
+  {
+    "breed": "<td id=cattledog key=cattledog>cattledog</td>",
+    "subBreed": "<td id=australian key=australian>australian</td>",
+    "rating": "<td id=rating key=4>4</td>"
+  },
+  {
+    "breed": "<td id=chihuahua key=chihuahua>chihuahua</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=0>0</td>"
+  },
+  {
+    "breed": "<td id=chow key=chow>chow</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=0>0</td>"
+  },
+  {
+    "breed": "<td id=clumber key=clumber>clumber</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=2>2</td>"
+  },
+  {
+    "breed": "<td id=cockapoo key=cockapoo>cockapoo</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=8>8</td>"
+  },
+  {
+    "breed": "<td id=collie key=collie>collie</td>",
+    "subBreed": "<td id=border key=border>border</td>",
+    "rating": "<td id=rating key=6>6</td>"
+  },
+  {
+    "breed": "<td id=coonhound key=coonhound>coonhound</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=7>7</td>"
+  },
+  {
+    "breed": "<td id=corgi key=corgi>corgi</td>",
+    "subBreed": "<td id=cardigan key=cardigan>cardigan</td>",
+    "rating": "<td id=rating key=8>8</td>"
+  },
+  {
+    "breed": "<td id=cotondetulear key=cotondetulear>cotondetulear</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=7>7</td>"
+  },
+  {
+    "breed": "<td id=dachshund key=dachshund>dachshund</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=8>8</td>"
+  },
+  {
+    "breed": "<td id=dalmatian key=dalmatian>dalmatian</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=2>2</td>"
+  },
+  {
+    "breed": "<td id=dane key=dane>dane</td>",
+    "subBreed": "<td id=great key=great>great</td>",
+    "rating": "<td id=rating key=1>1</td>"
+  },
+  {
+    "breed": "<td id=deerhound key=deerhound>deerhound</td>",
+    "subBreed": "<td id=scottish key=scottish>scottish</td>",
+    "rating": "<td id=rating key=6>6</td>"
+  },
+  {
+    "breed": "<td id=dhole key=dhole>dhole</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=5>5</td>"
+  },
+  {
+    "breed": "<td id=dingo key=dingo>dingo</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=4>4</td>"
+  },
+  {
+    "breed": "<td id=doberman key=doberman>doberman</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=3>3</td>"
+  },
+  {
+    "breed": "<td id=elkhound key=elkhound>elkhound</td>",
+    "subBreed": "<td id=norwegian key=norwegian>norwegian</td>",
+    "rating": "<td id=rating key=9>9</td>"
+  },
+  {
+    "breed": "<td id=entlebucher key=entlebucher>entlebucher</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=6>6</td>"
+  },
+  {
+    "breed": "<td id=eskimo key=eskimo>eskimo</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=0>0</td>"
+  },
+  {
+    "breed": "<td id=finnish key=finnish>finnish</td>",
+    "subBreed": "<td id=lapphund key=lapphund>lapphund</td>",
+    "rating": "<td id=rating key=7>7</td>"
+  },
+  {
+    "breed": "<td id=frise key=frise>frise</td>",
+    "subBreed": "<td id=bichon key=bichon>bichon</td>",
+    "rating": "<td id=rating key=1>1</td>"
+  },
+  {
+    "breed": "<td id=germanshepherd key=germanshepherd>germanshepherd</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=7>7</td>"
+  },
+  {
+    "breed": "<td id=greyhound key=greyhound>greyhound</td>",
+    "subBreed": "<td id=italian key=italian>italian</td>",
+    "rating": "<td id=rating key=4>4</td>"
+  },
+  {
+    "breed": "<td id=groenendael key=groenendael>groenendael</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=6>6</td>"
+  },
+  {
+    "breed": "<td id=havanese key=havanese>havanese</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=5>5</td>"
+  },
+  {
+    "breed": "<td id=hound key=hound>hound</td>",
+    "subBreed": "<td id=afghan key=afghan>afghan</td>",
+    "rating": "<td id=rating key=4>4</td>"
+  },
+  {
+    "breed": "<td id=husky key=husky>husky</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=2>2</td>"
+  },
+  {
+    "breed": "<td id=keeshond key=keeshond>keeshond</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=0>0</td>"
+  },
+  {
+    "breed": "<td id=kelpie key=kelpie>kelpie</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=7>7</td>"
+  },
+  {
+    "breed": "<td id=komondor key=komondor>komondor</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=6>6</td>"
+  },
+  {
+    "breed": "<td id=kuvasz key=kuvasz>kuvasz</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=0>0</td>"
+  },
+  {
+    "breed": "<td id=labradoodle key=labradoodle>labradoodle</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=6>6</td>"
+  },
+  {
+    "breed": "<td id=labrador key=labrador>labrador</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=7>7</td>"
+  },
+  {
+    "breed": "<td id=leonberg key=leonberg>leonberg</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=5>5</td>"
+  },
+  {
+    "breed": "<td id=lhasa key=lhasa>lhasa</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=1>1</td>"
+  },
+  {
+    "breed": "<td id=malamute key=malamute>malamute</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=8>8</td>"
+  },
+  {
+    "breed": "<td id=malinois key=malinois>malinois</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=9>9</td>"
+  },
+  {
+    "breed": "<td id=maltese key=maltese>maltese</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=1>1</td>"
+  },
+  {
+    "breed": "<td id=mastiff key=mastiff>mastiff</td>",
+    "subBreed": "<td id=bull key=bull>bull</td>",
+    "rating": "<td id=rating key=6>6</td>"
+  },
+  {
+    "breed": "<td id=mexicanhairless key=mexicanhairless>mexicanhairless</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=3>3</td>"
+  },
+  {
+    "breed": "<td id=mix key=mix>mix</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=2>2</td>"
+  },
+  {
+    "breed": "<td id=mountain key=mountain>mountain</td>",
+    "subBreed": "<td id=bernese key=bernese>bernese</td>",
+    "rating": "<td id=rating key=7>7</td>"
+  },
+  {
+    "breed": "<td id=newfoundland key=newfoundland>newfoundland</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=6>6</td>"
+  },
+  {
+    "breed": "<td id=otterhound key=otterhound>otterhound</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=2>2</td>"
+  },
+  {
+    "breed": "<td id=ovcharka key=ovcharka>ovcharka</td>",
+    "subBreed": "<td id=caucasian key=caucasian>caucasian</td>",
+    "rating": "<td id=rating key=7>7</td>"
+  },
+  {
+    "breed": "<td id=papillon key=papillon>papillon</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=4>4</td>"
+  },
+  {
+    "breed": "<td id=pekinese key=pekinese>pekinese</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=8>8</td>"
+  },
+  {
+    "breed": "<td id=pembroke key=pembroke>pembroke</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=4>4</td>"
+  },
+  {
+    "breed": "<td id=pinscher key=pinscher>pinscher</td>",
+    "subBreed": "<td id=miniature key=miniature>miniature</td>",
+    "rating": "<td id=rating key=3>3</td>"
+  },
+  {
+    "breed": "<td id=pitbull key=pitbull>pitbull</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=3>3</td>"
+  },
+  {
+    "breed": "<td id=pointer key=pointer>pointer</td>",
+    "subBreed": "<td id=german key=german>german</td>",
+    "rating": "<td id=rating key=3>3</td>"
+  },
+  {
+    "breed": "<td id=pomeranian key=pomeranian>pomeranian</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=1>1</td>"
+  },
+  {
+    "breed": "<td id=poodle key=poodle>poodle</td>",
+    "subBreed": "<td id=medium key=medium>medium</td>",
+    "rating": "<td id=rating key=7>7</td>"
+  },
+  {
+    "breed": "<td id=pug key=pug>pug</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=8>8</td>"
+  },
+  {
+    "breed": "<td id=puggle key=puggle>puggle</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=7>7</td>"
+  },
+  {
+    "breed": "<td id=pyrenees key=pyrenees>pyrenees</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=0>0</td>"
+  },
+  {
+    "breed": "<td id=redbone key=redbone>redbone</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=9>9</td>"
+  },
+  {
+    "breed": "<td id=retriever key=retriever>retriever</td>",
+    "subBreed": "<td id=chesapeake key=chesapeake>chesapeake</td>",
+    "rating": "<td id=rating key=6>6</td>"
+  },
+  {
+    "breed": "<td id=ridgeback key=ridgeback>ridgeback</td>",
+    "subBreed": "<td id=rhodesian key=rhodesian>rhodesian</td>",
+    "rating": "<td id=rating key=9>9</td>"
+  },
+  {
+    "breed": "<td id=rottweiler key=rottweiler>rottweiler</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=3>3</td>"
+  },
+  {
+    "breed": "<td id=saluki key=saluki>saluki</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=3>3</td>"
+  },
+  {
+    "breed": "<td id=samoyed key=samoyed>samoyed</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=2>2</td>"
+  },
+  {
+    "breed": "<td id=schipperke key=schipperke>schipperke</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=6>6</td>"
+  },
+  {
+    "breed": "<td id=schnauzer key=schnauzer>schnauzer</td>",
+    "subBreed": "<td id=giant key=giant>giant</td>",
+    "rating": "<td id=rating key=6>6</td>"
+  },
+  {
+    "breed": "<td id=segugio key=segugio>segugio</td>",
+    "subBreed": "<td id=italian key=italian>italian</td>",
+    "rating": "<td id=rating key=6>6</td>"
+  },
+  {
+    "breed": "<td id=setter key=setter>setter</td>",
+    "subBreed": "<td id=english key=english>english</td>",
+    "rating": "<td id=rating key=6>6</td>"
+  },
+  {
+    "breed": "<td id=sharpei key=sharpei>sharpei</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=4>4</td>"
+  },
+  {
+    "breed": "<td id=sheepdog key=sheepdog>sheepdog</td>",
+    "subBreed": "<td id=english key=english>english</td>",
+    "rating": "<td id=rating key=4>4</td>"
+  },
+  {
+    "breed": "<td id=shiba key=shiba>shiba</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=7>7</td>"
+  },
+  {
+    "breed": "<td id=shihtzu key=shihtzu>shihtzu</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=7>7</td>"
+  },
+  {
+    "breed": "<td id=spaniel key=spaniel>spaniel</td>",
+    "subBreed": "<td id=blenheim key=blenheim>blenheim</td>",
+    "rating": "<td id=rating key=3>3</td>"
+  },
+  {
+    "breed": "<td id=spitz key=spitz>spitz</td>",
+    "subBreed": "<td id=japanese key=japanese>japanese</td>",
+    "rating": "<td id=rating key=1>1</td>"
+  },
+  {
+    "breed": "<td id=springer key=springer>springer</td>",
+    "subBreed": "<td id=english key=english>english</td>",
+    "rating": "<td id=rating key=7>7</td>"
+  },
+  {
+    "breed": "<td id=stbernard key=stbernard>stbernard</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=7>7</td>"
+  },
+  {
+    "breed": "<td id=terrier key=terrier>terrier</td>",
+    "subBreed": "<td id=american key=american>american</td>",
+    "rating": "<td id=rating key=6>6</td>"
+  },
+  {
+    "breed": "<td id=tervuren key=tervuren>tervuren</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=9>9</td>"
+  },
+  {
+    "breed": "<td id=vizsla key=vizsla>vizsla</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=3>3</td>"
+  },
+  {
+    "breed": "<td id=waterdog key=waterdog>waterdog</td>",
+    "subBreed": "<td id=spanish key=spanish>spanish</td>",
+    "rating": "<td id=rating key=7>7</td>"
+  },
+  {
+    "breed": "<td id=weimaraner key=weimaraner>weimaraner</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=6>6</td>"
+  },
+  {
+    "breed": "<td id=whippet key=whippet>whippet</td>",
+    "subBreed": null,
+    "rating": "<td id=rating key=0>0</td>"
+  },
+  {
+    "breed": "<td id=wolfhound key=wolfhound>wolfhound</td>",
+    "subBreed": "<td id=irish key=irish>irish</td>",
+    "rating": "<td id=rating key=6>6</td>"
+  }
+]

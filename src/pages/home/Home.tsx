@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./dogs.css";
+import "./home.css";
 import FiveStarRating from "../../components/five-star-rating/FiveStarRating";
 import TableComponent from "../../components/table-component/TableComponent";
 import {
@@ -8,7 +8,10 @@ import {
   getRandomDogImageByBreed,
 } from "../../services/dog-ceo";
 import type { Breeds, TableDataJSX, TableData } from "../../types";
-import DropDown from "../../components/drop-down/DropDown";
+import {
+  dogCeoDataToTableData,
+  tableDataToTdJSXHomePage,
+} from "../../utils/format-data";
 import RadioHideInput from "../../components/radio-hide-input/RadioHideInput";
 
 function Home() {
@@ -40,115 +43,32 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    const tableDataFromBreedsList = breedsListToTableData(breedsList);
+    const tableDataFromBreedsList = dogCeoDataToTableData(breedsList);
     setTableData(tableDataFromBreedsList);
   }, [breedsList]);
 
   useEffect(() => {
-    const tableDataJSXFromTableData = tableDataToJSX(tableData);
-    setTableDataJSX(tableDataJSXFromTableData);
+    const tableDataTdJSX = tableDataToTdJSXHomePage(
+      tableData,
+      handleRadioChange,
+      handleDropDownChange,
+      isDropDownActive,
+    );
+    setTableDataJSX(tableDataTdJSX);
   }, [tableData]);
 
   useEffect(() => {
     //basically forcing a re-render here upon changing selected breed
-    const tableDataJSXFromTableData = tableDataToJSX(tableData);
-    setTableDataJSX(tableDataJSXFromTableData);
+    const tableDataTdJSX = tableDataToTdJSXHomePage(
+      tableData,
+      handleRadioChange,
+      handleDropDownChange,
+      isDropDownActive,
+    );
+    setTableDataJSX(tableDataTdJSX);
   }, [selectedBreed]);
 
-  function breedsListToTableData(breedsList: Breeds) {
-    const tableDataJSX = Object.entries(breedsList).map((element) => {
-      const breed = element[0];
-      const subBreed = element[1];
-      const tableDataObject = {
-        breed: breed,
-        subBreed: subBreed,
-      };
-      return tableDataObject;
-    });
-    return tableDataJSX;
-  }
-
-  function tableDataToJSX(tableData: Omit<TableData, "rating">[]) {
-    const tableDataJSX = tableData.map((breedObject, index) => {
-      const { breed } = breedObject;
-      const breedJSX = setElementAsRadioJSX(
-        breed,
-        "breed",
-        handleRadioChange,
-        index,
-      );
-      const subBreedJSX = setSubBreedAsJSX(breedObject);
-
-      const outputObject = {
-        breed: breedJSX,
-        subBreed: subBreedJSX,
-      };
-
-      return outputObject;
-    });
-    return tableDataJSX;
-  }
-
-  function setElementAsJSX(
-    element: string | number | null,
-    id: string,
-    key: string | number,
-  ) {
-    return (
-      <td id={id} key={key}>
-        {element}
-      </td>
-    );
-  }
-
-  function setSubBreedAsJSX(breedObject: Omit<TableData, "rating">) {
-    const subBreedArray = breedObject.subBreed;
-    const tableParentElement = breedObject.breed;
-    let outputSubBreed: JSX.Element;
-
-    if (subBreedArray.length > 1) {
-      outputSubBreed = (
-        <DropDown
-          items={subBreedArray}
-          onChange={(e) => handleDropDownChange(e)}
-          isDisabled={isDropDownDisabled(tableParentElement)}
-          key={tableParentElement + "subBreed"}
-        />
-      );
-    } else {
-      const singleElement = breedObject.subBreed[0];
-      outputSubBreed =
-        singleElement == null
-          ? setElementAsJSX(singleElement, "null", "null")
-          : setElementAsJSX(singleElement, singleElement, singleElement);
-    }
-    return outputSubBreed;
-  }
-
-  function setElementAsRadioJSX(
-    item: string,
-    parentHeader: string,
-    handleRadioChange: (
-      e: React.ChangeEvent<HTMLInputElement>,
-      index: number,
-    ) => void,
-    index: number,
-  ) {
-    return (
-      <td id={"Radio"} key={item}>
-        {
-          <RadioHideInput
-            key={item}
-            radioGroup={parentHeader}
-            item={item}
-            onChange={(e) => handleRadioChange(e, index)}
-          />
-        }
-      </td>
-    );
-  }
-
-  function isDropDownDisabled(breedBeingRendered: string) {
+  function isDropDownActive(breedBeingRendered: string) {
     if (selectedBreed === breedBeingRendered) return true;
     return false;
   }
@@ -198,7 +118,6 @@ function Home() {
   function handleFavClick() {
     console.log("Send Dog to user favourites");
   }
-
   return (
     <div className="Dogs-wrapper">
       <h1 className="title">Dog Ceo Clone</h1>

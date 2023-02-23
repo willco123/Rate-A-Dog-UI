@@ -16,18 +16,22 @@ export default function SearchFilter({
   reInitTableData,
 }: SearchFilterProps) {
   const inputRefObject = useRef<HTMLInputElement>(null);
-  const searchInputRef = inputRefObject.current;
   const isbreedData = breedData.length > 0;
-
+  // const searchInputRef = inputRefObject.current //isnt recognised in jest tests
+  //maybe undef on init render but defined on re-render
   function clearInput() {
+    const searchInputRef = inputRefObject.current;
     reInitTableData(breedData);
     if (searchInputRef) searchInputRef.value = "";
     setCurrentPage(1);
   }
 
   function handleClick() {
-    if (searchInputRef && isbreedData)
-      filterTable(searchInputRef.value, breedData);
+    const searchInputRef = inputRefObject.current;
+
+    if (searchInputRef!.value && isbreedData) {
+      filterTable(searchInputRef!.value, breedData);
+    }
   }
 
   function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -48,8 +52,10 @@ export default function SearchFilter({
           onKeyDown={handleKeyPress}
           ref={inputRefObject}
         />
-        <label htmlFor="search-filter" onClick={handleClick} />
-        <span onClick={clearInput}>Clear</span>
+        <label htmlFor="search-filter" onClick={handleClick} role={"button"} />
+        <span onClick={clearInput} role={"button"}>
+          Clear
+        </span>
       </div>
     </div>
   );

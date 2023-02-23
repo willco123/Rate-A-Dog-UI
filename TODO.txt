@@ -75,3 +75,23 @@ Test if its possible to "partially" pass down props down a component tree into a
 .table-component td:hover {
   background-color: #f9f9f9;
 }
+
+
+  // "jest": {
+  //   "transform": {
+  //     ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+  //   },
+  //   "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+  //   "moduleFileExtensions": [
+  //     "ts",
+  //     "tsx",
+  //     "js"
+  //   ]
+  // }
+
+  What code is executed in browser vs on node? what is bundled and what isnt?
+
+  Refactor convertion functions to their own file and make them more re-usable
+  Export them to the test file and convert the get the test data to JSX
+  Then export the JSX data to the file in which it is to be used
+  This will skip the conversion nightmare
