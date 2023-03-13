@@ -10,8 +10,13 @@ const config: Config.InitialOptions = {
       "<rootDir>/__mocks__/fileMock.ts",
     "\\.(css|less)$": "identity-obj-proxy",
     "^.+/(.*\\.svg)": "jest-transform-stub",
+    "(.+)\\.js": "$1", //for .js in imports
   },
 
   setupFilesAfterEnv: ["<rootDir>/jest-setup.ts"],
+  moduleDirectories: ["node_modules", "src"],
+  transform: { "\\.[jt]sx?$": ["ts-jest", { useESM: true }] }, //for .js in imports
+
+  extensionsToTreatAsEsm: [".ts"], //for .js in imports
 };
 export default config;

@@ -1,14 +1,15 @@
-import React from "react";
-import "./App.css";
-import Home from "./pages/home/Home";
-import Navbar from "./components/navbar/Navbar";
+import React, { useState } from "react";
 import { Outlet, Routes, Route, useLocation } from "react-router-dom";
-import LoginModal from "./pages/login/LoginModal";
-import Register from "./pages/register/Register";
-import Favourites from "./pages/favourites/Favourites";
-import RatedDogs from "./pages/rated-dogs/RatedDogs";
+import "./App.css";
+import Home from "./pages/home/Home.js";
+import Navbar from "./components/navbar/Navbar.js";
+import LoginModal from "./pages/login/LoginModal.js";
+import Register from "./pages/register/Register.js";
+import Favourites from "./pages/favourites/Favourites.js";
+import RatedDogs from "./pages/rated-dogs/RatedDogs.js";
 
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const location = useLocation();
   const background = location.state && location.state.background;
   return (

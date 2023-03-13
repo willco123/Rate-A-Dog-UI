@@ -1,4 +1,4 @@
-import toStringLowerCase from "./to-string-lower-case";
+import toStringLowerCase from "./to-string-lower-case.js";
 
 export default function filterArrayOfObjects<T extends Object>(
   unfilteredArray: Array<T>,

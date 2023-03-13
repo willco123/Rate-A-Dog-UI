@@ -1,13 +1,13 @@
 import * as React from "react";
 import { screen } from "@testing-library/react";
-import Navbar from "../navbar/Navbar";
-import BasicApp from "../../test-helpers/BasicApp";
+import { createMemoryHistory } from "history";
+import Navbar from "../navbar/Navbar.js";
+import BasicApp from "../../test-helpers/BasicApp.js";
 import {
   renderWithRouter,
   renderWithMemoryRouter,
   renderWithRouterAndHistory,
-} from "../../test-helpers/user-event-setup";
-import { createMemoryHistory } from "history";
+} from "../../test-helpers/user-event-setup.js";
 
 describe("Navbar", () => {
   it("Correctly renders with wrapped func", () => {

@@ -1,8 +1,8 @@
 import React from "react";
-import RadioHideInput from "../components/radio-hide-input/RadioHideInput";
-import DropDown from "../components/drop-down/DropDown";
-import { BreedData, TableData, TableDataJSX, Breeds } from "../types";
-import { getBreeds } from "../services/dog-ceo";
+import RadioHideInput from "../components/radio-hide-input/RadioHideInput.js";
+import DropDown from "../components/drop-down/DropDown.js";
+import { getBreeds } from "../services/dog-ceo.js";
+import { BreedData, TableData, TableDataJSX, Breeds } from "../types.js";
 
 type HandleRadioChange = (
   e: React.ChangeEvent<HTMLInputElement>,
@@ -23,9 +23,14 @@ type IsDropDownActive = (breedBeingRendered: string) => boolean;
 
 export function wrapWithTdJSX(
   element: string | number | null | JSX.Element,
-  id: string,
-  key: string | number,
+  id: string | number | null,
+  key: string | number | null,
 ) {
+  if (typeof id === "number") id = id.toString();
+  if (typeof element == null) {
+    id = "null";
+    key = "null";
+  }
   return <td key={key}>{element}</td>;
 }
 
@@ -188,4 +193,35 @@ export function tableDataToTdJSXHomePage(
     return outputObject;
   });
   return tableDataJSX;
+}
+
+type GenericTableData = {
+  [key: string]: string | number | null | (string | number | null)[];
+};
+export type GenericTableDataJSX = { [key: string]: JSX.Element };
+
+export function tableDataToTdJSX(tableData: GenericTableData[]) {
+  const tableDataTdJSXArray: GenericTableDataJSX[] = tableData.map((row) => {
+    const tableDataValues = [...Object.values(row)];
+    const tableDataKeys = [...Object.keys(row)];
+    const tableDataTdJSX: GenericTableDataJSX = {};
+    const uniqueParent = tableDataValues[0] as string;
+
+    tableDataValues.forEach((element, index) => {
+      let tableDataValueJSX;
+      if (Array.isArray(element)) element = element[0];
+      if (index === 0)
+        tableDataValueJSX = wrapWithTdJSX(element, element, element);
+      else
+        tableDataValueJSX = wrapWithTdJSX(
+          element,
+          element,
+          element + uniqueParent,
+        );
+      tableDataTdJSX[tableDataKeys[index]] = tableDataValueJSX;
+    });
+
+    return tableDataTdJSX;
+  });
+  return tableDataTdJSXArray;
 }

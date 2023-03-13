@@ -1,8 +1,7 @@
 import * as React from "react";
 import { screen } from "@testing-library/react";
-import RadioHideInput from "../radio-hide-input/RadioHideInput";
-
-import { setup } from "../../test-helpers/user-event-setup";
+import RadioHideInput from "../radio-hide-input/RadioHideInput.js";
+import { setup } from "../../test-helpers/user-event-setup.js";
 
 const onChange = jest.fn();
 const radioGroup = "myGroup";

@@ -1,10 +1,14 @@
-const path = require("path");
-const ReactRefreshTypeScript = require("react-refresh-typescript");
-const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+import path from "path";
+import ReactRefreshTypeScript from "react-refresh-typescript";
+import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import { fileURLToPath } from "url";
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 const isDevelopment = process.env.NODE_ENV !== "production";
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-module.exports = {
-  entry: "./src/index.tsx",
+
+const Config = {
+  entry: path.resolve(process.cwd(), "./src/index.tsx"),
   mode: isDevelopment ? "development" : "production",
   module: {
     rules: [
@@ -29,7 +33,7 @@ module.exports = {
         test: /\.css$/,
         use: [
           {
-            loader: require.resolve("ts-loader"),
+            loader: "ts-loader",
             options: {
               getCustomTransformers: () => ({
                 before: [isDevelopment && ReactRefreshTypeScript()].filter(
@@ -46,7 +50,13 @@ module.exports = {
     ],
   },
 
-  resolve: { extensions: [".ts", ".js", ".tsx"] },
+  resolve: {
+    extensions: [".ts", ".js", ".tsx"],
+    extensionAlias: {
+      ".js": [".tsx", ".ts", ".js"],
+      ".mjs": [".mts", ".mjs"],
+    },
+  },
   output: {
     path: path.resolve(__dirname, "dist/"),
     publicPath: "/dist/",
@@ -64,7 +74,9 @@ module.exports = {
     historyApiFallback: true,
   },
   plugins: [
-    isDevelopment && new ReactRefreshWebpackPlugin(),
+    new ReactRefreshWebpackPlugin(),
     new ForkTsCheckerWebpackPlugin(),
   ].filter(Boolean),
 };
+
+export default Config;

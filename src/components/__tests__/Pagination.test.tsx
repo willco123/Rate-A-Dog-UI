@@ -1,8 +1,7 @@
 import * as React from "react";
 import { screen } from "@testing-library/react";
-import Pagination from "../pagination/Pagination";
-
-import { setup } from "../../test-helpers/user-event-setup";
+import Pagination from "../pagination/Pagination.js";
+import { setup } from "../../test-helpers/user-event-setup.js";
 
 // jest.mock("../../custom-hooks/usePagination").mockImplementation();
 

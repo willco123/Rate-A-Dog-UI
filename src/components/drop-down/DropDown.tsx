@@ -22,7 +22,7 @@ export default function DropDown({ items, onChange, isActive }: DropDownProps) {
     return listItems;
   }
   return (
-    <div className="drop-down">
+    <div className={"drop-down"}>
       {isActive && (
         <select defaultValue="empty" onChange={onChange}>
           {addItemsToList(items)}

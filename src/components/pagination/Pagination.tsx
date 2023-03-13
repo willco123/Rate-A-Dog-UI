@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import "./pagination.css";
-import usePagination from "../../custom-hooks/usePagination";
+import usePagination from "../../custom-hooks/usePagination.js";
 import classnames from "classnames";
 
 export type PageProps = {

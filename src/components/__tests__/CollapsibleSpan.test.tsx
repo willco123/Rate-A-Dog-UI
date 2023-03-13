@@ -1,8 +1,7 @@
 import * as React from "react";
 import { screen } from "@testing-library/react";
-import CollapsibleSpan from "../collapsible-span/CollapsibleSpan";
-
-import { setup } from "../../test-helpers/user-event-setup";
+import CollapsibleSpan from "../collapsible-span/CollapsibleSpan.js";
+import { setup } from "../../test-helpers/user-event-setup.js";
 
 describe("CheckBoxHideInput", () => {
   it("Should render the element", () => {

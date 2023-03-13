@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./home.css";
-import FiveStarRating from "../../components/five-star-rating/FiveStarRating";
-import TableComponent from "../../components/table-component/TableComponent";
+import FiveStarRating from "../../components/five-star-rating/FiveStarRating.js";
+import TableComponent from "../../components/table-component/TableComponent.js";
 import {
   getBreeds,
   getRandomDogImage,
   getRandomDogImageByBreed,
-} from "../../services/dog-ceo";
-import type { Breeds, TableDataJSX, TableData } from "../../types";
+} from "../../services/dog-ceo.js";
 import {
   dogCeoDataToTableData,
   tableDataToTdJSXHomePage,
-} from "../../utils/format-data";
-import RadioHideInput from "../../components/radio-hide-input/RadioHideInput";
+} from "../../utils/format-data.js";
+import type { Breeds, TableDataJSX, TableData } from "../../types.js";
 
 function Home() {
   const [dogImage, setDogImage] = useState<string>("");

@@ -1,8 +1,7 @@
 import * as React from "react";
 import { screen } from "@testing-library/react";
-import CheckBoxHideInput from "../checkbox-hide-input/CheckboxHideInput";
-
-import { setup } from "../../test-helpers/user-event-setup";
+import CheckBoxHideInput from "../checkbox-hide-input/CheckboxHideInput.js";
+import { setup } from "../../test-helpers/user-event-setup.js";
 
 describe("CheckBoxHideInput", () => {
   it("Should contain Checkbox", () => {

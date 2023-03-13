@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./favourites.css";
-import Table from "../../components/table-component/TableComponent";
+import Table from "../../components/table-component/TableComponent.js";
 
 export default function Favourites() {
   return (

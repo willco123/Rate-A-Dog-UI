@@ -1,7 +1,7 @@
 import * as React from "react";
 import { screen } from "@testing-library/react";
-import FiveStarRating from "../five-star-rating/FiveStarRating";
-import { setup } from "../../test-helpers/user-event-setup";
+import FiveStarRating from "../five-star-rating/FiveStarRating.js";
+import { setup } from "../../test-helpers/user-event-setup.js";
 
 const onChange = jest.fn();
 

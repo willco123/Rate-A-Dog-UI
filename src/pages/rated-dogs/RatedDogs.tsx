@@ -1,17 +1,16 @@
 import React, { useEffect, useState, useMemo } from "react";
 import "./rated-dogs.css";
-import TableComponent from "../../components/table-component/TableComponent";
-import { getBreeds } from "../../services/dog-ceo";
-import CollapsibleSpan from "../../components/collapsible-span/CollapsibleSpan";
-import SearchFilter from "../../components/search-filter/SearchFilter";
-import Pagination from "../../components/pagination/Pagination";
-import type { BreedData, TableData, TableDataJSX } from "../../types";
-import filterArrayOfObjects from "../../utils/filter-array";
+import TableComponent from "../../components/table-component/TableComponent.js";
+import CollapsibleSpan from "../../components/collapsible-span/CollapsibleSpan.js";
+import SearchFilter from "../../components/search-filter/SearchFilter.js";
+import Pagination from "../../components/pagination/Pagination.js";
+import filterArrayOfObjects from "../../utils/filter-array.js";
 import {
   mimicDbDataFromFetch,
   dataDBToTableData,
   tableDataToTdJSXRatedDogs,
-} from "../../utils/format-data";
+} from "../../utils/format-data.js";
+import type { BreedData, TableData, TableDataJSX } from "../../types.js";
 
 export default function RatedDogs() {
   const [breedData, setBreedData] = useState<BreedData[] | []>([]);

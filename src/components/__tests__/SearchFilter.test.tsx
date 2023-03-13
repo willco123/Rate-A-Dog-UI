@@ -1,7 +1,7 @@
 import * as React from "react";
 import { screen } from "@testing-library/react";
-import SearchFilter from "../search-filter/SearchFilter";
-import { setup } from "../../test-helpers/user-event-setup";
+import SearchFilter from "../search-filter/SearchFilter.js";
+import { setup } from "../../test-helpers/user-event-setup.js";
 
 const props = {
   filterTable: jest.fn(),

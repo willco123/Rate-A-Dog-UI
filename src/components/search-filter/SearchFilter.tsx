@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import "./search-filter.css";
-import { BreedData } from "../../types";
+import { BreedData } from "../../types.js";
 
 type SearchFilterProps = {
   filterTable: (filterValue: string, breedData: BreedData[]) => void;

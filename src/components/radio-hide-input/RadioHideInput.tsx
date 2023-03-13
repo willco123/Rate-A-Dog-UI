@@ -1,6 +1,5 @@
 import React from "react";
 import "./radio-hide-input.css";
-
 export type RadioHideInputProps = {
   item: string;
   radioGroup: string;
@@ -14,7 +13,7 @@ export default function RadioHideInput({
   onChange,
 }: RadioHideInputProps) {
   return (
-    <div className="radio-hide-input">
+    <div className={"radioHideInput"}>
       <input
         type="radio"
         value={item}
