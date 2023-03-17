@@ -5,7 +5,11 @@ import dogSVG from "../../assets/dog-api-logo.svg";
 import { postLogin } from "../../services/backend";
 import type { LoginData } from "../../services/backend";
 
-export default function LoginModal() {
+export default function LoginModal({
+  setIsLoggedIn,
+}: {
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const [badDetails, setBadDetails] = useState<boolean>(false);
 
   const navigate = useNavigate();
@@ -28,7 +32,12 @@ export default function LoginModal() {
     const loginData = Object.fromEntries(data) as LoginData;
     const response = await postLogin(loginData);
 
-    if (response) return navigate("/");
+
+    if (response) {
+      setIsLoggedIn(true);
+      navigate("/");
+      return;
+    }
     return setBadDetails(true);
   }
 

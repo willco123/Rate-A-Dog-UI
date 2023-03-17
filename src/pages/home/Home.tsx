@@ -12,6 +12,7 @@ import {
   tableDataToTdJSXHomePage,
 } from "../../utils/format-data.js";
 import type { Breeds, TableDataJSX, TableData } from "../../types.js";
+import { postBreed } from "../../services/backend";
 
 function Home() {
   const [dogImage, setDogImage] = useState<string>("");
@@ -98,9 +99,14 @@ function Home() {
     })();
   }
 
-  function handleRateClick() {
-    console.log(rating);
-    console.log("send rating to user DB");
+  async function handleRateClick() {
+    // console.log(document.cookie);
+
+    const response = await postBreed("bulldog");
+    console.log("asdad");
+    console.log(response);
+    // console.log(rating);
+    // console.log("send rating to user DB");
   }
 
   function clearSelection() {

@@ -7,6 +7,7 @@ import LoginModal from "./pages/login/LoginModal.js";
 import Register from "./pages/register/Register.js";
 import Favourites from "./pages/favourites/Favourites.js";
 import RatedDogs from "./pages/rated-dogs/RatedDogs.js";
+import Logout from "./pages/logout/Logout";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -15,26 +16,50 @@ export default function App() {
   return (
     <>
       <Routes location={background || location}>
-        <Route path="/" element={<LayoutsWithNavbar />}>
+        <Route
+          path="/"
+          element={
+            <LayoutsWithNavbar
+              isLoggedIn={isLoggedIn}
+              setIsLoggedIn={setIsLoggedIn}
+            />
+          }
+        >
           <Route index element={<Home />} />
           <Route path="/favourites" element={<Favourites />} />
           <Route path="/dogs" element={<RatedDogs />} />
+          <Route
+            path="/logout"
+            element={<Logout setIsLoggedIn={setIsLoggedIn} />}
+          />
         </Route>
       </Routes>
       {background && (
         <Routes>
-          <Route path="/login" element={<LoginModal />} />
-          <Route path="/register" element={<Register />} />
+          <Route
+            path="/login"
+            element={<LoginModal setIsLoggedIn={setIsLoggedIn} />}
+          />
+          <Route
+            path="/register"
+            element={<Register setIsLoggedIn={setIsLoggedIn} />}
+          />
         </Routes>
       )}
     </>
   );
 }
 
-function LayoutsWithNavbar() {
+function LayoutsWithNavbar({
+  isLoggedIn,
+  setIsLoggedIn,
+}: {
+  isLoggedIn: boolean;
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   return (
     <>
-      <Navbar />
+      <Navbar isLoggedIn={isLoggedIn} />
       <div className="main-wrapper">
         <Outlet />
       </div>

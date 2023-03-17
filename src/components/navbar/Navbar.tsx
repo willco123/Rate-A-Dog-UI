@@ -4,7 +4,7 @@ import "./navbar.css";
 import dogSVG from "../../assets/dog-api-logo.svg";
 import hamburgerSVG from "../../assets/hamburger-icon.svg";
 
-function Navbar() {
+function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
   2;
   const location = useLocation();
@@ -42,16 +42,25 @@ function Navbar() {
             <li>
               <Link to="/favourites">Favourites</Link>
             </li>
-            <li>
-              <Link to="/login" state={{ background: location }}>
-                Login
-              </Link>
-            </li>
-            <li>
-              <Link to="/register" state={{ background: location }}>
-                Sign Up
-              </Link>
-            </li>
+            {!isLoggedIn && (
+              <li>
+                <Link to="/login" state={{ background: location }}>
+                  Login
+                </Link>
+              </li>
+            )}
+            {!isLoggedIn && (
+              <li>
+                <Link to="/register" state={{ background: location }}>
+                  Sign Up
+                </Link>
+              </li>
+            )}
+            {isLoggedIn && (
+              <li>
+                <Link to="/logout">Logout</Link>
+              </li>
+            )}
           </ul>
           <div className="contact-nav">
             <a

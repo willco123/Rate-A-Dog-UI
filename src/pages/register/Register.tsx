@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import "./register.css";
 import dogSVG from "../../assets/dog-api-logo.svg";
 
-export default function Register() {
+export default function Register({
+  setIsLoggedIn,
+}: {
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const navigate = useNavigate();
   function clickModalBG(event: MouseEvent) {
     const target = event.target as HTMLBodyElement;
