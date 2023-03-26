@@ -2,7 +2,13 @@ import React from "react";
 import RadioHideInput from "../components/radio-hide-input/RadioHideInput.js";
 import DropDown from "../components/drop-down/DropDown.js";
 import { getBreeds } from "../services/dog-ceo.js";
-import { BreedData, TableData, TableDataJSX, Breeds } from "../types.js";
+import {
+  BreedData,
+  BreedDataDb,
+  TableData,
+  TableDataJSX,
+  Breeds,
+} from "../types.js";
 
 type HandleRadioChange = (
   e: React.ChangeEvent<HTMLInputElement>,
@@ -56,15 +62,33 @@ export function setAsDropDownJSX(
   return <DropDown items={items} isActive={isDisabled} onChange={onChange} />;
 }
 
+export function setFloatsToTwoDp(breedData: BreedData[]) {
+  const outputArray = breedData.map((element) => {
+    const ratingOutputArray = element.rating.map((rating) => {
+      if (rating) rating = parseFloat(rating.toFixed(2));
+      return rating;
+    });
+    const breedDataClone = { ...element };
+    breedDataClone.rating = ratingOutputArray;
+    return breedDataClone;
+  });
+  return outputArray;
+}
+
 export function dataDBToTableData(breedData: BreedData[]) {
   const tableData: TableData[] = breedData.map((breedObject) => {
-    const { breed, subBreed, rating } = breedObject;
-    const firstRating = rating[0];
+    const { breed, subBreed, rating, numberOfRates } = breedObject;
+    let firstRating = rating[0];
+    
+    //do this in axios req
+
+    let firstVote = numberOfRates[0];
 
     const outputObject: TableData = {
       breed: breed,
       subBreed: subBreed,
       rating: firstRating,
+      votes: firstVote,
     };
 
     return outputObject;
@@ -75,11 +99,13 @@ export function dataDBToTableData(breedData: BreedData[]) {
 export function tableDataToTdJSXRatedDogs(
   tableData: TableData[],
   handleDropDownChange: HandleDropDownChangeRatedDogs,
+  handleRadioChange: HandleRadioChange,
 ): TableDataJSX[] {
   const tableDataJSX = tableData.map((breedObject, index) => {
-    const { breed, subBreed, rating } = breedObject;
+    const { breed, subBreed, rating, votes } = breedObject;
 
-    const breedTdJSX = wrapWithTdJSX(breed, breed, breed);
+    const breedJSX = setAsRadioJSX(breed, "breed", handleRadioChange, index);
+    const breedTdJSX = wrapWithTdJSX(breedJSX, breed, breed);
 
     let subBreedElement: JSX.Element | string | null;
     if (subBreed.length > 1) {
@@ -93,19 +119,28 @@ export function tableDataToTdJSXRatedDogs(
     }
     const subBreedTdJSX =
       subBreedElement == null
-        ? wrapWithTdJSX(null, "null", "null")
+        ? wrapWithTdJSX(null, "null", breed + "null")
         : wrapWithTdJSX(
             subBreedElement,
             breed + " subBreed",
             breed + " subBreed",
           );
 
-    const ratingNullToString = rating == null ? "null" : rating;
-    const ratingTdJSX = wrapWithTdJSX(rating, "rating", ratingNullToString);
+    const ratingNullToString = rating == null ? breed + "null" : breed + rating;
+    const ratingTdJSX = wrapWithTdJSX(
+      rating,
+      "rating",
+      breed + ratingNullToString,
+    );
+
+    const votesTdJSX = wrapWithTdJSX(votes, "votes", breed + "votes");
+    //votes key needs to be attacehd to subBreed
+
     const outputObject = {
       breed: breedTdJSX,
       subBreed: subBreedTdJSX,
       rating: ratingTdJSX,
+      votes: votesTdJSX,
     };
 
     return outputObject;
@@ -113,32 +148,7 @@ export function tableDataToTdJSXRatedDogs(
   return tableDataJSX;
 }
 
-export async function mimicDbDataFromFetch() {
-  //should grab data from the backend, using a hack for display purposes atm
-  const myBreeds = await getBreeds();
-  const hackyBreedsList: BreedData[] = [];
-
-  Object.entries(myBreeds).forEach((element: any) => {
-    const ratingArray: number[] = [];
-
-    if (element[1].length == 0) {
-      ratingArray.push(Math.floor(Math.random() * 10));
-    } else {
-      for (let i in element[1]) {
-        ratingArray.push(Math.floor(Math.random() * 10));
-      }
-    }
-
-    const breedObject: BreedData = {
-      breed: element[0],
-      subBreed: element[1],
-      rating: ratingArray,
-    };
-
-    hackyBreedsList.push(breedObject);
-  });
-  return hackyBreedsList;
-}
+//
 
 export function dogCeoDataToTableData(breedsList: Breeds) {
   const tableData = Object.entries(breedsList).map((element) => {
@@ -154,7 +164,7 @@ export function dogCeoDataToTableData(breedsList: Breeds) {
 }
 
 export function tableDataToTdJSXHomePage(
-  tableData: Omit<TableData, "rating">[],
+  tableData: Omit<TableData, "rating" | "votes">[],
   handleRadioChange: HandleRadioChange,
   handleDropDownChange: HandleDropDownChangeHomePage,
   isDropDownActive: IsDropDownActive,
@@ -225,3 +235,30 @@ export function tableDataToTdJSX(tableData: GenericTableData[]) {
   });
   return tableDataTdJSXArray;
 }
+
+// export async function mimicDbDataFromFetch() {
+//   //should grab data from the backend, using a hack for display purposes atm
+//   const myBreeds = await getBreeds();
+//   const hackyBreedsList: BreedData[] = [];
+
+//   Object.entries(myBreeds).forEach((element: any) => {
+//     const ratingArray: number[] = [];
+
+//     if (element[1].length == 0) {
+//       ratingArray.push(Math.floor(Math.random() * 10));
+//     } else {
+//       for (let i in element[1]) {
+//         ratingArray.push(Math.floor(Math.random() * 10));
+//       }
+//     }
+
+//     const breedObject: BreedData = {
+//       breed: element[0],
+//       subBreed: element[1],
+//       rating: ratingArray,
+//     };
+
+//     hackyBreedsList.push(breedObject);
+//   });
+//   return hackyBreedsList;
+// }

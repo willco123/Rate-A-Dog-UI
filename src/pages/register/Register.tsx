@@ -1,13 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import classnames from "classnames";
+import _ from "lodash";
+import { postRegister } from "../../services/backend";
 import "./register.css";
 import dogSVG from "../../assets/dog-api-logo.svg";
+import type { RegisterData } from "../../services/backend";
 
-export default function Register({
-  setIsLoggedIn,
-}: {
-  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+export default function Register() {
+  const [badDetails, setBadDetails] = useState<string>("");
+  const [isRegistered, setIsRegistered] = useState<Boolean>(false);
+
   const navigate = useNavigate();
   function clickModalBG(event: MouseEvent) {
     const target = event.target as HTMLBodyElement;
@@ -16,24 +19,70 @@ export default function Register({
   useEffect(() => {
     document.addEventListener("click", clickModalBG);
     return () => {
+      setIsRegistered(false);
       document.removeEventListener("click", clickModalBG);
     };
   }, []);
 
+  async function handleClick(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const target = e.target as HTMLFormElement;
+    const data = new FormData(target);
+
+    const registerData = Object.fromEntries(data) as RegisterData;
+
+    const registerDataWithoutConfirm = _.omit(registerData, "confirmPassword");
+    const response = await postRegister(registerDataWithoutConfirm);
+
+    if (response === 200) {
+      setBadDetails("");
+      setIsRegistered(true);
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+      return;
+    }
+    return setBadDetails(response);
+  }
+
   return (
     <div className="darkBG">
-      <div className="login-container">
+      {isRegistered && <span>Registration Successful!</span>}
+
+      <form onSubmit={handleClick} className="register-container">
         <img src={dogSVG} alt="Dog SVG" className="brandTwo" />
-        <div className="login-close" onClick={() => navigate(-1)} />
-        <input className="login-input" name="Email" placeholder="Email" />
-        <input className="login-input" name="Password" placeholder="Password" />
-        <input
-          className="login-input"
-          name="Password"
-          placeholder="Confirm Password"
-        />
-        <button className="login-button">Sign Up!</button>
-      </div>
+        {!isRegistered && (
+          <>
+            <div className="register-close" onClick={() => navigate(-1)} />
+            <input
+              className="register-input"
+              name="username"
+              placeholder="Username"
+            />
+            <input
+              className="register-input"
+              name="email"
+              placeholder="Email"
+            />
+            <input
+              className="register-input"
+              name="password"
+              placeholder="Password"
+            />
+            <input
+              className="register-input"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+            />
+            {badDetails && <span className="register-bad">{badDetails}</span>}
+
+            <button className="register-button">Sign Up!</button>
+          </>
+        )}
+        {isRegistered && (
+          <span className="register-success">Registration Successful!</span>
+        )}
+      </form>
     </div>
   );
 }

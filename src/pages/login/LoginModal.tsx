@@ -27,11 +27,11 @@ export default function LoginModal({
 
   async function handleClick(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
     const target = e.target as HTMLFormElement;
     const data = new FormData(target);
     const loginData = Object.fromEntries(data) as LoginData;
     const response = await postLogin(loginData);
-
 
     if (response) {
       setIsLoggedIn(true);
@@ -46,7 +46,7 @@ export default function LoginModal({
       <form onSubmit={handleClick} className="login-container">
         <img src={dogSVG} alt="Dog SVG" className="brandTwo" />
         <div className="login-close" onClick={() => navigate(-1)} />
-        <input className="login-input" name="username" placeholder="Email" />
+        <input className="login-input" name="username" placeholder="Username" />
         <input className="login-input" name="password" placeholder="Password" />
         <button className="login-button">Login</button>
         {badDetails && (

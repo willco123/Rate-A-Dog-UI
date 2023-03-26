@@ -7,6 +7,7 @@ import fs from "fs";
 
 export async function createTableData() {
   const breedsList = await getBreeds();
+  if (!breedsList) return;
   const tableData = dogCeoDataToTableData(breedsList);
   const tableDataTdJSX = tableDataToTdJSX(tableData);
   return tableDataTdJSX;
@@ -31,6 +32,7 @@ export function readDataFromFile(filename: string) {
 
 async function writeBreedsToFile() {
   const breedsList = await getBreeds();
+  if (!breedsList) return;
   const tableData = dogCeoDataToTableData(breedsList);
   writeDataToFile(tableData, "table-data-test.txt");
 }

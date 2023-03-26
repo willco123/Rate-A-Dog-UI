@@ -7,33 +7,35 @@
 }
 
 .rated-dogs .table-container {
-  max-width: 500px;
+  max-width: 600px;
   position: relative;
 }
 
 .rated-dogs .table-component {
-  --tableWidth: 500px;
-  --numberOfColumns: 3;
+  --tableWidth: 600px;
+  --numberOfColumns: 4;
   background-color: unset;
   table-layout: fixed;
   width: var(--tableWidth);
 }
 
 .rated-dogs .table-component tbody {
-  display: block;
+  /* display: block; */
   overflow-y: auto;
-  width: var(--tableWidth);
-  height: 200px;
+  /* width: var(--tableWidth); */
+  /* height: 200px; */
 }
 
-.rated-dogs .table-component tr thead {
+/* .rated-dogs .table-component tr thead {
   display: block;
-}
+
+  margin: 0;
+  padding: 0;
+} */
 
 .rated-dogs .table-component td {
   text-align: left;
-  width: calc(var(--tableWidth) / var(--numberOfColumns));
-  width: 166px;
+  width: calc((var(--tableWidth) / var(--numberOfColumns)));
 }
 
 .rated-dogs .table-component td:hover {

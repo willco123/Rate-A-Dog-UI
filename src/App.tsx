@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Outlet, Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/home/Home.js";
@@ -8,11 +8,21 @@ import Register from "./pages/register/Register.js";
 import Favourites from "./pages/favourites/Favourites.js";
 import RatedDogs from "./pages/rated-dogs/RatedDogs.js";
 import Logout from "./pages/logout/Logout";
+import { getRefresh } from "./services/backend";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const location = useLocation();
   const background = location.state && location.state.background;
+
+  useEffect(() => {
+    (async () => {
+      const isAuthenticated = await getRefresh();
+
+      if (isAuthenticated) setIsLoggedIn(true);
+    })();
+  }, []);
+
   return (
     <>
       <Routes location={background || location}>
@@ -40,10 +50,7 @@ export default function App() {
             path="/login"
             element={<LoginModal setIsLoggedIn={setIsLoggedIn} />}
           />
-          <Route
-            path="/register"
-            element={<Register setIsLoggedIn={setIsLoggedIn} />}
-          />
+          <Route path="/register" element={<Register />} />
         </Routes>
       )}
     </>

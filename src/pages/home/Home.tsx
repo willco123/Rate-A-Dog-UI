@@ -12,19 +12,23 @@ import {
   tableDataToTdJSXHomePage,
 } from "../../utils/format-data.js";
 import type { Breeds, TableDataJSX, TableData } from "../../types.js";
-import { postBreed } from "../../services/backend";
+import { postDogsWithRating } from "../../services/backend";
+import parseUrlForBreeds from "../../utils/parse-url-for-breeds";
 
 function Home() {
   const [dogImage, setDogImage] = useState<string>("");
   const [breedsList, setBreedsList] = useState<Breeds>({});
-  const [tableData, setTableData] = useState<Omit<TableData, "rating">[]>([]);
+  const [tableData, setTableData] = useState<
+    Omit<TableData, "rating" | "votes">[]
+  >([]);
   const [tableDataJSX, setTableDataJSX] = useState<
-    Omit<TableDataJSX, "rating">[]
+    Omit<TableDataJSX, "rating" | "votes">[]
   >([]);
 
   const [selectedBreed, setSelectedBreed] = useState<string | null>(null);
   const [selectedSubBreed, setSelectedSubBreed] = useState<string | null>(null);
   const [rating, setRating] = useState<number>(0);
+  // const [currentDogUrl, setCurrentDogUrl] = useState<string>("");
 
   function showSelection() {
     if (!selectedBreed) return " ";
@@ -37,8 +41,10 @@ function Home() {
 
   useEffect(() => {
     (async () => {
-      setDogImage(await getRandomDogImage());
-      setBreedsList(await getBreeds());
+      const image = await getRandomDogImage();
+      const breeds = await getBreeds();
+      if (image) setDogImage(image);
+      if (breeds) setBreedsList(breeds);
     })();
   }, []);
 
@@ -91,22 +97,26 @@ function Home() {
 
   function handleGetClick() {
     (async () => {
-      if (selectedBreed)
-        setDogImage(
-          await getRandomDogImageByBreed(selectedBreed, selectedSubBreed),
+      let randomImg: string | false;
+      if (selectedBreed) {
+        randomImg = await getRandomDogImageByBreed(
+          selectedBreed,
+          selectedSubBreed,
         );
-      else setDogImage(await getRandomDogImage());
+        if (randomImg) setDogImage(randomImg);
+      } else {
+        randomImg = await getRandomDogImage();
+        if (randomImg) setDogImage(randomImg);
+      }
     })();
   }
 
   async function handleRateClick() {
-    // console.log(document.cookie);
+    let breed: string = "";
+    let subBreed: string | null | undefined = "";
+    [breed, subBreed] = parseUrlForBreeds(dogImage);
 
-    const response = await postBreed("bulldog");
-    console.log("asdad");
-    console.log(response);
-    // console.log(rating);
-    // console.log("send rating to user DB");
+    await postDogsWithRating(rating, dogImage, breed, subBreed);
   }
 
   function clearSelection() {
