@@ -10,9 +10,9 @@ import {
 import {
   dogCeoDataToTableData,
   tableDataToTdJSXHomePage,
-} from "../../utils/format-data.js";
+} from "../../utils/format-data/home-data.js";
 import type { Breeds, TableDataJSX, TableData } from "../../types.js";
-import { postDogsWithRating } from "../../services/backend";
+import { postDogs } from "../../services/backend";
 import parseUrlForBreeds from "../../utils/parse-url-for-breeds";
 
 function Home() {
@@ -116,7 +116,7 @@ function Home() {
     let subBreed: string | null | undefined = "";
     [breed, subBreed] = parseUrlForBreeds(dogImage);
 
-    await postDogsWithRating(rating, dogImage, breed, subBreed);
+    await postDogs(dogImage, breed, subBreed, rating);
   }
 
   function clearSelection() {

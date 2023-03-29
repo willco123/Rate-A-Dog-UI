@@ -40,7 +40,7 @@ function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
               <Link to="/dogs">Rated Dogs</Link>
             </li>
             <li>
-              <Link to="/favourites">Favourites</Link>
+              <Link to="/myratings">My Ratings</Link>
             </li>
             {!isLoggedIn && (
               <li>

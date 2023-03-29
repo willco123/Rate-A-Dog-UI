@@ -5,13 +5,18 @@ import CollapsibleSpan from "../../components/collapsible-span/CollapsibleSpan.j
 import SearchFilter from "../../components/search-filter/SearchFilter.js";
 import Pagination from "../../components/pagination/Pagination.js";
 import filterArrayOfObjects from "../../utils/filter-array.js";
+import { setFloatsToTwoDp } from "../../utils/format-data/format-data.js";
 import {
   dataDBToTableData,
   tableDataToTdJSXRatedDogs,
-  setFloatsToTwoDp,
-} from "../../utils/format-data.js";
+} from "../../utils/format-data/rated-dogs-data.js";
 import { getDbDogs } from "../../services/backend";
-import type { BreedData, TableData, TableDataJSX } from "../../types.js";
+import type {
+  BreedData,
+  TableData,
+  TableDataJSX,
+  ActiveSubBreeds,
+} from "../../types.js";
 
 export default function RatedDogs() {
   const [dogImage, setDogImage] = useState<string | null>(null);
@@ -23,9 +28,7 @@ export default function RatedDogs() {
   const [selectedBreedUrls, setSelectedBreedUrls] = useState<(string | null)[]>(
     [null],
   );
-  const [activeSubBreeds, setActiveSubBreeds] = useState<(string | null)[]>([
-    null,
-  ]);
+  const [activeSubBreeds, setActiveSubBreeds] = useState<ActiveSubBreeds[]>([]);
   const itemsPerPage = 5;
 
   const currentTableDataJSX = useMemo(() => {
@@ -41,18 +44,22 @@ export default function RatedDogs() {
     (async () => {
       const allDogsFromDB = await getDbDogs();
       if (!allDogsFromDB) return;
-
       const allDogsFromDBTwoDp = setFloatsToTwoDp(allDogsFromDB);
-
       setBreedData(allDogsFromDBTwoDp);
     })();
   }, []);
 
   useEffect(() => {
     const tableData = dataDBToTableData(breedData);
-    const initActiveSubBreeds = tableData.map((element) => {
-      return element.subBreed[0];
-    });
+    const initActiveSubBreeds: ActiveSubBreeds[] = tableData.map(
+      ({ breed, subBreed }) => {
+        const output = {
+          breed: breed,
+          activeSubBreed: subBreed[0],
+        };
+        return output;
+      },
+    );
 
     setActiveSubBreeds(initActiveSubBreeds);
     setTableData(tableData);
@@ -71,22 +78,18 @@ export default function RatedDogs() {
   useEffect(() => {
     if (selectedBreed === null) return;
 
-    const breedDataIndex = breedData.findIndex((element) => {
+    const associatedSubBreed = activeSubBreeds.find((element) => {
       return element.breed === selectedBreed;
     });
 
-    const targetBreedObject = breedData[breedDataIndex];
-
-    const urlIndex =
-      targetBreedObject.subBreed.length > 0
-        ? targetBreedObject.subBreed.findIndex((element) => {
-            return element === activeSubBreeds[breedDataIndex];
-          })
-        : 0;
-
-    const urls = breedData[breedDataIndex].url[urlIndex];
-
-    setSelectedBreedUrls(urls);
+    const breedObject = breedData.find((element) => {
+      return (
+        element.breed === selectedBreed &&
+        element.subBreed == associatedSubBreed?.activeSubBreed
+      );
+    });
+    if (!breedObject) throw new Error("breedObject is undefined");
+    setSelectedBreedUrls(breedObject.url);
   }, [selectedBreed, activeSubBreeds]);
 
   useEffect(() => {
@@ -121,23 +124,25 @@ export default function RatedDogs() {
     currentTableDataRowIndex: number,
   ) {
     const selectedSubBreed = e.target.value;
-    const targetBreedIndex = breedData.findIndex((element) => {
-      return element.breed === tableRowId;
-    });
-    //index the desired properties another way, as the order sent from the backend currently matters
-    const targetBreed = Object.values(breedData[targetBreedIndex]);
-    const subBreedArray = targetBreed[2] as string[];
-    const subBreedIndex = subBreedArray.indexOf(selectedSubBreed);
-    const ratingArray = targetBreed[3] as number[];
-    const associatedBreedRating = ratingArray[subBreedIndex];
-    // const currentTableDataRowIndex2 = tableData.findIndex(
-    //   (obj) => obj.breed === tableRowId,
-    // );
+    const associatedBreed = tableRowId;
     const activeSubBreedsClone = [...activeSubBreeds];
-
-    activeSubBreedsClone[currentTableDataRowIndex] = selectedSubBreed;
-
+    const activeObject = activeSubBreedsClone.find(
+      (element) => element.breed == associatedBreed,
+    );
+    if (!activeObject) throw new Error("breed is undefined");
+    activeObject.activeSubBreed = selectedSubBreed;
     setActiveSubBreeds(activeSubBreedsClone);
+
+    const breedObject = breedData.find((element) => {
+      return (
+        element.breed === associatedBreed &&
+        element.subBreed == selectedSubBreed
+      );
+    });
+
+    if (!breedObject) throw new Error("breedObject is undefined");
+    const associatedBreedRating = breedObject.rating;
+
     const tableDataClone = tableData.map((element) => {
       return { ...element };
     });

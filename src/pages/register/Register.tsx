@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import classnames from "classnames";
 import _ from "lodash";
 import { postRegister } from "../../services/backend";
 import "./register.css";

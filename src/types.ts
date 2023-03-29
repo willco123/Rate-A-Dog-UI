@@ -1,20 +1,23 @@
 export type BreedData = {
-  url: [(string | null)[]];
+  breed: string;
+  subBreed: string | null;
+  url: (string | null)[];
+  rating: number | null;
+  numberOfRates: number;
+};
+
+export type TableData = {
+  breed: string;
+  subBreed: (string | null)[];
+  rating: number | null;
+  votes: number;
+};
+
+export type BreedDataGrouped = {
   breed: string;
   subBreed: (string | null)[];
   rating: (number | null)[];
-  numberOfRates: number[];
-};
-
-export type BreedDataDb = {
-  breed: string;
-  rating: number;
-  url?: string[];
-};
-
-export type TableData = Omit<BreedData, "rating" | "url" | "numberOfRates"> & {
-  rating: number | null;
-  votes: number;
+  votes: number[];
 };
 
 export type TableDataJSX = {
@@ -26,4 +29,9 @@ export type TableDataJSX = {
 
 export type Breeds = {
   [key: string]: (string | null)[];
+};
+
+export type ActiveSubBreeds = {
+  breed: string;
+  activeSubBreed: string | null;
 };

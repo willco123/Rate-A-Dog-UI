@@ -1,7 +1,5 @@
-import {
-  dogCeoDataToTableData,
-  tableDataToTdJSX,
-} from "../utils/format-data.js";
+import { tableDataToTdJSX } from "../utils/format-data/format-data.js";
+import { dogCeoDataToTableData } from "../utils/format-data/home-data.js";
 import { getBreeds } from "../services/dog-ceo.js";
 import fs from "fs";
 

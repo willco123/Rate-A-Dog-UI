@@ -5,7 +5,7 @@ import Home from "./pages/home/Home.js";
 import Navbar from "./components/navbar/Navbar.js";
 import LoginModal from "./pages/login/LoginModal.js";
 import Register from "./pages/register/Register.js";
-import Favourites from "./pages/favourites/Favourites.js";
+import MyRatings from "./pages/my-ratings/MyRatings.js";
 import RatedDogs from "./pages/rated-dogs/RatedDogs.js";
 import Logout from "./pages/logout/Logout";
 import { getRefresh } from "./services/backend";
@@ -36,7 +36,7 @@ export default function App() {
           }
         >
           <Route index element={<Home />} />
-          <Route path="/favourites" element={<Favourites />} />
+          <Route path="/myratings" element={<MyRatings />} />
           <Route path="/dogs" element={<RatedDogs />} />
           <Route
             path="/logout"

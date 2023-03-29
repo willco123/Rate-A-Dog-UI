@@ -75,7 +75,7 @@ axios.interceptors.response.use(
 export async function getDbDogs() {
   try {
     const response = await axios.get(
-      serverURL + "dogs/dbdogs",
+      serverURL + "dogs",
 
       {
         withCredentials: true,
@@ -85,6 +85,22 @@ export async function getDbDogs() {
     return response.data;
   } catch (err: any) {
     return false;
+  }
+}
+
+export async function getUserDbDogs() {
+  try {
+    const response = await axiosWithAuthHeader.get(
+      serverURL + "dogs/user",
+
+      {
+        withCredentials: true,
+      },
+    );
+
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error);
   }
 }
 
@@ -159,11 +175,11 @@ export async function getRefresh() {
   }
 }
 
-export async function postDogsWithRating(
-  rating: number,
+export async function postDogs(
   dogUrl: string,
   breed: string,
   subBreed: string | undefined | null,
+  rating?: number,
 ) {
   try {
     // const fullBreed = breed + (subBreed ? "-" + subBreed : "");
@@ -187,27 +203,3 @@ export async function postDogsWithRating(
     return err.response;
   }
 }
-
-export async function getFavourites() {
-  try {
-    const response = await axiosWithAuthHeader.get(serverURL + "favourites", {
-      withCredentials: true,
-    });
-    return response;
-  } catch (err: any) {
-    return false;
-  }
-}
-
-export async function postFavourites() {
-  try {
-    const response = await axiosWithAuthHeader.get(serverURL + "favourites", {
-      withCredentials: true,
-    });
-    return response;
-  } catch (err: any) {
-    return false;
-  }
-}
-
-export async function deleteFavourites() {}
