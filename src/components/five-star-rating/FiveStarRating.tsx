@@ -51,8 +51,17 @@ export default function FiveStarRating({
           value="1"
           id="1"
           onChange={onChange}
+          checked
         />
         <label htmlFor="1" aria-label="input-1" />
+        {/* <input
+          type="radio"
+          name="rating"
+          value="0"
+          id="0"
+          onChange={onChange}
+        />
+        <label htmlFor="0" aria-label="input-0" /> */}
       </div>
     </>
   );

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
-import "./rated-dogs.css";
+import classnames from "classnames";
+import "./all-ratings.css";
 import TableComponent from "../../components/table-component/TableComponent.js";
 import CollapsibleSpan from "../../components/collapsible-span/CollapsibleSpan.js";
 import SearchFilter from "../../components/search-filter/SearchFilter.js";
@@ -8,8 +9,8 @@ import filterArrayOfObjects from "../../utils/filter-array.js";
 import { setFloatsToTwoDp } from "../../utils/format-data/format-data.js";
 import {
   dataDBToTableData,
-  tableDataToTdJSXRatedDogs,
-} from "../../utils/format-data/rated-dogs-data.js";
+  tableDataToTdJSXAllRatings,
+} from "../../utils/format-data/all-ratings-data.js";
 import { getDbDogs } from "../../services/backend";
 import type {
   BreedData,
@@ -17,19 +18,28 @@ import type {
   TableDataJSX,
   ActiveSubBreeds,
 } from "../../types.js";
+import { useAllRatingsDataInit } from "../../custom-hooks/useAllRatingsDataInit";
 
-export default function RatedDogs() {
+export default function AllRatings() {
   const [dogImage, setDogImage] = useState<string | null>(null);
-  const [breedData, setBreedData] = useState<BreedData[] | []>([]);
-  const [tableData, setTableData] = useState<TableData[] | []>([]);
-  const [tableDataJSX, setTableDataJSX] = useState<TableDataJSX[] | []>([]);
+
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedBreed, setSelectedBreed] = useState<string | null>(null);
   const [selectedBreedUrls, setSelectedBreedUrls] = useState<(string | null)[]>(
     [null],
   );
-  const [activeSubBreeds, setActiveSubBreeds] = useState<ActiveSubBreeds[]>([]);
+  const [isLeftArrow, setIsLeftArrow] = useState<boolean>(false);
+  const [isRightArrow, setIsRightArrow] = useState<boolean>(true);
   const itemsPerPage = 5;
+
+  const {
+    breedData,
+    tableDataJSX,
+    activeSubBreeds,
+    tableData,
+    setTableData,
+    setActiveSubBreeds,
+  } = useAllRatingsDataInit(handleRadioChange, handleDropDownChange);
 
   const currentTableDataJSX = useMemo(() => {
     if (!tableDataJSX) return [];
@@ -39,41 +49,6 @@ export default function RatedDogs() {
       ? tableDataJSX.slice(firstPageIndex, lastPageIndex)
       : [];
   }, [currentPage, tableDataJSX]);
-
-  useEffect(() => {
-    (async () => {
-      const allDogsFromDB = await getDbDogs();
-      if (!allDogsFromDB) return;
-      const allDogsFromDBTwoDp = setFloatsToTwoDp(allDogsFromDB);
-      setBreedData(allDogsFromDBTwoDp);
-    })();
-  }, []);
-
-  useEffect(() => {
-    const tableData = dataDBToTableData(breedData);
-    const initActiveSubBreeds: ActiveSubBreeds[] = tableData.map(
-      ({ breed, subBreed }) => {
-        const output = {
-          breed: breed,
-          activeSubBreed: subBreed[0],
-        };
-        return output;
-      },
-    );
-
-    setActiveSubBreeds(initActiveSubBreeds);
-    setTableData(tableData);
-  }, [breedData]);
-
-  useEffect(() => {
-    const tableDataJSX = tableDataToTdJSXRatedDogs(
-      tableData,
-      handleDropDownChange,
-      handleRadioChange,
-    );
-
-    setTableDataJSX(tableDataJSX);
-  }, [tableData]);
 
   useEffect(() => {
     if (selectedBreed === null) return;
@@ -94,6 +69,13 @@ export default function RatedDogs() {
 
   useEffect(() => {
     setDogImage(selectedBreedUrls[0]);
+    if (selectedBreedUrls.length === 1) {
+      setIsLeftArrow(false);
+      setIsRightArrow(false);
+    } else {
+      setIsLeftArrow(false);
+      setIsRightArrow(true);
+    }
   }, [selectedBreedUrls]);
 
   function filterTable(filterValue: string, breedData: BreedData[]) {
@@ -154,22 +136,49 @@ export default function RatedDogs() {
     const currentIndex = selectedBreedUrls.findIndex((element) => {
       return element == dogImage;
     });
-    if (currentIndex === 0) return;
+    if (currentIndex - 1 === 0) setIsLeftArrow(false);
+    if (currentIndex === selectedBreedUrls.length - 1) setIsRightArrow(true);
     setDogImage(selectedBreedUrls[currentIndex - 1]);
   }
   function handleForwardClick() {
     const currentIndex = selectedBreedUrls.findIndex((element) => {
       return element == dogImage;
     });
+    if (currentIndex + 1 === 1) setIsLeftArrow(true);
 
-    if (currentIndex === selectedBreedUrls.length - 1) return;
+    if (currentIndex === selectedBreedUrls.length - 2) setIsRightArrow(false);
+
     setDogImage(selectedBreedUrls[currentIndex + 1]);
   }
 
   return (
-    <div className="rated-dogs">
-      <h1 className="title">View Breed Ratings</h1>
-      {dogImage && <img src={dogImage} className="Dogs-dog-image" />}
+    <div className="all-ratings">
+      <h1 className="title">All Ratings</h1>
+      {selectedBreed && (
+        <div className="image-buttons-container">
+          <div className="button-left-container">
+            <button
+              onClick={handleBackClick}
+              className={classnames("button-left", {
+                disabled: !isLeftArrow,
+              })}
+            />
+          </div>
+          {dogImage && (
+            <div className="image-container">
+              <img src={dogImage} className="dog-image" />
+            </div>
+          )}
+          <div className="button-right-container">
+            <button
+              onClick={handleForwardClick}
+              className={classnames("button-right", {
+                disabled: !isRightArrow,
+              })}
+            />
+          </div>
+        </div>
+      )}
       <CollapsibleSpan
         WrappedComponent={
           <SearchFilter
@@ -196,8 +205,6 @@ export default function RatedDogs() {
           onPageChange={(page: number) => setCurrentPage(page)}
         />
       )}
-      <button onClick={handleBackClick}>Back</button>
-      <button onClick={handleForwardClick}>Forward</button>
     </div>
   );
 }

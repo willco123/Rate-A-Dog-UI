@@ -11,13 +11,13 @@ import {
 
 describe("Navbar", () => {
   it("Correctly renders with wrapped func", () => {
-    renderWithRouter(<Navbar />);
+    renderWithRouter(<Navbar isLoggedIn={true} />);
     expect(screen.getByRole("navigation")).toBeInTheDocument();
   });
   it("Manually control history with Memory Router", async () => {
     const myComponents = (
       <>
-        <Navbar />
+        <Navbar isLoggedIn={true} />
         <BasicApp />
       </>
     );
@@ -26,13 +26,16 @@ describe("Navbar", () => {
     const favourites = links[2];
     await user.click(favourites);
     expect(screen.getByText("This is the Favourites page")).toBeInTheDocument();
-    const ratedDogs = links[1];
-    await user.click(ratedDogs);
+    const allRatings = links[1];
+    await user.click(allRatings);
     expect(screen.getByTestId("location-display")).toHaveTextContent("/dogs");
   });
   it("Using Create Memory History", async () => {
     const history = createMemoryHistory();
-    const { user } = renderWithRouterAndHistory(<Navbar />, history);
+    const { user } = renderWithRouterAndHistory(
+      <Navbar isLoggedIn={true} />,
+      history,
+    );
     const links = screen.getAllByRole("link");
     const favourites = links[2];
 
@@ -41,7 +44,7 @@ describe("Navbar", () => {
     expect(history.location.pathname).toBe("/favourites");
   });
   it("Expands hamburger menu", async () => {
-    const { user } = renderWithRouter(<Navbar />);
+    const { user } = renderWithRouter(<Navbar isLoggedIn={true} />);
     const hamburgerButton = screen.getByRole("button");
     await user.click(hamburgerButton);
     expect(document.body).toHaveStyle("overflow: hidden");

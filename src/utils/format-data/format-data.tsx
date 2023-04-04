@@ -1,14 +1,7 @@
 import React from "react";
 import RadioHideInput from "../../components/radio-hide-input/RadioHideInput.js";
 import DropDown from "../../components/drop-down/DropDown.js";
-import { getBreeds } from "../../services/dog-ceo.js";
-import {
-  BreedData,
-  TableData,
-  TableDataJSX,
-  Breeds,
-  BreedDataGrouped,
-} from "../../types.js";
+import { BreedData } from "../../types.js";
 
 export type HandleRadioChange = (
   e: React.ChangeEvent<HTMLInputElement>,
@@ -45,9 +38,18 @@ export function setAsRadioJSX(
 export function setAsDropDownJSX(
   items: (string | null | number)[],
   onChange: React.ChangeEventHandler<HTMLSelectElement>,
+  // onChange: () => string | number,
   isDisabled: boolean,
+  activeSubBreed: string | null,
 ) {
-  return <DropDown items={items} isActive={isDisabled} onChange={onChange} />;
+  return (
+    <DropDown
+      items={items}
+      isActive={isDisabled}
+      onChange={onChange}
+      value={activeSubBreed}
+    />
+  );
 }
 
 export function setFloatsToTwoDp(breedData: BreedData[]) {

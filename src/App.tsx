@@ -6,7 +6,7 @@ import Navbar from "./components/navbar/Navbar.js";
 import LoginModal from "./pages/login/LoginModal.js";
 import Register from "./pages/register/Register.js";
 import MyRatings from "./pages/my-ratings/MyRatings.js";
-import RatedDogs from "./pages/rated-dogs/RatedDogs.js";
+import AllRatings from "./pages/all-ratings/AllRatings.js";
 import Logout from "./pages/logout/Logout";
 import { getRefresh } from "./services/backend";
 
@@ -26,22 +26,19 @@ export default function App() {
   return (
     <>
       <Routes location={background || location}>
-        <Route
-          path="/"
-          element={
-            <LayoutsWithNavbar
-              isLoggedIn={isLoggedIn}
-              setIsLoggedIn={setIsLoggedIn}
-            />
-          }
-        >
+        <Route path="/" element={<LayoutsWithNavbar isLoggedIn={isLoggedIn} />}>
           <Route index element={<Home />} />
-          <Route path="/myratings" element={<MyRatings />} />
-          <Route path="/dogs" element={<RatedDogs />} />
-          <Route
-            path="/logout"
-            element={<Logout setIsLoggedIn={setIsLoggedIn} />}
-          />
+          <Route path="/dogs" element={<AllRatings />} />
+
+          {isLoggedIn && (
+            <>
+              <Route path="/myratings" element={<MyRatings />} />
+              <Route
+                path="/logout"
+                element={<Logout setIsLoggedIn={setIsLoggedIn} />}
+              />
+            </>
+          )}
         </Route>
       </Routes>
       {background && (
@@ -57,13 +54,7 @@ export default function App() {
   );
 }
 
-function LayoutsWithNavbar({
-  isLoggedIn,
-  setIsLoggedIn,
-}: {
-  isLoggedIn: boolean;
-  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+function LayoutsWithNavbar({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (
     <>
       <Navbar isLoggedIn={isLoggedIn} />

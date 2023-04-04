@@ -7,9 +7,9 @@ const Home = (currentLocation: string) => (
     <div data-testid="location-display">{currentLocation}</div>
   </>
 );
-const RatedDogs = (currentLocation: string) => (
+const AllRatings = (currentLocation: string) => (
   <>
-    <h1>This is the Rated Dogs page</h1>
+    <h1>This is the All Ratings page</h1>
     <div data-testid="location-display">{currentLocation}</div>
   </>
 );
@@ -38,7 +38,7 @@ const BasicApp = () => {
     <>
       <Routes location={location}>
         <Route path="/" element={Home(location.pathname)} />
-        <Route path="/dogs" element={RatedDogs(location.pathname)} />
+        <Route path="/dogs" element={AllRatings(location.pathname)} />
         <Route path="/favourites" element={MyRatings(location.pathname)} />
         <Route path="/login" element={Login(location.pathname)} />
         <Route path="/register" element={Register(location.pathname)} />

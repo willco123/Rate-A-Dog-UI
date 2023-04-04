@@ -95,6 +95,7 @@
     width: 100%;
     flex-direction: row;
     justify-content: center;
+    position: absolute;
   }
   .brand {
     transform: scale(0.2);
@@ -133,5 +134,7 @@
   }
   .navigation-menu.expanded {
     display: flex block;
+    z-index: 3000;
+    position: absolute;
   }
 }

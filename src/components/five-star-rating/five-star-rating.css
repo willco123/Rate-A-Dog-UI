@@ -26,3 +26,7 @@
 .star-container > input:checked ~ label:before {
   color: orange;
 }
+
+/* .star-container label[for="0"] {
+  opacity: 0%;
+} */

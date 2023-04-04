@@ -11,68 +11,41 @@ import {
   dogCeoDataToTableData,
   tableDataToTdJSXHomePage,
 } from "../../utils/format-data/home-data.js";
-import type { Breeds, TableDataJSX, TableData } from "../../types.js";
+
 import { postDogs } from "../../services/backend";
 import parseUrlForBreeds from "../../utils/parse-url-for-breeds";
+import { useHomeDataInit } from "../../custom-hooks/useHomeDataInit";
 
 function Home() {
-  const [dogImage, setDogImage] = useState<string>("");
-  const [breedsList, setBreedsList] = useState<Breeds>({});
-  const [tableData, setTableData] = useState<
-    Omit<TableData, "rating" | "votes">[]
-  >([]);
-  const [tableDataJSX, setTableDataJSX] = useState<
-    Omit<TableDataJSX, "rating" | "votes">[]
-  >([]);
+  const {
+    tableDataJSX,
+    activeSubBreeds,
+    dogImage,
+    tableData,
+    setTableDataJSX,
+    setActiveSubBreeds,
+    setDogImage,
+  } = useHomeDataInit(
+    handleRadioChange,
+    handleDropDownChange,
+    isDropDownActive,
+  );
 
   const [selectedBreed, setSelectedBreed] = useState<string | null>(null);
   const [selectedSubBreed, setSelectedSubBreed] = useState<string | null>(null);
   const [rating, setRating] = useState<number>(0);
-  // const [currentDogUrl, setCurrentDogUrl] = useState<string>("");
-
-  function showSelection() {
-    if (!selectedBreed) return " ";
-    const subBreed = selectedSubBreed ? selectedSubBreed : " ";
-    const selection = selectedBreed + " " + subBreed;
-    return selection;
-  }
-
-  const selection = showSelection();
 
   useEffect(() => {
-    (async () => {
-      const image = await getRandomDogImage();
-      const breeds = await getBreeds();
-      if (image) setDogImage(image);
-      if (breeds) setBreedsList(breeds);
-    })();
-  }, []);
-
-  useEffect(() => {
-    const tableDataFromBreedsList = dogCeoDataToTableData(breedsList);
-    setTableData(tableDataFromBreedsList);
-  }, [breedsList]);
-
-  useEffect(() => {
+    //force re-render
     const tableDataTdJSX = tableDataToTdJSXHomePage(
       tableData,
       handleRadioChange,
       handleDropDownChange,
       isDropDownActive,
+      activeSubBreeds,
     );
     setTableDataJSX(tableDataTdJSX);
-  }, [tableData]);
-
-  useEffect(() => {
-    //basically forcing a re-render here upon changing selected breed
-    const tableDataTdJSX = tableDataToTdJSXHomePage(
-      tableData,
-      handleRadioChange,
-      handleDropDownChange,
-      isDropDownActive,
-    );
-    setTableDataJSX(tableDataTdJSX);
-  }, [selectedBreed]);
+  }, [selectedBreed, activeSubBreeds]);
 
   function isDropDownActive(breedBeingRendered: string) {
     if (selectedBreed === breedBeingRendered) return true;
@@ -89,9 +62,19 @@ function Home() {
     setSelectedSubBreed(firstSubBreed);
   }
 
-  function handleDropDownChange(event: React.ChangeEvent<HTMLSelectElement>) {
+  function handleDropDownChange(
+    event: React.ChangeEvent<HTMLSelectElement>,
+    tableRowId: string,
+  ) {
     const newSelectedSubBreed = event.target.value;
-
+    const associatedBreed = tableRowId;
+    const activeSubBreedsClone = [...activeSubBreeds];
+    const activeObject = activeSubBreedsClone.find(
+      (element) => element.breed == associatedBreed,
+    );
+    if (!activeObject) throw new Error("breed is undefined");
+    activeObject.activeSubBreed = newSelectedSubBreed;
+    setActiveSubBreeds(activeSubBreedsClone);
     setSelectedSubBreed(newSelectedSubBreed);
   }
 
@@ -122,6 +105,12 @@ function Home() {
   function clearSelection() {
     setSelectedBreed(null);
     setSelectedSubBreed(null);
+    const radioGroup = document.getElementsByName(
+      "breed",
+    ) as unknown as HTMLInputElement[];
+    radioGroup.forEach((radio) => {
+      radio.checked = false;
+    });
   }
 
   function handleRatingChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -130,30 +119,33 @@ function Home() {
     setRating(selectedRatingAsNumber);
   }
 
-  function handleFavClick() {
-    console.log("Send Dog to user favourites");
-  }
   return (
     <div className="Dogs-wrapper">
       <h1 className="title">Dog Ceo Clone</h1>
-      {dogImage && <img src={dogImage} className="Dogs-dog-image" />}
+      <div className="button-container">
+        <button onClick={handleGetClick} className="Dogs-button">
+          Get a new Dog!
+        </button>
+        <button onClick={handleRateClick} className="Dogs-button">
+          Rate the Dog!
+        </button>
+        <button onClick={clearSelection} className="Dogs-button">
+          Clear
+        </button>
+      </div>
+      <div className="image-table-container">
+        <div className="Dogs-image-container">
+          {dogImage && <img src={dogImage} className="Dogs-dog-image" />}
+        </div>
+        <div className="table-container">
+          <TableComponent
+            key={"table-component"}
+            theadData={["Breed", "Sub-Breed"]}
+            tbodyData={tableDataJSX}
+          />
+        </div>
+      </div>
       <FiveStarRating onChange={handleRatingChange} />
-      <span>{selection}</span>
-      <span onClick={clearSelection}>Clear</span>
-      <TableComponent
-        key={"table-component"}
-        theadData={["Breed", "Sub-Breed"]}
-        tbodyData={tableDataJSX}
-      />
-      <button onClick={handleGetClick} className="Dogs-button">
-        Get a new Dog!
-      </button>
-      <button onClick={handleRateClick} className="Dogs-button">
-        Rate the Dog!
-      </button>
-      <button onClick={handleFavClick} className="Dogs-button">
-        Add to favourites!
-      </button>
     </div>
   );
 }

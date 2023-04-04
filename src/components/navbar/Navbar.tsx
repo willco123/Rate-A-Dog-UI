@@ -37,11 +37,13 @@ function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
         >
           <ul>
             <li>
-              <Link to="/dogs">Rated Dogs</Link>
+              <Link to="/dogs">All Ratings</Link>
             </li>
-            <li>
-              <Link to="/myratings">My Ratings</Link>
-            </li>
+            {isLoggedIn && (
+              <li>
+                <Link to="/myratings">My Ratings</Link>
+              </li>
+            )}
             {!isLoggedIn && (
               <li>
                 <Link to="/login" state={{ background: location }}>

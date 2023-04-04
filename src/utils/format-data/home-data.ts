@@ -1,13 +1,18 @@
-import React from "react";
 import { setAsDropDownJSX, setAsRadioJSX, wrapWithTdJSX } from "./format-data";
-import type { TableData, Breeds, TableDataJSX } from "../../types";
+import type {
+  TableData,
+  Breeds,
+  TableDataJSX,
+  ActiveSubBreeds,
+} from "../../types";
 import type { HandleRadioChange } from "./format-data";
 
-type HandleDropDownChangeHomePage = (
+export type HandleDropDownChange = (
   event: React.ChangeEvent<HTMLSelectElement>,
+  tableRowId: string,
 ) => void;
 
-type IsDropDownActive = (breedBeingRendered: string) => boolean;
+export type IsDropDownActive = (breedBeingRendered: string) => boolean;
 
 export function dogCeoDataToTableData(breedsList: Breeds) {
   const tableData = Object.entries(breedsList).map((element) => {
@@ -25,8 +30,9 @@ export function dogCeoDataToTableData(breedsList: Breeds) {
 export function tableDataToTdJSXHomePage(
   tableData: Omit<TableData, "rating" | "votes">[],
   handleRadioChange: HandleRadioChange,
-  handleDropDownChange: HandleDropDownChangeHomePage,
+  handleDropDownChange: HandleDropDownChange,
   isDropDownActive: IsDropDownActive,
+  activeSubBreeds: ActiveSubBreeds[],
 ): Omit<TableDataJSX, "rating" | "votes">[] {
   const tableDataJSX = tableData.map((breedObject, index) => {
     const { breed, subBreed } = breedObject;
@@ -34,12 +40,20 @@ export function tableDataToTdJSXHomePage(
     const breedTdJSX = wrapWithTdJSX(breedJSX, breed, breed);
     //seems to  not work when id's clash for input id and td id
 
+    const activeSubBreed = activeSubBreeds.find((element) => {
+      return element.breed === breed;
+    })?.activeSubBreed;
+
+    if (activeSubBreed === undefined)
+      throw new Error("activeSubBreed is undefined");
+
     let subBreedElement: JSX.Element | string | null;
     if (subBreed.length > 1) {
       subBreedElement = setAsDropDownJSX(
         subBreed,
-        handleDropDownChange,
+        (e) => handleDropDownChange(e, breed),
         isDropDownActive(breed),
+        activeSubBreed,
       );
     } else {
       subBreedElement = subBreed[0];

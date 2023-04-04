@@ -1,14 +1,14 @@
-import React from "react";
 import { setAsDropDownJSX, setAsRadioJSX, wrapWithTdJSX } from "./format-data";
 import type {
   BreedData,
   BreedDataGrouped,
   TableData,
   TableDataJSX,
+  ActiveSubBreeds,
 } from "../../types";
 import type { HandleRadioChange } from "./format-data";
 
-type HandleDropDownChangeRatedDogs = (
+export type HandleDropDownChange = (
   e: React.ChangeEvent<HTMLSelectElement>,
   tableRowId: string,
   breedDataRowIndex: number,
@@ -57,10 +57,11 @@ export function dataDBToTableData(breedData: BreedData[]): TableData[] {
   return tableData;
 }
 
-export function tableDataToTdJSXRatedDogs(
+export function tableDataToTdJSXAllRatings(
   tableData: TableData[],
-  handleDropDownChange: HandleDropDownChangeRatedDogs,
+  handleDropDownChange: HandleDropDownChange,
   handleRadioChange: HandleRadioChange,
+  activeSubBreeds: ActiveSubBreeds[],
 ): TableDataJSX[] {
   const tableDataJSX = tableData.map((breedObject, index) => {
     const { breed, subBreed, rating, votes } = breedObject;
@@ -68,12 +69,20 @@ export function tableDataToTdJSXRatedDogs(
     const breedJSX = setAsRadioJSX(breed, "breed", handleRadioChange, index);
     const breedTdJSX = wrapWithTdJSX(breedJSX, breed, breed);
 
+    const activeSubBreed = activeSubBreeds.find((element) => {
+      return element.breed === breed;
+    })?.activeSubBreed;
+
+    if (activeSubBreed === undefined)
+      throw new Error("activeSubBreed is undefined");
+
     let subBreedElement: JSX.Element | string | null;
     if (subBreed.length > 1) {
       subBreedElement = setAsDropDownJSX(
         subBreed,
         (e) => handleDropDownChange(e, breed, index),
         true,
+        activeSubBreed,
       );
     } else {
       subBreedElement = subBreed[0];

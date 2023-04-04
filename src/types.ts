@@ -35,3 +35,38 @@ export type ActiveSubBreeds = {
   breed: string;
   activeSubBreed: string | null;
 };
+
+export type ActiveSubBreedUrls = {
+  breed: string;
+  activeSubBreed: string | null;
+  url: string;
+};
+
+export type UserRatingData = {
+  breed: string;
+  subBreed: string | null;
+  urlRatings: UrlRatings[];
+};
+
+export type UserRatingDataGrouped = {
+  breed: string;
+  subBreed: (string | null)[];
+  urls: string[][];
+  urlRatings: (number | null)[][];
+};
+
+export type UserRatingTableData = {
+  breed: string;
+  subBreed: (string | null)[];
+  urls: string[];
+  urlRating: number | null;
+};
+
+export type UserRatingTableDataJSX = {
+  breed: JSX.Element;
+  subBreed: JSX.Element;
+  urls: JSX.Element;
+  urlRating: JSX.Element;
+};
+
+type UrlRatings = [number | null, string];
