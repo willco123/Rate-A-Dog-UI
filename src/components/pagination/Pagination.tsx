@@ -1,6 +1,6 @@
 import React from "react";
 import _ from "lodash";
-import "./pagination.css";
+import "./pagination.scss";
 import usePagination from "../../custom-hooks/usePagination.js";
 import classnames from "classnames";
 

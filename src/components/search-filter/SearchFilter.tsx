@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import "./search-filter.css";
+import "./search-filter.scss";
 import { BreedData } from "../../types.js";
 
 type SearchFilterProps = {

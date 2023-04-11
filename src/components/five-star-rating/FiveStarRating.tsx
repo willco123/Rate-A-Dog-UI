@@ -1,5 +1,5 @@
 import React from "react";
-import "./five-star-rating.css";
+import "./five-star-rating.scss";
 
 export default function FiveStarRating({
   onChange,

@@ -1,23 +1,13 @@
 import React, { useEffect, useState, useMemo } from "react";
 import classnames from "classnames";
-import "./all-ratings.css";
+import "./all-ratings.scss";
 import TableComponent from "../../components/table-component/TableComponent.js";
 import CollapsibleSpan from "../../components/collapsible-span/CollapsibleSpan.js";
 import SearchFilter from "../../components/search-filter/SearchFilter.js";
 import Pagination from "../../components/pagination/Pagination.js";
 import filterArrayOfObjects from "../../utils/filter-array.js";
-import { setFloatsToTwoDp } from "../../utils/format-data/format-data.js";
-import {
-  dataDBToTableData,
-  tableDataToTdJSXAllRatings,
-} from "../../utils/format-data/all-ratings-data.js";
-import { getDbDogs } from "../../services/backend";
-import type {
-  BreedData,
-  TableData,
-  TableDataJSX,
-  ActiveSubBreeds,
-} from "../../types.js";
+import { dataDBToTableData } from "../../utils/format-data/all-ratings-data.js";
+import type { BreedData, TableData } from "../../types.js";
 import { useAllRatingsDataInit } from "../../custom-hooks/useAllRatingsDataInit";
 
 export default function AllRatings() {

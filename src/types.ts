@@ -70,3 +70,24 @@ export type UserRatingTableDataJSX = {
 };
 
 type UrlRatings = [number | null, string];
+
+export type UrlRatingData = {
+  breed: string;
+  subBreed: string | null;
+  urlRatings: AllUrlRatings[];
+};
+
+export type CarouselData = {
+  breed: string;
+  subBreed: string | null;
+  url: string;
+  numberOfRates: number;
+  rating: number | null;
+  isExpanded: boolean;
+};
+
+type AllUrlRatings = {
+  avgRating: number | null;
+  url: string;
+  numberOfRates: number;
+};

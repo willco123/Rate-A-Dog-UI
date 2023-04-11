@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
-import "./home.css";
+import "./home.scss";
 import FiveStarRating from "../../components/five-star-rating/FiveStarRating.js";
 import TableComponent from "../../components/table-component/TableComponent.js";
 import {
-  getBreeds,
   getRandomDogImage,
   getRandomDogImageByBreed,
 } from "../../services/dog-ceo.js";
-import {
-  dogCeoDataToTableData,
-  tableDataToTdJSXHomePage,
-} from "../../utils/format-data/home-data.js";
+import { tableDataToTdJSXHomePage } from "../../utils/format-data/home-data.js";
 
 import { postDogs } from "../../services/backend";
 import parseUrlForBreeds from "../../utils/parse-url-for-breeds";
 import { useHomeDataInit } from "../../custom-hooks/useHomeDataInit";
+import Carousel from "../../components/carousel/Carousel";
 
 function Home() {
   const {
@@ -120,8 +117,9 @@ function Home() {
   }
 
   return (
-    <div className="Dogs-wrapper">
-      <h1 className="title">Dog Ceo Clone</h1>
+    <div className="home-wrapper">
+      <Carousel />
+      {/* <h1 className="title">Dog Ceo Clone</h1>
       <div className="button-container">
         <button onClick={handleGetClick} className="Dogs-button">
           Get a new Dog!
@@ -134,10 +132,12 @@ function Home() {
         </button>
       </div>
       <div className="image-table-container">
-        <div className="Dogs-image-container">
-          {dogImage && <img src={dogImage} className="Dogs-dog-image" />}
-        </div>
-        <div className="table-container">
+      <div className="home-image-container">
+        {dogImage && <img src={dogImage} className="home-image" />}
+        {dogImage && <img src={dogImage} className="home-image" />}
+        {dogImage && <img src={dogImage} className="home-image" />}
+      </div>
+      <div className="table-container">
           <TableComponent
             key={"table-component"}
             theadData={["Breed", "Sub-Breed"]}
@@ -145,7 +145,7 @@ function Home() {
           />
         </div>
       </div>
-      <FiveStarRating onChange={handleRatingChange} />
+      <FiveStarRating onChange={handleRatingChange} /> */}
     </div>
   );
 }

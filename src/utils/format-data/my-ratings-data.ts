@@ -29,7 +29,6 @@ export function userRatingDataToTableData(
   });
 
   const setOfBreeds = [...new Set(breedsList)];
-  console.log(setOfBreeds);
   const UserRatingDataGrouped: UserRatingDataGrouped[] = [];
 
   setOfBreeds.forEach((breed) => {
@@ -58,9 +57,6 @@ export function userRatingDataToTableData(
     ({ breed, subBreed, urlRatings, urls }) => {
       const firstRating = urlRatings[0][0]; //urlRatings[0][0] is the first rating of the first url of the first subBreed
       const firstUrlArray = urls[0];
-      console.log("here");
-      console.log(subBreed);
-      console.log(firstUrlArray);
       const outputObject = {
         breed: breed,
         subBreed: subBreed,

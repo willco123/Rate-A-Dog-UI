@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import "./navbar.css";
+import "./navbar.scss";
 import dogSVG from "../../assets/dog-api-logo.svg";
 import hamburgerSVG from "../../assets/hamburger-icon.svg";
 

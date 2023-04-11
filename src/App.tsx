@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, Routes, Route, useLocation } from "react-router-dom";
-import "./App.css";
+import "./App.scss";
 import Home from "./pages/home/Home.js";
 import Navbar from "./components/navbar/Navbar.js";
 import LoginModal from "./pages/login/LoginModal.js";
@@ -26,20 +26,20 @@ export default function App() {
   return (
     <>
       <Routes location={background || location}>
-        <Route path="/" element={<LayoutsWithNavbar isLoggedIn={isLoggedIn} />}>
-          <Route index element={<Home />} />
-          <Route path="/dogs" element={<AllRatings />} />
+        {/* <Route path="/" element={<LayoutsWithNavbar isLoggedIn={isLoggedIn} />}> */}
+        <Route index element={<Home />} />
+        <Route path="/dogs" element={<AllRatings />} />
 
-          {isLoggedIn && (
-            <>
-              <Route path="/myratings" element={<MyRatings />} />
-              <Route
-                path="/logout"
-                element={<Logout setIsLoggedIn={setIsLoggedIn} />}
-              />
-            </>
-          )}
-        </Route>
+        {isLoggedIn && (
+          <>
+            <Route path="/myratings" element={<MyRatings />} />
+            <Route
+              path="/logout"
+              element={<Logout setIsLoggedIn={setIsLoggedIn} />}
+            />
+          </>
+        )}
+        {/* </Route> */}
       </Routes>
       {background && (
         <Routes>

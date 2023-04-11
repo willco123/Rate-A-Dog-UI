@@ -1,5 +1,5 @@
 import React from "react";
-import "./radio-hide-input.css";
+import "./radio-hide-input.scss";
 export type RadioHideInputProps = {
   item: string;
   radioGroup: string;

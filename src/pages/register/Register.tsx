@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import _ from "lodash";
 import { postRegister } from "../../services/backend";
-import "./register.css";
+import "./register.scss";
 import dogSVG from "../../assets/dog-api-logo.svg";
 import type { RegisterData } from "../../services/backend";
 
