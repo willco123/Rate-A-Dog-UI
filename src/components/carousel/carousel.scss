@@ -41,16 +41,11 @@
   border: 1px solid #490dee;
   width: 40vmin;
   height: 56vmin;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
   pointer-events: none;
   .expand-image::before {
     position: absolute;
-    top: 100%;
-    left: 95%;
+    top: 78%;
+    left: 59%;
     font-family: FontAwesome;
     height: 100px;
     pointer-events: all;

@@ -138,8 +138,6 @@ export default function Carousel() {
 
   return (
     <div>
-      <span>{selectedImageHTML?.dataset.rating}</span>
-
       <div className="chosen-image" ref={snapRefObject}>
         <div
           className={classnames("expand-image", {

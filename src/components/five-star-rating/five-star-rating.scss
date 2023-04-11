@@ -1,32 +1,28 @@
-// .star-container {
-//   display: flex;
-//   flex-direction: row-reverse;
-// }
-
-// .star-container > input {
-//   display: none;
-// }
-
-// .star-container > label {
-//   width: 1.1em;
-//   font-size: 50px;
-//   cursor: pointer;
-// }
-
-// .star-container > label::before {
-//   font-family: FontAwesome;
-//   content: "\f005";
-// }
-
-// .star-container > label:hover:before,
-// .star-container > label:hover ~ label:before {
-//   color: orange;
-// }
-
-// .star-container > input:checked ~ label:before {
-//   color: orange;
-// }
-
-// /* .star-container label[for="0"] {
-//   opacity: 0%;
-// } */
+.star-container {
+  display: flex;
+  flex-direction: row-reverse;
+  > input {
+    display: none;
+  }
+  > label {
+    width: 1.1em;
+    font-size: 50px;
+    cursor: pointer;
+  }
+  > label::before {
+    font-family: FontAwesome;
+    content: "\f005";
+  }
+  > label:hover:before {
+    color: orange;
+  }
+  > label:hover ~ label:before {
+    color: orange;
+  }
+  > input:checked ~ label:before {
+    color: orange;
+  }
+}
+/* .star-container label[for="0"] {
+  opacity: 0%;
+} */

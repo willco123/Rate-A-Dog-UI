@@ -118,12 +118,19 @@ function Home() {
 
   return (
     <div className="home-wrapper">
+      <div>
+        <span>Breed</span>
+        <span>Sub-Breed</span>
+      </div>
+      <div>
+        <span>AvgRating</span>
+        <span>MyRating:</span>
+      </div>
+
       <Carousel />
+      <FiveStarRating onChange={handleRatingChange} />
       {/* <h1 className="title">Dog Ceo Clone</h1>
       <div className="button-container">
-        <button onClick={handleGetClick} className="Dogs-button">
-          Get a new Dog!
-        </button>
         <button onClick={handleRateClick} className="Dogs-button">
           Rate the Dog!
         </button>
@@ -144,8 +151,7 @@ function Home() {
             tbodyData={tableDataJSX}
           />
         </div>
-      </div>
-      <FiveStarRating onChange={handleRatingChange} /> */}
+      </div> */}
     </div>
   );
 }
