@@ -30,7 +30,7 @@ const Config = {
         // options: {},
       },
       {
-        test: /\.css$/,
+        test: /\.s[ac]ss$/i,
         use: [
           {
             loader: "ts-loader",
@@ -45,6 +45,7 @@ const Config = {
           },
           "style-loader",
           "css-loader",
+          "sass-loader",
         ],
       },
     ],

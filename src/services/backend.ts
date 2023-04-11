@@ -73,9 +73,26 @@ axios.interceptors.response.use(
 );
 
 export async function getDbDogs() {
+  //ratings and votes grouped by subBreed
   try {
     const response = await axios.get(
       serverURL + "dogs",
+
+      {
+        withCredentials: true,
+      },
+    );
+
+    return response.data;
+  } catch (err: any) {
+    return false;
+  }
+}
+
+export async function getAllDbDogs() {
+  try {
+    const response = await axios.get(
+      serverURL + "dogs/all",
 
       {
         withCredentials: true,

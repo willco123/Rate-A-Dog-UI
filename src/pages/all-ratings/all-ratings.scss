@@ -1,0 +1,85 @@
+// .all-ratings {
+//   align-items: center;
+//   display: block flex;
+//   flex-direction: column;
+//   width: 100%;
+//   height: 100%;
+// }
+
+// .all-ratings .table-container {
+//   max-width: 600px;
+//   position: relative;
+// }
+
+// .all-ratings .table-component {
+//   --tableWidth: 600px;
+//   --numberOfColumns: 4;
+//   background-color: unset;
+//   table-layout: fixed;
+//   width: var(--tableWidth);
+// }
+
+// .all-ratings .table-component tbody {
+//   overflow-y: auto;
+// }
+
+// .all-ratings .table-component td {
+//   text-align: left;
+//   width: calc((var(--tableWidth) / var(--numberOfColumns)));
+// }
+
+// .all-ratings .table-component td:hover {
+//   background-color: #f9f9f9;
+// }
+
+// .all-ratings .image-buttons-container {
+//   position: relative;
+//   display: flex;
+//   margin-bottom: 100px;
+// }
+
+// .all-ratings button {
+//   width: 20%;
+//   height: 10%;
+// }
+
+// .all-ratings button.button-left {
+//   position: absolute;
+//   bottom: -10%;
+// }
+
+// .all-ratings button.button-right {
+//   position: absolute;
+//   right: 0;
+//   bottom: -10%;
+// }
+
+// .all-ratings button.button-left::before {
+//   font-family: FontAwesome;
+//   content: "\f060";
+// }
+
+// .all-ratings button.button-right::before {
+//   font-family: FontAwesome;
+//   content: "\f061";
+// }
+
+// .all-ratings button.button-left.disabled {
+//   display: none;
+// }
+// .all-ratings button.button-right.disabled {
+//   display: none;
+// }
+
+// .all-ratings .dog-image {
+//   max-width: 60vw;
+//   max-height: 40vh;
+//   display: inline-block;
+//   overflow: hidden;
+// }
+
+// .all-ratings .image-container {
+//   width: 60vw;
+//   height: 40vh;
+//   text-align: center;
+// }

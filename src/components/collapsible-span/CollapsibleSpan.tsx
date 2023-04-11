@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./collapsible-span.css";
+import "./collapsible-span.scss";
 import classnames from "classnames";
 
 export default function CollapsibleSpan({

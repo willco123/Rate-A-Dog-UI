@@ -3,7 +3,7 @@ import { useMyRatingsDataInit } from "../../custom-hooks/useMyRatingsDataInit.js
 import Table from "../../components/table-component/TableComponent.js";
 import Pagination from "../../components/pagination/Pagination.js";
 
-import "./my-ratings.css";
+import "./my-ratings.scss";
 
 export default function MyRatings() {
   const [dogImage, setDogImage] = useState<string | null>(null);

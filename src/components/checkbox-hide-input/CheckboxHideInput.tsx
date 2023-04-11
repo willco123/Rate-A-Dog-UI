@@ -1,5 +1,5 @@
 import React from "react";
-import "./checkbox-hide-input.css";
+import "./checkbox-hide-input.scss";
 
 export default function CheckboxHideInput({ item }: { item: string }) {
   return (

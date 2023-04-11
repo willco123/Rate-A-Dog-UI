@@ -1,5 +1,5 @@
 import React from "react";
-import "./drop-down.css";
+import "./drop-down.scss";
 
 export type DropDownProps = {
   items: (string | null | number)[];
@@ -17,7 +17,6 @@ export default function DropDown({
 }: DropDownProps) {
   function addItemsToList(items: (string | null | number)[]) {
     const listItems = items.map((item) => {
-      console.log(item);
       if (item == null) item = " ";
       return (
         <option key={item} value={item}>
