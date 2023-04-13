@@ -1,17 +1,22 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { getAllDbDogs } from "../../services/backend";
 import {
-  formatCarouselData,
-  formatCarouselDataJSX,
-} from "../../utils/format-data/carousel-data";
+  getAllDbDogs,
+  getTwentyLowerDbDogs,
+  getTwentyUpperDbDogs,
+} from "../../services/backend";
+import { formatCarouselData } from "../../utils/format-data/carousel-data";
 import classnames from "classnames";
+import CarouselImageContaniner from "../carousel-image-container/CarouselImageContainer";
 import type { CarouselData, UrlRatingData } from "../../types.js";
 import "./carousel.scss";
 
 export default function Carousel() {
+  const [upperBound, setUpperBound] = useState<boolean>(true);
+  const [lowerBound, setLowerBound] = useState<boolean>(false);
+  const [highestIndex, setHighestIndex] = useState<number>(0);
+  const [lowestIndex, setLowestIndex] = useState<number>(0);
   const [urlRatingData, setUrlRatingData] = useState<UrlRatingData[] | []>([]);
   const [carouselData, setCarouselData] = useState<CarouselData[]>([]);
-  const [carouselDataJSX, setCarouselDataJSX] = useState<JSX.Element[]>([]);
   const [isAnImageExpanded, setIsAnImageExpanded] = useState<boolean>(false);
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [mouseX, setMouseX] = useState(0);
@@ -28,23 +33,18 @@ export default function Carousel() {
   useEffect(() => {
     (async () => {
       const dbDogs = await getAllDbDogs();
-      setUrlRatingData(dbDogs);
+      if (!dbDogs) return setUrlRatingData([]);
+      return setUrlRatingData(dbDogs);
     })();
   }, []);
 
   useEffect(() => {
+    console.log(urlRatingData.length);
+    console.log(urlRatingData);
+    if (urlRatingData.length === 0) return;
     const carouselData = formatCarouselData(urlRatingData);
-    setCarouselData(carouselData);
+    return setCarouselData(carouselData);
   }, [urlRatingData]);
-
-  useEffect(() => {
-    const carouselDataJSX = formatCarouselDataJSX(
-      carouselData,
-      isAnImageExpanded,
-      handleCollapse,
-    );
-    setCarouselDataJSX(carouselDataJSX);
-  }, [carouselData]);
 
   useEffect(() => {
     if (isMouseDown) {
@@ -116,6 +116,18 @@ export default function Carousel() {
     return selectedImage;
   }
 
+  function getDistanceBetweenTwentyImages() {
+    if (carousel === null) return;
+    const carouselImages = carousel.children;
+    const firstImage = carouselImages[0];
+    const twentiethImage = carouselImages[20];
+
+    const firstImageCoordX = firstImage.getBoundingClientRect().left;
+    const twentiethImageCoordX = twentiethImage.getBoundingClientRect().left;
+
+    return twentiethImageCoordX - firstImageCoordX;
+  }
+
   function handleExpand() {
     if (!selectedImageHTML) return;
     const carouselDataClone = carouselData.map((element) => {
@@ -134,6 +146,35 @@ export default function Carousel() {
     });
     setCarouselData(carouselDataClone);
     setIsAnImageExpanded(false);
+  }
+
+  async function handleBoundaries(index: number) {
+    if (index > highestIndex) setHighestIndex(index);
+    if (index < lowestIndex) setLowestIndex(index);
+
+    if (upperBound && highestIndex == 40) {
+      setLowerBound(true); //enable lower bound
+
+      const newUrlRatingData = await getTwentyUpperDbDogs(urlRatingData);
+      const distance = getDistanceBetweenTwentyImages();
+      if (!distance) return;
+      setUrlRatingData(newUrlRatingData);
+      carousel!.style.transition = "none";
+      setMouseX(mouseX + distance);
+      setHighestIndex(20);
+      setLowestIndex(20);
+    }
+
+    if (lowerBound && lowestIndex == 10) {
+      const newUrlRatingData = await getTwentyLowerDbDogs(urlRatingData);
+      const distance = getDistanceBetweenTwentyImages();
+      if (!distance) return;
+      setUrlRatingData(newUrlRatingData);
+      carousel!.style.transition = "none";
+      setMouseX(mouseX - distance);
+      setLowestIndex(30);
+      setHighestIndex(30);
+    }
   }
 
   return (
@@ -159,25 +200,21 @@ export default function Carousel() {
         ref={carouselRefObject}
         // ref={initCarousel}
       >
-        {carouselDataJSX}
+        {carouselData.map((element, index) => {
+          return (
+            <CarouselImageContaniner
+              carouselData={element}
+              isAnImageExpanded={isAnImageExpanded}
+              handleCollapse={handleCollapse}
+              index={index}
+              handleBoundaries={handleBoundaries}
+            />
+          );
+        })}
       </div>
     </div>
   );
 }
 
-// const initCarousel = useCallback((instance: HTMLDivElement) => {
-//   const carousel = instance;
-//   if (carousel === null) return;
-//   if (carousel.children.length === 0) return;
-//   carousel!.style.transition = "transform 0.5s ease-in-out";
-//   const selectedImage = getNearestImage();
-//   const selectedImageArea = selectedImage!.getBoundingClientRect();
-//   const selectionContainer = snapRefObject.current;
-//   const selectedContainerArea = selectionContainer!.getBoundingClientRect();
-//   const diffX = selectedImageArea.left - selectedContainerArea.left;
-//   if (selectedImage) {
-//     setSelectedImageHTML(selectedImage.children[0] as HTMLImageElement);
-//   }
-
-//   setMouseX(mouseX - diffX);
-// }, []);
+//0123456789ABCDEF
+//xxxxxxxxxxABCDEF0123456789

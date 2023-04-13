@@ -74,7 +74,15 @@ type UrlRatings = [number | null, string];
 export type UrlRatingData = {
   breed: string;
   subBreed: string | null;
-  urlRatings: AllUrlRatings[];
+  url: string;
+  numberOfRates: number;
+  userRatingData: UrlUserRatingData[];
+  averageRating: number | null;
+};
+
+type UrlUserRatingData = {
+  url: string;
+  rating: number | null;
 };
 
 export type CarouselData = {
@@ -82,7 +90,7 @@ export type CarouselData = {
   subBreed: string | null;
   url: string;
   numberOfRates: number;
-  rating: number | null;
+  averageRating: number | null;
   isExpanded: boolean;
 };
 

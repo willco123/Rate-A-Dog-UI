@@ -1,5 +1,6 @@
 import axios from "axios";
 import { redirect } from "react-router-dom";
+import type { UrlRatingData } from "../types";
 
 export type LoginData = {
   username: string;
@@ -101,6 +102,43 @@ export async function getAllDbDogs() {
 
     return response.data;
   } catch (err: any) {
+    console.log(err);
+    return false;
+  }
+}
+
+export async function getTwentyLowerDbDogs(urlRatingData: UrlRatingData[]) {
+  try {
+    const response = await axios.post(
+      serverURL + "dogs/ten/lower",
+      { urlRatingData: urlRatingData },
+
+      {
+        withCredentials: true,
+      },
+    );
+
+    return response.data;
+  } catch (err: any) {
+    console.log(err);
+    return false;
+  }
+}
+
+export async function getTwentyUpperDbDogs(urlRatingData: UrlRatingData[]) {
+  try {
+    const response = await axios.post(
+      serverURL + "dogs/ten/upper",
+      { urlRatingData: urlRatingData },
+
+      {
+        withCredentials: true,
+      },
+    );
+
+    return response.data;
+  } catch (err: any) {
+    console.log(err);
     return false;
   }
 }
@@ -188,6 +226,7 @@ export async function getRefresh() {
     if (response.status === 200) return true;
     return false;
   } catch (err: any) {
+    console.log("err");
     return false;
   }
 }

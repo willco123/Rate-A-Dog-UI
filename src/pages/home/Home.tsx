@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./home.scss";
 import FiveStarRating from "../../components/five-star-rating/FiveStarRating.js";
-import TableComponent from "../../components/table-component/TableComponent.js";
-import {
-  getRandomDogImage,
-  getRandomDogImageByBreed,
-} from "../../services/dog-ceo.js";
 import { tableDataToTdJSXHomePage } from "../../utils/format-data/home-data.js";
 
 import { postDogs } from "../../services/backend";
@@ -15,13 +10,11 @@ import Carousel from "../../components/carousel/Carousel";
 
 function Home() {
   const {
-    tableDataJSX,
     activeSubBreeds,
     dogImage,
     tableData,
     setTableDataJSX,
     setActiveSubBreeds,
-    setDogImage,
   } = useHomeDataInit(
     handleRadioChange,
     handleDropDownChange,
@@ -75,39 +68,12 @@ function Home() {
     setSelectedSubBreed(newSelectedSubBreed);
   }
 
-  function handleGetClick() {
-    (async () => {
-      let randomImg: string | false;
-      if (selectedBreed) {
-        randomImg = await getRandomDogImageByBreed(
-          selectedBreed,
-          selectedSubBreed,
-        );
-        if (randomImg) setDogImage(randomImg);
-      } else {
-        randomImg = await getRandomDogImage();
-        if (randomImg) setDogImage(randomImg);
-      }
-    })();
-  }
-
   async function handleRateClick() {
     let breed: string = "";
     let subBreed: string | null | undefined = "";
     [breed, subBreed] = parseUrlForBreeds(dogImage);
 
     await postDogs(dogImage, breed, subBreed, rating);
-  }
-
-  function clearSelection() {
-    setSelectedBreed(null);
-    setSelectedSubBreed(null);
-    const radioGroup = document.getElementsByName(
-      "breed",
-    ) as unknown as HTMLInputElement[];
-    radioGroup.forEach((radio) => {
-      radio.checked = false;
-    });
   }
 
   function handleRatingChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -129,29 +95,10 @@ function Home() {
 
       <Carousel />
       <FiveStarRating onChange={handleRatingChange} />
-      {/* <h1 className="title">Dog Ceo Clone</h1>
-      <div className="button-container">
-        <button onClick={handleRateClick} className="Dogs-button">
-          Rate the Dog!
-        </button>
-        <button onClick={clearSelection} className="Dogs-button">
-          Clear
-        </button>
-      </div>
-      <div className="image-table-container">
-      <div className="home-image-container">
-        {dogImage && <img src={dogImage} className="home-image" />}
-        {dogImage && <img src={dogImage} className="home-image" />}
-        {dogImage && <img src={dogImage} className="home-image" />}
-      </div>
-      <div className="table-container">
-          <TableComponent
-            key={"table-component"}
-            theadData={["Breed", "Sub-Breed"]}
-            tbodyData={tableDataJSX}
-          />
-        </div>
-      </div> */}
+
+      <button onClick={handleRateClick} className="Dogs-button">
+        Rate the Dog!
+      </button>
     </div>
   );
 }
