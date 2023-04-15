@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   getAllDbDogs,
-  getTwentyLowerDbDogs,
-  getTwentyUpperDbDogs,
+  getLowerDbDogs,
+  getUpperDbDogs,
 } from "../../services/backend";
 import { formatCarouselData } from "../../utils/format-data/carousel-data";
 import classnames from "classnames";
@@ -11,10 +11,14 @@ import type { CarouselData, UrlRatingData } from "../../types.js";
 import "./carousel.scss";
 
 export default function Carousel() {
-  const [upperBound, setUpperBound] = useState<boolean>(true);
-  const [lowerBound, setLowerBound] = useState<boolean>(false);
+  const [upperBound, setUpperBound] = useState<number>(90);
+  const [lowerBound, setLowerBound] = useState<number | null>(null);
   const [highestIndex, setHighestIndex] = useState<number>(0);
   const [lowestIndex, setLowestIndex] = useState<number>(0);
+  const [isLowerBoundReached, setIsLowerBoundReached] =
+    useState<boolean>(false);
+  const [isHigherBoundReached, setIsHigherBoundReached] =
+    useState<boolean>(false);
   const [urlRatingData, setUrlRatingData] = useState<UrlRatingData[] | []>([]);
   const [carouselData, setCarouselData] = useState<CarouselData[]>([]);
   const [isAnImageExpanded, setIsAnImageExpanded] = useState<boolean>(false);
@@ -39,9 +43,10 @@ export default function Carousel() {
   }, []);
 
   useEffect(() => {
-    console.log(urlRatingData.length);
     console.log(urlRatingData);
     if (urlRatingData.length === 0) return;
+    setIsHigherBoundReached(false);
+    setIsLowerBoundReached(false);
     const carouselData = formatCarouselData(urlRatingData);
     return setCarouselData(carouselData);
   }, [urlRatingData]);
@@ -116,21 +121,22 @@ export default function Carousel() {
     return selectedImage;
   }
 
-  function getDistanceBetweenTwentyImages() {
+  function getDistanceBetweenImages(numberOfImages: number) {
     if (carousel === null) return;
     const carouselImages = carousel.children;
     const firstImage = carouselImages[0];
-    const twentiethImage = carouselImages[20];
+    const xthImage = carouselImages[numberOfImages];
 
     const firstImageCoordX = firstImage.getBoundingClientRect().left;
-    const twentiethImageCoordX = twentiethImage.getBoundingClientRect().left;
+    const xthImageCoordX = xthImage.getBoundingClientRect().left;
 
-    return twentiethImageCoordX - firstImageCoordX;
+    return xthImageCoordX - firstImageCoordX;
   }
 
   function handleExpand() {
     if (!selectedImageHTML) return;
     const carouselDataClone = carouselData.map((element) => {
+      if (element === null) return null;
       element.isExpanded = false;
       if (element.url === selectedImageHTML.src) element.isExpanded = true;
       return element;
@@ -141,6 +147,7 @@ export default function Carousel() {
 
   function handleCollapse() {
     const carouselDataClone = carouselData.map((element) => {
+      if (element === null) return null;
       element.isExpanded = false;
       return element;
     });
@@ -152,30 +159,70 @@ export default function Carousel() {
     if (index > highestIndex) setHighestIndex(index);
     if (index < lowestIndex) setLowestIndex(index);
 
-    if (upperBound && highestIndex == 40) {
-      setLowerBound(true); //enable lower bound
-
-      const newUrlRatingData = await getTwentyUpperDbDogs(urlRatingData);
-      const distance = getDistanceBetweenTwentyImages();
-      if (!distance) return;
-      setUrlRatingData(newUrlRatingData);
-      carousel!.style.transition = "none";
-      setMouseX(mouseX + distance);
-      setHighestIndex(20);
-      setLowestIndex(20);
+    if (highestIndex >= upperBound) {
+      setIsHigherBoundReached(true);
     }
 
-    if (lowerBound && lowestIndex == 10) {
-      const newUrlRatingData = await getTwentyLowerDbDogs(urlRatingData);
-      const distance = getDistanceBetweenTwentyImages();
-      if (!distance) return;
-      setUrlRatingData(newUrlRatingData);
-      carousel!.style.transition = "none";
-      setMouseX(mouseX - distance);
-      setLowestIndex(30);
-      setHighestIndex(30);
+    if (lowerBound === null) return;
+    if (lowestIndex <= lowerBound) {
+      setIsLowerBoundReached(true);
     }
   }
+
+  useEffect(() => {
+    if (isHigherBoundReached) {
+      (async () => {
+        setUpperBound(upperBound + 40);
+        const newUrlRatingData = await getUpperDbDogs(urlRatingData);
+        setUrlRatingData(newUrlRatingData);
+        if (lowerBound != null) {
+          setLowestIndex(lowerBound + 90);
+          setLowerBound(lowerBound + 40);
+        }
+
+        if (lowerBound === null) {
+          //init lower bound
+          setLowestIndex(90);
+          setLowerBound(50);
+        }
+      })();
+    }
+  }, [isHigherBoundReached]);
+
+  useEffect(() => {
+    if (isLowerBoundReached) {
+      (async () => {
+        if (lowerBound === 10) {
+          console.log("here");
+          console.log(lowestIndex);
+          setLowestIndex(50);
+
+          const newUrlRatingData = await getLowerDbDogs(urlRatingData);
+          setUrlRatingData(newUrlRatingData);
+        } else {
+          setLowerBound(lowerBound! - 40);
+          const newUrlRatingData = await getLowerDbDogs(urlRatingData);
+          setUrlRatingData(newUrlRatingData);
+          setHighestIndex(upperBound - 80);
+          setUpperBound(upperBound - 40);
+        }
+      })();
+    }
+  }, [isLowerBoundReached]);
+
+  useEffect(() => {
+    console.log("lowestIndex", lowestIndex);
+    console.log("lowerBound", lowerBound);
+  }, [lowerBound]);
+
+  useEffect(() => {
+    console.log("highestIndex", highestIndex);
+    console.log("upperBound", upperBound);
+  }, [upperBound]);
+
+  useEffect(() => {
+    console.log("lowestIndex", lowestIndex);
+  }, [lowestIndex]);
 
   return (
     <div>
@@ -216,5 +263,30 @@ export default function Carousel() {
   );
 }
 
-//0123456789ABCDEF
-//xxxxxxxxxxABCDEF0123456789
+// useEffect(() => {
+//   if(highestIndex === )
+//   (async () => {
+//     if (lowerBound != null) {
+//       setLowestIndex(lowestIndex + 40);
+//       setLowerBound(lowerBound + 40);
+//     }
+//     if (lowerBound === null) {
+//       //init lower bound
+//       setLowestIndex(90);
+//       setLowerBound(50);
+//     }
+
+//     const newUrlRatingData = await getUpperDbDogs(urlRatingData);
+//     setUrlRatingData(newUrlRatingData);
+//   })();
+// }, [upperBound]);
+
+// useEffect(() => {
+//   (async () => {
+//     const newUrlRatingData = await getLowerDbDogs(urlRatingData);
+
+//     setHighestIndex(highestIndex - 40);
+//     setUpperBound(upperBound - 40);
+//     setUrlRatingData(newUrlRatingData);
+//   })();
+// }, [lowerBound]);

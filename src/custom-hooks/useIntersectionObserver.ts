@@ -4,7 +4,7 @@ const useIntersectionObserver = ({
   target,
   onIntersect,
   threshold = 0,
-  rootMargin = "0px",
+  rootMargin = "150px",
 }: {
   target: React.RefObject<HTMLDivElement>;
   onIntersect: IntersectionObserverCallback;

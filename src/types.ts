@@ -92,7 +92,7 @@ export type CarouselData = {
   numberOfRates: number;
   averageRating: number | null;
   isExpanded: boolean;
-};
+} | null;
 
 type AllUrlRatings = {
   avgRating: number | null;

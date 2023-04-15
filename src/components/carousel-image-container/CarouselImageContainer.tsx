@@ -16,6 +16,9 @@ export default function CarouselImageContaniner({
   index: number;
   handleBoundaries: (index: number) => void;
 }) {
+  if (carouselData === null)
+    return <div className="slider-image" key={"null" + index}></div>;
+
   const [isVisible, setIsVisible] = useState(false);
   const imageRef = useRef<HTMLDivElement>(null);
 
@@ -32,12 +35,15 @@ export default function CarouselImageContaniner({
         if (dataIndex !== index.toString()) return;
         setIsVisible(true);
         if (!imageRef.current) throw new Error("Image container is undefined");
-        observerElement.unobserve(imageRef.current);
+        // observerElement.unobserve(imageRef.current);
+      } else if (entry.isIntersecting === false) {
+        setIsVisible(false);
       }
     },
   });
 
   if (!isAnImageExpanded) handleCollapse = undefined;
+
   const { breed, subBreed, averageRating, numberOfRates, url, isExpanded } =
     carouselData;
   let isAnImageExpandedCopy = isAnImageExpanded;

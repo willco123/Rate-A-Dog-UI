@@ -107,7 +107,7 @@ export async function getAllDbDogs() {
   }
 }
 
-export async function getTwentyLowerDbDogs(urlRatingData: UrlRatingData[]) {
+export async function getLowerDbDogs(urlRatingData: UrlRatingData[]) {
   try {
     const response = await axios.post(
       serverURL + "dogs/ten/lower",
@@ -125,7 +125,7 @@ export async function getTwentyLowerDbDogs(urlRatingData: UrlRatingData[]) {
   }
 }
 
-export async function getTwentyUpperDbDogs(urlRatingData: UrlRatingData[]) {
+export async function getUpperDbDogs(urlRatingData: UrlRatingData[]) {
   try {
     const response = await axios.post(
       serverURL + "dogs/ten/upper",
@@ -226,7 +226,6 @@ export async function getRefresh() {
     if (response.status === 200) return true;
     return false;
   } catch (err: any) {
-    console.log("err");
     return false;
   }
 }
