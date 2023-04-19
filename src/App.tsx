@@ -26,20 +26,20 @@ export default function App() {
   return (
     <>
       <Routes location={background || location}>
-        {/* <Route path="/" element={<LayoutsWithNavbar isLoggedIn={isLoggedIn} />}> */}
-        <Route index element={<Home />} />
-        <Route path="/dogs" element={<AllRatings />} />
+        <Route path="/" element={<LayoutsWithNavbar isLoggedIn={isLoggedIn} />}>
+          <Route index element={<Home />} />
+          <Route path="/dogs" element={<AllRatings />} />
 
-        {isLoggedIn && (
-          <>
-            <Route path="/myratings" element={<MyRatings />} />
-            <Route
-              path="/logout"
-              element={<Logout setIsLoggedIn={setIsLoggedIn} />}
-            />
-          </>
-        )}
-        {/* </Route> */}
+          {isLoggedIn && (
+            <>
+              <Route path="/myratings" element={<MyRatings />} />
+              <Route
+                path="/logout"
+                element={<Logout setIsLoggedIn={setIsLoggedIn} />}
+              />
+            </>
+          )}
+        </Route>
       </Routes>
       {background && (
         <Routes>

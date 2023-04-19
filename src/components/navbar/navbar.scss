@@ -1,88 +1,79 @@
-// @charset "UTF-8";
+@charset "UTF-8";
 
-// .navigation {
-//   height: 100%;
-//   overflow-x: hidden;
-//   width: 20vw;
-//   background-color: rgb(219, 216, 216);
-//   text-align: center;
-//   display: block flex;
-//   align-items: center;
-//   flex-direction: column;
-//   position: fixed;
-// }
+.navigation {
+  height: 50px;
+  overflow-y: hidden;
+  width: 100%;
+  background-color: rgb(219, 216, 216);
+  display: block flex;
+  justify-content: center;
+  // position: absolute;
+  margin-top: -8;
+  .brand-name {
+    text-decoration: none;
+    color: black;
+    font-size: 36px;
+    position: absolute;
+    left: 0;
+  }
+  .navigation-menu {
+    & ul {
+      margin-top: 1rem;
+      text-align: left;
+      display: flex;
+      gap: 100px;
+    }
+    & li {
+      list-style-type: none;
+      & a {
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        color: black;
+        &:hover {
+          color: #2642af;
+        }
+      }
+    }
+  }
+}
 
-// .brand {
-//   margin-top: 3rem;
-// }
+.contact-nav {
+  margin-top: 100px;
+  border-top: 2px solid;
+  /* width: 50%; */
+}
 
-// .brand-name {
-//   text-decoration: none;
-//   color: black;
-//   font-size: 36px;
-//   margin-top: 2rem;
-// }
+.contact-nav a {
+  text-decoration: none;
+  color: inherit;
+}
 
-// .navigation-menu {
-//   margin-top: 1rem;
-// }
+.contact-nav a:hover {
+  color: #2642af;
+}
 
-// .navigation-menu ul {
-//   margin-top: 1rem;
-//   text-align: left;
-//   display: flex;
-//   flex-direction: column;
-// }
-// .navigation-menu li {
-//   list-style-type: none;
-// }
-// .navigation-menu li a {
-//   text-decoration: none;
-//   display: block;
-//   width: 100%;
-//   color: black;
-// }
+.hamburger {
+  position: absolute;
+  border: 0;
+  height: 40px;
+  width: 40px;
+  padding: 0.5rem;
+  border-radius: 50%;
+  background-color: #283b8b;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  right: 25px;
+  display: none;
+}
+.hamburger:hover {
+  background-color: #2642af;
+}
 
-// .contact-nav {
-//   margin-top: 100px;
-//   border-top: 2px solid;
-//   /* width: 50%; */
-// }
-
-// .contact-nav a {
-//   text-decoration: none;
-//   color: inherit;
-// }
-
-// .contact-nav a:hover {
-//   color: #2642af;
-// }
-
-// .navigation-menu li a:hover {
-//   color: #2642af;
-// }
-
-// .hamburger {
-//   position: absolute;
-//   border: 0;
-//   height: 40px;
-//   width: 40px;
-//   padding: 0.5rem;
-//   border-radius: 50%;
-//   background-color: #283b8b;
-//   cursor: pointer;
-//   transition: background-color 0.2s ease-in-out;
-//   right: 25px;
-//   display: none;
-// }
-// .hamburger:hover {
-//   background-color: #2642af;
-// }
-
-// .fixScrollToggle--on {
-//   overflow: hidden;
-//   background-color: #c00;
-// }
+.fixScrollToggle--on {
+  overflow: hidden;
+  background-color: #c00;
+}
 
 // @media screen and (max-width: 700px) {
 //   .hamburger {

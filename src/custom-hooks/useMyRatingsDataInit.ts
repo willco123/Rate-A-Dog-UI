@@ -34,7 +34,7 @@ export const useMyRatingsDataInit = (
 
   useEffect(() => {
     (async () => {
-      const userRatings = await getUserDbDogs();
+      const userRatings = await getUserDbDogs(100);
       setUserRatingData(userRatings);
     })();
   }, []);

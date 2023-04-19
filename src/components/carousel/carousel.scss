@@ -1,52 +1,74 @@
-.slider-image-container {
-  display: flex;
-  gap: 2vmin;
+//width will be 300 * 100 = 30,000px
+//then when we shift alter the content justification
+
+.carousel-container {
   position: absolute;
-  top: 50%;
-  cursor: grab;
-  -webkit-user-drag: none;
-  .slider-image {
-    width: 40vmin;
-    height: 56vmin;
-    object-fit: cover;
-    object-position: center;
+  display: flex;
+  gap: 10px;
+  top: 10%;
+
+  .slider-image-container {
     position: relative;
-  }
-  img {
-    width: 40vmin;
-    height: 56vmin;
-    object-fit: cover;
-    object-position: center;
-    &.expanded {
-      width: auto;
-      height: auto;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      max-width: 90vw;
-      max-height: 90vh;
-      z-index: 11;
+    display: flex;
+    // width: 15000px;
+    right: 50%;
+    gap: 5px;
+    -webkit-user-drag: none;
+    cursor: grab;
+    &.first {
+      justify-content: right;
+      background-color: red;
     }
-    &.another-image-expanded {
-      opacity: 0.3;
+    &.second {
+      // flex-direction: row-reverse;
+      justify-content: left;
+      background-color: blue;
     }
-    &::selection {
-      background-color: transparent;
-      color: #000;
+    .slider-image {
+      width: 300px;
+      height: 500px;
+      position: relative;
+    }
+    img {
+      width: 300px;
+      height: 500px;
+      object-fit: cover;
+      object-position: center;
+      &.expanded {
+        width: auto;
+        height: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-width: 90vw;
+        max-height: 90vh;
+        z-index: 11;
+      }
+      &.another-image-expanded {
+        opacity: 0.3;
+      }
+      &::selection {
+        background-color: transparent;
+        color: #000;
+      }
     }
   }
 }
 
 .chosen-image {
   border: 1px solid #490dee;
-  width: 40vmin;
-  height: 56vmin;
+  width: 300px;
+  height: 500px;
   pointer-events: none;
+  position: absolute;
+  top: 300px;
+  left: 50%;
+  transform: translateX(-50%);
   .expand-image::before {
     position: absolute;
-    top: 78%;
-    left: 59%;
+    top: 100%;
+    left: 90%;
     font-family: FontAwesome;
     height: 100px;
     pointer-events: all;

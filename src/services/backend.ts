@@ -90,11 +90,11 @@ export async function getDbDogs() {
   }
 }
 
-export async function getAllDbDogs() {
+export async function getAllDbDogs(sampleSize: number) {
   try {
-    const response = await axios.get(
+    const response = await axios.post(
       serverURL + "dogs/all",
-
+      { sampleSize: sampleSize },
       {
         withCredentials: true,
       },
@@ -107,12 +107,14 @@ export async function getAllDbDogs() {
   }
 }
 
-export async function getLowerDbDogs(urlRatingData: UrlRatingData[]) {
+export async function getMoreDbDogs(
+  sampleSize: number,
+  currentData: UrlRatingData[],
+) {
   try {
     const response = await axios.post(
-      serverURL + "dogs/ten/lower",
-      { urlRatingData: urlRatingData },
-
+      serverURL + "dogs/all/more",
+      { sampleSize: sampleSize, currentlyLoadedDocuments: currentData },
       {
         withCredentials: true,
       },
@@ -120,34 +122,34 @@ export async function getLowerDbDogs(urlRatingData: UrlRatingData[]) {
 
     return response.data;
   } catch (err: any) {
-    console.log(err);
     return false;
   }
 }
 
-export async function getUpperDbDogs(urlRatingData: UrlRatingData[]) {
+export async function getUserDbDogs(sampleSize: number) {
   try {
-    const response = await axios.post(
-      serverURL + "dogs/ten/upper",
-      { urlRatingData: urlRatingData },
-
-      {
-        withCredentials: true,
-      },
-    );
-
-    return response.data;
-  } catch (err: any) {
-    console.log(err);
-    return false;
-  }
-}
-
-export async function getUserDbDogs() {
-  try {
-    const response = await axiosWithAuthHeader.get(
+    const response = await axiosWithAuthHeader.post(
       serverURL + "dogs/user",
+      { sampleSize: sampleSize },
+      {
+        withCredentials: true,
+      },
+    );
 
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+export async function getMoreUserDbDogs(
+  sampleSize: number,
+  currentData: UrlRatingData[],
+) {
+  try {
+    const response = await axiosWithAuthHeader.post(
+      serverURL + "dogs/user/more",
+      { sampleSize: sampleSize, currentlyLoadedDocuments: currentData },
       {
         withCredentials: true,
       },

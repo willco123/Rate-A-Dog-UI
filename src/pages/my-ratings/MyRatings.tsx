@@ -1,168 +1,105 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { useMyRatingsDataInit } from "../../custom-hooks/useMyRatingsDataInit.js";
-import Table from "../../components/table-component/TableComponent.js";
-import Pagination from "../../components/pagination/Pagination.js";
-
+import React, { useEffect, useState } from "react";
 import "./my-ratings.scss";
+import FiveStarRating from "../../components/five-star-rating/FiveStarRating.js";
+import { UrlRatingData } from "../../types";
+import {
+  postDogs,
+  getUserDbDogs,
+  getMoreUserDbDogs,
+} from "../../services/backend";
 
-export default function MyRatings() {
-  const [dogImage, setDogImage] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+import Carousel from "../../components/carousel/Carousel";
+
+function MyRatings() {
   const [selectedBreed, setSelectedBreed] = useState<string | null>(null);
-  const [selectedBreedUrls, setSelectedBreedUrls] = useState<(string | null)[]>(
-    [null],
-  );
-  const [selectedBreedUrl, setSelectedBreedUrl] = useState<string | null>(null);
+  const [selectedSubBreed, setSelectedSubBreed] = useState<string | null>(null);
+  const [averageRating, setAverageRating] = useState<number>(0);
+  const [url, setUrl] = useState<string | null>(null);
+  const [myRating, setMyRating] = useState<number>(0);
+  const [userData, setUserData] = useState<UrlRatingData[]>([]);
+  const [firstArrayData, setFirstArrayData] = useState<UrlRatingData[]>([]);
+  const [secondArrayData, setSecondArrayData] = useState<UrlRatingData[]>([]);
+  const sampleSize = 100;
+  const sliceIndex = Math.floor(sampleSize / 2);
 
-  const {
-    userRatingData,
-    userRatingTableData,
-    userRatingTableDataJSX,
-    activeSubBreedUrl,
-    setUserRatingTableData,
-    setActiveSubBreedUrl,
-  } = useMyRatingsDataInit(
-    handleRadioChange,
-    handleSubBreedDropDownChange,
-    handleUrlDropDownChange,
-  );
-
-  const itemsPerPage = 5;
-
-  const currentTableDataJSX = useMemo(() => {
-    if (!userRatingTableDataJSX) return [];
-    const firstPageIndex = (currentPage - 1) * itemsPerPage;
-    const lastPageIndex = firstPageIndex + itemsPerPage;
-    return userRatingTableDataJSX.length
-      ? userRatingTableDataJSX.slice(firstPageIndex, lastPageIndex)
-      : [];
-  }, [currentPage, userRatingTableDataJSX]);
-
-  useEffect(() => {
-    setDogImage(selectedBreedUrls[0]);
-  }, [selectedBreedUrls]);
-
-  useEffect(() => {
-    setDogImage(selectedBreedUrl);
-  }, [selectedBreedUrl]);
-
-  useEffect(() => {
-    if (selectedBreed === null) return;
-
-    const associatedSubBreed = activeSubBreedUrl.find((element) => {
-      return element.breed === selectedBreed;
-    });
-
-    const subBreedUrlRatings = userRatingData.find((element) => {
-      return (
-        element.breed === selectedBreed &&
-        element.subBreed == associatedSubBreed?.activeSubBreed
-      );
-    });
-    if (!subBreedUrlRatings) throw new Error("breedObject is undefined");
-    const urls = subBreedUrlRatings.urlRatings.map((element) => element[1]);
-    setSelectedBreedUrls(urls);
-  }, [selectedBreed, activeSubBreedUrl]);
-
-  function handleRadioChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const newSelectedBreed = event.target.value;
-    setSelectedBreed(newSelectedBreed);
+  async function handleRateClick() {
+    if (url === null || selectedBreed === null) return;
+    await postDogs(url, selectedBreed, selectedSubBreed, averageRating);
   }
 
-  function handleSubBreedDropDownChange(
-    e: React.ChangeEvent<HTMLSelectElement>,
-    tableRowId: string,
-    currentTableDataRowIndex: number,
+  function setSelectedImageData(
+    selectedBreed: string | undefined,
+    selectedSubBreed: string | null | undefined,
+    averageRating: number | null | undefined,
+    url: string | undefined,
   ) {
-    const selectedSubBreed = e.target.value;
-    const associatedBreed = tableRowId;
-    const activeSubBreedUrlClone = [...activeSubBreedUrl];
-    const activeObject = activeSubBreedUrlClone.find(
-      (element) => element.breed == associatedBreed,
-    );
-    if (!activeObject) throw new Error("breed is undefined");
-    activeObject.activeSubBreed = selectedSubBreed;
-
-    setActiveSubBreedUrl(activeSubBreedUrlClone);
-
-    const userRatings = userRatingData.find((element) => {
-      return (
-        element.breed === associatedBreed &&
-        element.subBreed == selectedSubBreed
-      );
-    });
-
-    if (!userRatings) throw new Error("breedObject is undefined");
-    const urls = userRatings.urlRatings.map((element) => element[1]);
-    setSelectedBreedUrls(urls);
-
-    const associatedBreedRating = userRatings.urlRatings[0][0]; //first rating of the first url
-    const userRatingTableDataClone = userRatingTableData.map((element) => {
-      return { ...element };
-    });
-    userRatingTableDataClone[currentTableDataRowIndex].urlRating =
-      associatedBreedRating;
-    userRatingTableDataClone[currentTableDataRowIndex].urls = urls;
-    setUserRatingTableData(userRatingTableDataClone);
+    if (selectedBreed) setSelectedBreed(selectedBreed);
+    if (selectedSubBreed === undefined) selectedSubBreed = null;
+    setSelectedSubBreed(selectedSubBreed);
+    if (averageRating) setAverageRating(averageRating);
+    if (url) setUrl(url);
   }
 
-  function handleUrlDropDownChange(
-    e: React.ChangeEvent<HTMLSelectElement>,
-    tableRowId: string,
-    currentTableDataRowIndex: number,
-  ) {
-    const selectedUrl = e.target.value;
-    const associatedBreed = tableRowId;
-    const activeSubBreedUrlClone = [...activeSubBreedUrl];
-    const activeObject = activeSubBreedUrlClone.find(
-      (element) => element.breed == associatedBreed,
-    );
-    if (!activeObject) throw new Error("breed is undefined");
-    activeObject.url = selectedUrl;
+  function handleRatingChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const selectedRating = e.target.value;
+    const selectedRatingAsNumber = parseInt(selectedRating, 10);
+    setAverageRating(selectedRatingAsNumber);
+  }
 
-    // setActiveSubBreedUrl(activeSubBreedUrlClone);
-
-    const associatedRating = (() => {
-      for (let element of userRatingData) {
-        for (let urlRating of element.urlRatings) {
-          if (urlRating[1] === selectedUrl) {
-            return urlRating[0];
-          }
-        }
-      }
+  useEffect(() => {
+    (async () => {
+      const dbDogs = await getUserDbDogs(sampleSize);
+      setUserData(dbDogs);
     })();
+  }, []);
 
-    if (associatedRating === undefined)
-      throw new Error("associatedRating is undefined");
+  useEffect(() => {
+    const firstSlice = userData.slice(0, sliceIndex);
+    const secondSlice = userData.slice(sliceIndex);
+    setFirstArrayData(firstSlice);
+    setSecondArrayData(secondSlice);
+  }, [userData]);
 
-    const userRatingTableDataClone = userRatingTableData.map((element) => {
-      return { ...element };
-    });
-    userRatingTableDataClone[currentTableDataRowIndex].urlRating =
-      associatedRating;
-    setUserRatingTableData(userRatingTableDataClone);
-    setSelectedBreedUrl(selectedUrl);
+  async function mutateUserData(targetArray: "first" | "second") {
+    const moreDogs = await getMoreUserDbDogs(sampleSize, userData);
+    if (targetArray === "first") {
+      const userDataClone = [...moreDogs, ...userData.slice(sliceIndex)];
+      setUserData(userDataClone);
+    }
+    if (targetArray === "second") {
+      const userDataClone = [...userData.slice(0, sliceIndex), ...moreDogs];
+      setUserData(userDataClone);
+    }
   }
+
   return (
-    <div className="my-ratings">
-      <div className="title">My Ratings</div>
-      {dogImage && (
-        <div className="image-container">
-          <img src={dogImage} className="dog-image" />
+    <div className="home-wrapper">
+      <h1>My Ratings</h1>
+      <div className="image-data">
+        <span>Breed: {selectedBreed}</span>
+        <span>Sub-Breed : {selectedSubBreed}</span>
+
+        <div>
+          <span>AvgRating: {averageRating}</span>
+          <span>MyRating:</span>
         </div>
-      )}
-      <Table
-        tbodyData={currentTableDataJSX}
-        theadData={["Breed", "SubBreed", "Urls", "Rating"]}
-      />
-      {userRatingTableData && (
-        <Pagination
-          dataLength={userRatingTableData.length}
-          currentPage={currentPage}
-          itemsPerPage={itemsPerPage}
-          onPageChange={(page: number) => setCurrentPage(page)}
+        <div className="chosen-image-home"></div>
+        <FiveStarRating onChange={handleRatingChange} />
+        <button onClick={handleRateClick} className="Dogs-button">
+          Rate the Dog!
+        </button>
+      </div>
+      {userData && (
+        <Carousel
+          firstArrayData={firstArrayData}
+          secondArrayData={secondArrayData}
+          key={"my-ratings-data" + userData.length}
+          setSelectedImageData={setSelectedImageData}
+          mutateArrayData={mutateUserData}
         />
       )}
     </div>
   );
 }
+
+export default MyRatings;

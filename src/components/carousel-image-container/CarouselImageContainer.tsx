@@ -8,18 +8,25 @@ export default function CarouselImageContaniner({
   isAnImageExpanded,
   handleCollapse,
   index,
-  handleBoundaries,
+  handleBoundary,
+  parentContainer,
 }: {
   carouselData: CarouselData;
   isAnImageExpanded: boolean;
   handleCollapse: ((e: React.MouseEvent<HTMLDivElement>) => void) | undefined;
   index: number;
-  handleBoundaries: (index: number) => void;
+  handleBoundary: (index: number) => void;
+  parentContainer: string;
 }) {
   if (carouselData === null)
-    return <div className="slider-image" key={"null" + index}></div>;
+    return (
+      <div
+        className="slider-image"
+        key={"null" + parentContainer + index}
+      ></div>
+    );
 
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const imageRef = useRef<HTMLDivElement>(null);
 
   useIntersectionObserver({
@@ -30,11 +37,11 @@ export default function CarouselImageContaniner({
         if (dataIndex === null) throw new Error("data-index is null");
         const currentCarouselDataIndex = parseInt(dataIndex);
 
-        handleBoundaries(currentCarouselDataIndex);
+        handleBoundary(currentCarouselDataIndex);
 
         if (dataIndex !== index.toString()) return;
         setIsVisible(true);
-        if (!imageRef.current) throw new Error("Image container is undefined");
+        // if (!imageRef.current) throw new Error("Image container is undefined");
         // observerElement.unobserve(imageRef.current);
       } else if (entry.isIntersecting === false) {
         setIsVisible(false);
@@ -52,7 +59,6 @@ export default function CarouselImageContaniner({
   return (
     <div
       className={classnames("slider-image")}
-      key={url}
       ref={imageRef}
       data-index={index}
     >

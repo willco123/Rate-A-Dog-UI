@@ -1,26 +1,46 @@
 import React, { useEffect, useState, useRef } from "react";
-import {
-  getAllDbDogs,
-  getLowerDbDogs,
-  getUpperDbDogs,
-} from "../../services/backend";
 import { formatCarouselData } from "../../utils/format-data/carousel-data";
 import classnames from "classnames";
 import CarouselImageContaniner from "../carousel-image-container/CarouselImageContainer";
 import type { CarouselData, UrlRatingData } from "../../types.js";
 import "./carousel.scss";
 
-export default function Carousel() {
-  const [upperBound, setUpperBound] = useState<number>(90);
-  const [lowerBound, setLowerBound] = useState<number | null>(null);
-  const [highestIndex, setHighestIndex] = useState<number>(0);
-  const [lowestIndex, setLowestIndex] = useState<number>(0);
-  const [isLowerBoundReached, setIsLowerBoundReached] =
-    useState<boolean>(false);
-  const [isHigherBoundReached, setIsHigherBoundReached] =
-    useState<boolean>(false);
-  const [urlRatingData, setUrlRatingData] = useState<UrlRatingData[] | []>([]);
-  const [carouselData, setCarouselData] = useState<CarouselData[]>([]);
+export default function Carousel({
+  firstArrayData,
+  secondArrayData,
+  setSelectedImageData,
+  mutateArrayData,
+}: {
+  firstArrayData: UrlRatingData[];
+  secondArrayData: UrlRatingData[];
+  setSelectedImageData: (
+    selectedBreed: string | undefined,
+    selectedSubBreed: string | null | undefined,
+    averageRating: number | null | undefined,
+    url: string | undefined,
+  ) => void;
+  mutateArrayData: (
+    targetArray: "first" | "second",
+    carousel: HTMLDivElement,
+  ) => void;
+}) {
+  const [firstCarouselWidth, setFirstCarouselWidth] = useState<number>(0);
+  const [secondCarouselWidth, setSecondCarouselWidth] = useState<number>(0);
+  const [arrayPosition, setArrayPosition] = useState<string[]>([
+    "first",
+    "second",
+  ]);
+
+  const [firstShiftX, setFirstShiftX] = useState<number>(0);
+  const [secondShiftX, setSecondShiftX] = useState<number>(0);
+
+  const [carouselDataFirst, setCarouselDataFirst] = useState<
+    CarouselData[] | []
+  >([]);
+  const [carouselDataSecond, setCarouselDataSecond] = useState<
+    CarouselData[] | []
+  >([]);
+
   const [isAnImageExpanded, setIsAnImageExpanded] = useState<boolean>(false);
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [mouseX, setMouseX] = useState(0);
@@ -31,25 +51,33 @@ export default function Carousel() {
 
   const snapRefObject = useRef<HTMLDivElement>(null);
   const carouselRefObject = useRef<HTMLDivElement>(null);
+  const firstCarouselRef = useRef<HTMLDivElement>(null);
+  const secondCarouselRef = useRef<HTMLDivElement>(null);
   const carousel = carouselRefObject.current;
-
-  //not sure why removeEventListener is not working using old method for now
-  useEffect(() => {
-    (async () => {
-      const dbDogs = await getAllDbDogs();
-      if (!dbDogs) return setUrlRatingData([]);
-      return setUrlRatingData(dbDogs);
-    })();
-  }, []);
+  const firstCarousel = firstCarouselRef.current;
+  const secondCarousel = secondCarouselRef.current;
 
   useEffect(() => {
-    console.log(urlRatingData);
-    if (urlRatingData.length === 0) return;
-    setIsHigherBoundReached(false);
-    setIsLowerBoundReached(false);
-    const carouselData = formatCarouselData(urlRatingData);
-    return setCarouselData(carouselData);
-  }, [urlRatingData]);
+    const carouselData = formatCarouselData(firstArrayData);
+    setCarouselDataFirst(carouselData);
+  }, [firstArrayData]);
+
+  useEffect(() => {
+    const carouselData = formatCarouselData(secondArrayData);
+    setCarouselDataSecond(carouselData);
+  }, [secondArrayData]);
+
+  // useEffect(() => {
+  //   const nummberOfImages = carouselDataFirst.length;
+  //   if (firstCarousel === null) return;
+  //   firstCarousel.style.width = `${nummberOfImages * 300}px`;
+  // }, [carouselDataFirst]);
+
+  // useEffect(() => {
+  //   const nummberOfImages = carouselDataSecond.length;
+  //   if (secondCarousel === null) return;
+  //   secondCarousel.style.width = `${nummberOfImages * 300}px`;
+  // }, [carouselDataSecond]);
 
   useEffect(() => {
     if (isMouseDown) {
@@ -67,7 +95,6 @@ export default function Carousel() {
       const selectionContainer = snapRefObject.current;
       const selectedContainerArea = selectionContainer!.getBoundingClientRect();
       const diffX = selectedImageArea.left - selectedContainerArea.left;
-
       if (selectedImage) {
         setSelectedImageHTML(selectedImage.children[0] as HTMLImageElement);
       }
@@ -75,6 +102,24 @@ export default function Carousel() {
       setMouseX(mouseX - diffX);
     }
   }, [isMouseDown]);
+
+  useEffect(() => {
+    if (!selectedImageHTML) return;
+    const averageRatingString: string | number | undefined =
+      selectedImageHTML.dataset.rating;
+    let averageRating: number = 0;
+    if (averageRatingString) averageRating = parseInt(averageRatingString, 10);
+
+    const selectedBreed = selectedImageHTML.dataset.breed;
+    const selectedSubBreed = selectedImageHTML.dataset.subbreed;
+    const selectedUrl = selectedImageHTML.src;
+    setSelectedImageData(
+      selectedBreed,
+      selectedSubBreed,
+      averageRating,
+      selectedUrl,
+    );
+  }, [selectedImageHTML]);
 
   function handleMouseDown(e: React.MouseEvent<HTMLDivElement>) {
     if (isAnImageExpanded) return;
@@ -97,8 +142,13 @@ export default function Carousel() {
       return;
     const selectedImageArea = snapRefObject.current.getBoundingClientRect();
     const middleCoordX = (selectedImageArea.left + selectedImageArea.right) / 2;
-    if (carousel === null) throw new Error("carousel is null");
-    const carouselImages = carousel.children;
+    if (firstCarousel === null || secondCarousel === null)
+      throw new Error("carousel is null");
+
+    const carouselImages = [
+      ...firstCarousel.children,
+      ...secondCarousel.children,
+    ];
 
     let selectedImage: HTMLImageElement | undefined;
 
@@ -121,111 +171,123 @@ export default function Carousel() {
     return selectedImage;
   }
 
-  function getDistanceBetweenImages(numberOfImages: number) {
-    if (carousel === null) return;
-    const carouselImages = carousel.children;
-    const firstImage = carouselImages[0];
-    const xthImage = carouselImages[numberOfImages];
-
-    const firstImageCoordX = firstImage.getBoundingClientRect().left;
-    const xthImageCoordX = xthImage.getBoundingClientRect().left;
-
-    return xthImageCoordX - firstImageCoordX;
-  }
-
   function handleExpand() {
     if (!selectedImageHTML) return;
-    const carouselDataClone = carouselData.map((element) => {
+    const carouselDataFirstClone = carouselDataFirst.map((element) => {
       if (element === null) return null;
       element.isExpanded = false;
       if (element.url === selectedImageHTML.src) element.isExpanded = true;
       return element;
     });
-    setCarouselData(carouselDataClone);
+    const carouselDataSecondClone = carouselDataSecond.map((element) => {
+      if (element === null) return null;
+      element.isExpanded = false;
+      if (element.url === selectedImageHTML.src) element.isExpanded = true;
+      return element;
+    });
+    setCarouselDataFirst(carouselDataFirstClone);
+    setCarouselDataSecond(carouselDataSecondClone);
     setIsAnImageExpanded(true);
   }
 
   function handleCollapse() {
-    const carouselDataClone = carouselData.map((element) => {
+    const carouselDataFirstClone = carouselDataFirst.map((element) => {
       if (element === null) return null;
       element.isExpanded = false;
       return element;
     });
-    setCarouselData(carouselDataClone);
+    const carouselDataSecondClone = carouselDataSecond.map((element) => {
+      if (element === null) return null;
+      element.isExpanded = false;
+      return element;
+    });
+    setCarouselDataFirst(carouselDataFirstClone);
+    setCarouselDataSecond(carouselDataSecondClone);
     setIsAnImageExpanded(false);
   }
 
-  async function handleBoundaries(index: number) {
-    if (index > highestIndex) setHighestIndex(index);
-    if (index < lowestIndex) setLowestIndex(index);
+  async function handleFirstBoundary(index: number) {
+    if (secondCarousel === null) return;
 
-    if (highestIndex >= upperBound) {
-      setIsHigherBoundReached(true);
+    if (index > 40 && arrayPosition[1] === "first") {
+      //Moving second array to the right
+      const distance = getCarouselDistance();
+      setSecondShiftX(secondShiftX + distance);
+      secondCarousel.style.justifyContent = "left";
+      setArrayPosition(["first", "second"]);
+      mutateArrayData("second", secondCarousel);
     }
+    if (index < 10 && arrayPosition[0] === "first") {
+      //moving second array to the left
 
-    if (lowerBound === null) return;
-    if (lowestIndex <= lowerBound) {
-      setIsLowerBoundReached(true);
+      const distance = getCarouselDistance();
+      setSecondShiftX(secondShiftX + distance * -1);
+      secondCarousel.style.justifyContent = "right";
+      setArrayPosition(["second", "first"]);
+      mutateArrayData("second", secondCarousel);
     }
   }
 
-  useEffect(() => {
-    if (isHigherBoundReached) {
-      (async () => {
-        setUpperBound(upperBound + 40);
-        const newUrlRatingData = await getUpperDbDogs(urlRatingData);
-        setUrlRatingData(newUrlRatingData);
-        if (lowerBound != null) {
-          setLowestIndex(lowerBound + 90);
-          setLowerBound(lowerBound + 40);
-        }
+  async function handleSecondBoundary(index: number) {
+    if (firstCarousel === null) return;
 
-        if (lowerBound === null) {
-          //init lower bound
-          setLowestIndex(90);
-          setLowerBound(50);
-        }
-      })();
+    if (index > 40 && arrayPosition[1] === "second") {
+      //moving first array to the right
+      const distance = getCarouselDistance();
+      setFirstShiftX(firstShiftX + distance);
+      firstCarousel.style.justifyContent = "left";
+      setArrayPosition(["second", "first"]);
+      mutateArrayData("first", firstCarousel);
     }
-  }, [isHigherBoundReached]);
-
-  useEffect(() => {
-    if (isLowerBoundReached) {
-      (async () => {
-        if (lowerBound === 10) {
-          console.log("here");
-          console.log(lowestIndex);
-          setLowestIndex(50);
-
-          const newUrlRatingData = await getLowerDbDogs(urlRatingData);
-          setUrlRatingData(newUrlRatingData);
-        } else {
-          setLowerBound(lowerBound! - 40);
-          const newUrlRatingData = await getLowerDbDogs(urlRatingData);
-          setUrlRatingData(newUrlRatingData);
-          setHighestIndex(upperBound - 80);
-          setUpperBound(upperBound - 40);
-        }
-      })();
+    if (index < 10 && arrayPosition[0] === "second") {
+      //moving first array to the left
+      const distance = getCarouselDistance();
+      setFirstShiftX(firstShiftX + distance * -1);
+      firstCarousel.style.justifyContent = "right";
+      setArrayPosition(["first", "second"]);
+      mutateArrayData("first", firstCarousel);
     }
-  }, [isLowerBoundReached]);
+  }
 
-  useEffect(() => {
-    console.log("lowestIndex", lowestIndex);
-    console.log("lowerBound", lowerBound);
-  }, [lowerBound]);
+  function getCarouselDistance() {
+    if (firstCarousel === null || secondCarousel === null) return 0;
+    const firstCarouselWidth = firstCarousel.getBoundingClientRect().width;
 
-  useEffect(() => {
-    console.log("highestIndex", highestIndex);
-    console.log("upperBound", upperBound);
-  }, [upperBound]);
+    const secondCarouselWidth = secondCarousel.getBoundingClientRect().width;
+    const distance = firstCarouselWidth + secondCarouselWidth;
+    return distance;
+  }
 
-  useEffect(() => {
-    console.log("lowestIndex", lowestIndex);
-  }, [lowestIndex]);
+  // function swapSecondLeft() {
+  //   const distance = getCarouselDistance();
+  //   console.log(distance);
+
+  //   setSecondShiftX(secondShiftX + distance * -1);
+  // }
+
+  // function swapSecondRight() {
+  //   const distance = getCarouselDistance();
+  //   console.log(distance);
+
+  //   setSecondShiftX(secondShiftX + distance);
+  // }
+  // function swapFirstLeft() {
+  //   const distance = getCarouselDistance();
+  //   console.log(distance);
+  //   setFirstShiftX(firstShiftX + distance * -1);
+  // }
+  // function swapFirstRight() {
+  //   const distance = getCarouselDistance();
+  //   console.log(distance);
+  //   setFirstShiftX(firstShiftX + distance);
+  // }
 
   return (
     <div>
+      {/* <button onClick={swapFirstLeft}>swapFirstLeft</button>
+      <button onClick={swapFirstRight}>swapFirstRight</button>
+      <button onClick={swapSecondLeft}>swapSecondLeft</button>
+      <button onClick={swapSecondRight}>swapSecondRight</button> */}
       <div className="chosen-image" ref={snapRefObject}>
         <div
           className={classnames("expand-image", {
@@ -237,56 +299,67 @@ export default function Carousel() {
         />
       </div>
       <div
-        className={classnames("slider-image-container", {
-          expanded: isAnImageExpanded,
-        })}
-        onMouseDown={handleMouseDown}
+        key="carousel-container"
+        className="carousel-container"
         style={{
-          transform: `translate(${mouseX}px, -50%)`,
+          transform: `translate(${mouseX}px, 35%)`,
         }}
         ref={carouselRefObject}
-        // ref={initCarousel}
       >
-        {carouselData.map((element, index) => {
-          return (
-            <CarouselImageContaniner
-              carouselData={element}
-              isAnImageExpanded={isAnImageExpanded}
-              handleCollapse={handleCollapse}
-              index={index}
-              handleBoundaries={handleBoundaries}
-            />
-          );
-        })}
+        <div
+          key="first-carousel"
+          ref={firstCarouselRef}
+          className={classnames("slider-image-container first", {
+            expanded: isAnImageExpanded,
+          })}
+          style={{
+            transform: `translate(${firstShiftX}px, 0%)`,
+          }}
+          onMouseDown={handleMouseDown}
+        >
+          {carouselDataFirst.map((element, index) => {
+            const key = element ? element.url : index + "null";
+            return (
+              <CarouselImageContaniner
+                carouselData={element}
+                isAnImageExpanded={isAnImageExpanded}
+                handleCollapse={handleCollapse}
+                index={index}
+                handleBoundary={handleFirstBoundary}
+                parentContainer="first-carousel"
+                key={key}
+              />
+            );
+          })}
+        </div>
+
+        <div
+          key="second-carousel123"
+          ref={secondCarouselRef}
+          className={classnames("slider-image-container second", {
+            expanded: isAnImageExpanded,
+          })}
+          style={{
+            transform: `translate(${secondShiftX}px, 0%)`,
+          }}
+          onMouseDown={handleMouseDown}
+        >
+          {carouselDataSecond.map((element, index) => {
+            const key = element ? element.url : index + "null";
+            return (
+              <CarouselImageContaniner
+                carouselData={element}
+                isAnImageExpanded={isAnImageExpanded}
+                handleCollapse={handleCollapse}
+                index={index}
+                handleBoundary={handleSecondBoundary}
+                parentContainer="second-carousel"
+                key={key}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );
 }
-
-// useEffect(() => {
-//   if(highestIndex === )
-//   (async () => {
-//     if (lowerBound != null) {
-//       setLowestIndex(lowestIndex + 40);
-//       setLowerBound(lowerBound + 40);
-//     }
-//     if (lowerBound === null) {
-//       //init lower bound
-//       setLowestIndex(90);
-//       setLowerBound(50);
-//     }
-
-//     const newUrlRatingData = await getUpperDbDogs(urlRatingData);
-//     setUrlRatingData(newUrlRatingData);
-//   })();
-// }, [upperBound]);
-
-// useEffect(() => {
-//   (async () => {
-//     const newUrlRatingData = await getLowerDbDogs(urlRatingData);
-
-//     setHighestIndex(highestIndex - 40);
-//     setUpperBound(upperBound - 40);
-//     setUrlRatingData(newUrlRatingData);
-//   })();
-// }, [lowerBound]);

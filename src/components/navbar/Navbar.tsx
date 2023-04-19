@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./navbar.scss";
-import dogSVG from "../../assets/dog-api-logo.svg";
+// import dogSVG from "../../assets/dog-api-logo.svg";
 import hamburgerSVG from "../../assets/hamburger-icon.svg";
 
 function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
@@ -18,9 +18,9 @@ function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (
     <>
       <nav className="navigation">
-        <img src={dogSVG} alt="Dog SVG" className="brand" />
+        {/* <img src={dogSVG} alt="Dog SVG" className="brand" /> */}
         <Link to="/" className="brand-name">
-          Dog API Clone
+          Rate A Dog
         </Link>
         <button
           className="hamburger"
@@ -37,7 +37,7 @@ function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
         >
           <ul>
             <li>
-              <Link to="/dogs">All Ratings</Link>
+              <Link to="/">All Ratings</Link>
             </li>
             {isLoggedIn && (
               <li>
