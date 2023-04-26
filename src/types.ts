@@ -1,30 +1,15 @@
-export type BreedData = {
-  breed: string;
-  subBreed: string | null;
-  url: (string | null)[];
-  rating: number | null;
-  numberOfRates: number;
-};
-
 export type TableData = {
   breed: string;
   subBreed: (string | null)[];
-  rating: number | null;
-  votes: number;
-};
-
-export type BreedDataGrouped = {
-  breed: string;
-  subBreed: (string | null)[];
-  rating: (number | null)[];
-  votes: number[];
+  averageRating: (number | null)[];
+  numberOfRates: number[];
 };
 
 export type TableDataJSX = {
   breed: JSX.Element;
   subBreed: JSX.Element;
-  rating: JSX.Element;
-  votes: JSX.Element;
+  averageRating: JSX.Element;
+  numberOfRates: JSX.Element;
 };
 
 export type Breeds = {
@@ -42,48 +27,19 @@ export type ActiveSubBreedUrls = {
   url: string;
 };
 
-export type UserRatingData = {
-  breed: string;
-  subBreed: string | null;
-  urlRatings: UrlRatings[];
-};
-
-export type UserRatingDataGrouped = {
-  breed: string;
-  subBreed: (string | null)[];
-  urls: string[][];
-  urlRatings: (number | null)[][];
-};
-
-export type UserRatingTableData = {
-  breed: string;
-  subBreed: (string | null)[];
-  urls: string[];
-  urlRating: number | null;
-};
-
-export type UserRatingTableDataJSX = {
-  breed: JSX.Element;
-  subBreed: JSX.Element;
-  urls: JSX.Element;
-  urlRating: JSX.Element;
-};
-
-type UrlRatings = [number | null, string];
-
 export type UrlRatingData = {
   breed: string;
   subBreed: string | null;
   url: string;
   numberOfRates: number;
-  myRating: number | null;
-  // userRatingData: UrlUserRatingData[];
   averageRating: number | null;
+  myRating?: number | null;
 };
 
-type UrlUserRatingData = {
-  url: string;
-  rating: number | null;
+export type SingleUrlOnRate = {
+  numberOfRates: number;
+  averageRating: number;
+  myRating: number;
 };
 
 export type CarouselData = {
@@ -96,10 +52,15 @@ export type CarouselData = {
   isExpanded: boolean;
 };
 
-type AllUrlRatings = {
-  avgRating: number | null;
-  url: string;
-  numberOfRates: number;
+export type FilterData = { breed: string; subBreed: string | null };
+
+export type LoginData = {
+  username: string;
+  password: string;
 };
 
-export type FilterData = { breed: string; subBreed: string | null };
+export type RegisterData = {
+  username: string;
+  password: string;
+  email: string;
+};

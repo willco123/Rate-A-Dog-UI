@@ -244,8 +244,6 @@ export default function Carousel({
       //Moving second array to the right
     }
     if (index < 10 && arrayPosition[0] === "first") {
-      //if sorted dont run this on first iter
-
       setArrayPosition(["second", "first"]);
       const distance = getCarouselDistance();
       mutateArrayData("second", secondCarousel);

@@ -9,10 +9,10 @@ import {
   getFilteredCount,
   getAllSorted,
   getDogByUrl,
-} from "../../services/backend";
+} from "../../services/backend/dogs.js";
 
 import Carousel from "../../components/carousel/Carousel";
-import { UrlRatingData, FilterData } from "../../types";
+import { UrlRatingData } from "../../types";
 
 function Home() {
   const [maxSamples, setMaxSamples] = useState<number | null>(null);

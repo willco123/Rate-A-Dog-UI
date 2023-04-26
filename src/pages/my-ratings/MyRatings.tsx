@@ -7,7 +7,7 @@ import {
   getUserDbDogs,
   getUserCount,
   getUserFilteredCount,
-} from "../../services/backend";
+} from "../../services/backend/dogs.js";
 
 import Carousel from "../../components/carousel/Carousel";
 

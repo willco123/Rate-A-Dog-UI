@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import _ from "lodash";
-import { postRegister } from "../../services/backend";
+import { postRegister } from "../../services/backend/users.js";
 import "./register.scss";
 import dogSVG from "../../assets/dog-api-logo.svg";
-import type { RegisterData } from "../../services/backend";
+import type { RegisterData } from "../../types";
 
 export default function Register() {
   const [badDetails, setBadDetails] = useState<string>("");

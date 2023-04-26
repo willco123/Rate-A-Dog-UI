@@ -1,25 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, Routes, Route, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./App.scss";
 import Home from "./pages/home/Home.js";
 import Navbar from "./components/navbar/Navbar.js";
 import LoginModal from "./pages/login/LoginModal.js";
 import Register from "./pages/register/Register.js";
 import MyRatings from "./pages/my-ratings/MyRatings.js";
-// import AllRatings from "./pages/all-ratings/AllRatings.js";
-import Logout from "./pages/logout/Logout";
-import { getRefresh } from "./services/backend";
+import Logout from "./pages/logout/Logout.js";
+import { getRefresh } from "./services/backend/users.js";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const background = location.state && location.state.background;
 
   useEffect(() => {
     (async () => {
       const isAuthenticated = await getRefresh();
-
       if (isAuthenticated) setIsLoggedIn(true);
+      if (!isAuthenticated && isLoggedIn) setIsLoggedIn(false);
+      if (!isAuthenticated) navigate("/");
     })();
   }, []);
 
@@ -28,8 +30,6 @@ export default function App() {
       <Routes location={background || location}>
         <Route path="/" element={<LayoutsWithNavbar isLoggedIn={isLoggedIn} />}>
           <Route index element={<Home />} />
-          {/* <Route path="/dogs" element={<AllRatings />} /> */}
-
           {isLoggedIn && (
             <>
               <Route path="/myratings" element={<MyRatings />} />
@@ -53,7 +53,6 @@ export default function App() {
     </>
   );
 }
-
 function LayoutsWithNavbar({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (
     <>
@@ -64,5 +63,3 @@ function LayoutsWithNavbar({ isLoggedIn }: { isLoggedIn: boolean }) {
     </>
   );
 }
-
-//for testing may have to split app and routes to allow for router to be rendered/redclared
