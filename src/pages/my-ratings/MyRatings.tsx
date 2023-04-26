@@ -5,12 +5,20 @@ import { UrlRatingData } from "../../types";
 import {
   postDogs,
   getUserDbDogs,
-  getMoreUserDbDogs,
+  getUserCount,
+  getUserFilteredCount,
 } from "../../services/backend";
 
 import Carousel from "../../components/carousel/Carousel";
 
 function MyRatings() {
+  const [maxSamples, setMaxSamples] = useState<number>(0);
+  const [chosenRating, setChosenRating] = useState<number | null>(null);
+  const [currentMaxIndex, setCurrentMaxIndex] = useState<number>(100);
+  const [sortMode, setSortMode] = useState<
+    "averageRating" | "numberOfRates" | "myRating" | "breed"
+  >("averageRating");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [selectedBreed, setSelectedBreed] = useState<string | null>(null);
   const [selectedSubBreed, setSelectedSubBreed] = useState<string | null>(null);
   const [averageRating, setAverageRating] = useState<number>(0);
@@ -23,8 +31,19 @@ function MyRatings() {
   const sliceIndex = Math.floor(sampleSize / 2);
 
   async function handleRateClick() {
-    if (url === null || selectedBreed === null) return;
-    await postDogs(url, selectedBreed, selectedSubBreed, averageRating);
+    if (url === null || selectedBreed === null || chosenRating === null) return;
+    await postDogs(url, selectedBreed, selectedSubBreed, chosenRating);
+    const updatedData: UrlRatingData[] = await getUserDbDogs(
+      sortOrder,
+      sortMode,
+      currentMaxIndex - 100,
+      sampleSize,
+    );
+    setUserData(updatedData);
+    setMyRating(chosenRating);
+    const updatedItem = updatedData.find((item) => item.url === url);
+    if (updatedItem && updatedItem.averageRating != null)
+      setAverageRating(updatedItem.averageRating);
   }
 
   function setSelectedImageData(
@@ -32,7 +51,9 @@ function MyRatings() {
     selectedSubBreed: string | null | undefined,
     averageRating: number | null | undefined,
     url: string | undefined,
+    myRating: number | null | undefined,
   ) {
+    if (myRating) setMyRating(myRating);
     if (selectedBreed) setSelectedBreed(selectedBreed);
     if (selectedSubBreed === undefined) selectedSubBreed = null;
     setSelectedSubBreed(selectedSubBreed);
@@ -43,15 +64,19 @@ function MyRatings() {
   function handleRatingChange(e: React.ChangeEvent<HTMLInputElement>) {
     const selectedRating = e.target.value;
     const selectedRatingAsNumber = parseInt(selectedRating, 10);
-    setAverageRating(selectedRatingAsNumber);
+    setChosenRating(selectedRatingAsNumber);
   }
 
   useEffect(() => {
     (async () => {
-      const dbDogs = await getUserDbDogs(sampleSize);
+      const dbDogs = await getUserDbDogs(sortOrder, sortMode, 0, 100);
       setUserData(dbDogs);
     })();
-  }, []);
+  }, [sortMode]);
+
+  // useEffect(()=> {
+
+  // }, [filteredBreed])
 
   useEffect(() => {
     const firstSlice = userData.slice(0, sliceIndex);
@@ -61,7 +86,7 @@ function MyRatings() {
   }, [userData]);
 
   async function mutateUserData(targetArray: "first" | "second") {
-    const moreDogs = await getMoreUserDbDogs(sampleSize, userData);
+    const moreDogs = await getUserDbDogs(sortOrder, sortMode, currentMaxIndex);
     if (targetArray === "first") {
       const userDataClone = [...moreDogs, ...userData.slice(sliceIndex)];
       setUserData(userDataClone);
@@ -74,14 +99,21 @@ function MyRatings() {
 
   return (
     <div className="home-wrapper">
-      <h1>My Ratings</h1>
+      <button onClick={() => setSortMode("breed")}>breed</button>
+      <button onClick={() => setSortMode("averageRating")}>
+        averageRating
+      </button>
+      <button onClick={() => setSortMode("numberOfRates")}>
+        numberOfRates
+      </button>
+      <button onClick={() => setSortMode("myRating")}>myRating</button>
       <div className="image-data">
         <span>Breed: {selectedBreed}</span>
         <span>Sub-Breed : {selectedSubBreed}</span>
 
         <div>
           <span>AvgRating: {averageRating}</span>
-          <span>MyRating:</span>
+          <span>MyRating: {myRating}</span>
         </div>
         <div className="chosen-image-home"></div>
         <FiveStarRating onChange={handleRatingChange} />
@@ -96,6 +128,10 @@ function MyRatings() {
           key={"my-ratings-data" + userData.length}
           setSelectedImageData={setSelectedImageData}
           mutateArrayData={mutateUserData}
+          maxSamples={maxSamples}
+          currentMaxIndex={currentMaxIndex}
+          sampleSize={sampleSize}
+          sortMode={sortMode}
         />
       )}
     </div>

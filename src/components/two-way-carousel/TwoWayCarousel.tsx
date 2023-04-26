@@ -30,7 +30,6 @@ export default function Carousel({
   mutateArrayData: (
     targetArray: "first" | "second",
     carousel: HTMLDivElement,
-    direction: "left" | "right",
   ) => void;
   maxSamples: number | null;
   currentMaxIndex: number | null;
@@ -237,30 +236,19 @@ export default function Carousel({
   async function handleFirstBoundary(index: number) {
     if (secondCarousel === null) return;
     if (index > 40 && arrayPosition[1] === "first") {
-      if (maxSamples && currentMaxIndex && currentMaxIndex >= maxSamples)
-        return; //disable boundary if array is at its end
-      // console.log("one");
-      // console.log(currentMaxIndex);
       setArrayPosition(["first", "second"]);
       const distance = getCarouselDistance();
-      mutateArrayData("second", secondCarousel, "right");
+      mutateArrayData("second", secondCarousel);
       setSecondShiftX(secondShiftX + distance + 15);
       secondCarousel.style.justifyContent = "left";
       //Moving second array to the right
     }
     if (index < 10 && arrayPosition[0] === "first") {
-      // console.log("two");
-      // console.log(currentMaxIndex);
-      if (
-        sortMode != "random" &&
-        (!currentMaxIndex || (currentMaxIndex && currentMaxIndex <= sampleSize))
-      )
-        return;
       //if sorted dont run this on first iter
 
       setArrayPosition(["second", "first"]);
       const distance = getCarouselDistance();
-      mutateArrayData("second", secondCarousel, "left");
+      mutateArrayData("second", secondCarousel);
       setSecondShiftX(secondShiftX + (distance + 15) * -1);
       secondCarousel.style.justifyContent = "right";
       //moving second array to the left
@@ -270,24 +258,18 @@ export default function Carousel({
   function handleSecondBoundary(index: number) {
     if (firstCarousel === null) return;
     if (index > 40 && arrayPosition[1] === "second") {
-      if (maxSamples && currentMaxIndex && currentMaxIndex >= maxSamples)
-        return; //disable boundary is array is at its end
       //moving first array to the right
-      // console.log("three", arrayPosition);
-      // console.log(currentMaxIndex);
       setArrayPosition(["second", "first"]);
       const distance = getCarouselDistance();
-      mutateArrayData("first", firstCarousel, "right");
+      mutateArrayData("first", firstCarousel);
       setFirstShiftX(firstShiftX + distance + 15);
       firstCarousel.style.justifyContent = "left";
     }
     if (index < 10 && arrayPosition[0] === "second") {
       //moving first array to the left
-      // console.log("four");
-      // console.log(currentMaxIndex);
       setArrayPosition(["first", "second"]);
       const distance = getCarouselDistance();
-      mutateArrayData("first", firstCarousel, "left");
+      mutateArrayData("first", firstCarousel);
       setFirstShiftX(firstShiftX + (distance + 15) * -1);
       firstCarousel.style.justifyContent = "right";
     }
@@ -299,7 +281,6 @@ export default function Carousel({
 
     const secondCarouselWidth = secondCarousel.getBoundingClientRect().width;
     const distance = firstCarouselWidth + secondCarouselWidth;
-    console.log(distance);
     return distance;
   }
 

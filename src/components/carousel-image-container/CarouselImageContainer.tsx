@@ -16,15 +16,16 @@ export default function CarouselImageContaniner({
   handleCollapse: ((e: React.MouseEvent<HTMLDivElement>) => void) | undefined;
   index: number;
   handleBoundary: (index: number) => void;
-  parentContainer: string;
+  parentContainer: "first" | "second";
 }) {
-  if (carouselData === null)
+  if (carouselData === null) {
     return (
       <div
         className="slider-image"
         key={"null" + parentContainer + index}
       ></div>
     );
+  }
 
   const [isVisible, setIsVisible] = useState(true);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -51,8 +52,15 @@ export default function CarouselImageContaniner({
 
   if (!isAnImageExpanded) handleCollapse = undefined;
 
-  const { breed, subBreed, averageRating, numberOfRates, url, isExpanded } =
-    carouselData;
+  const {
+    breed,
+    subBreed,
+    averageRating,
+    myRating,
+    numberOfRates,
+    url,
+    isExpanded,
+  } = carouselData;
   let isAnImageExpandedCopy = isAnImageExpanded;
   if (isExpanded) isAnImageExpandedCopy = false;
 
@@ -61,6 +69,7 @@ export default function CarouselImageContaniner({
       className={classnames("slider-image")}
       ref={imageRef}
       data-index={index}
+      data-carousel={parentContainer}
     >
       {isVisible && (
         <img
@@ -74,7 +83,8 @@ export default function CarouselImageContaniner({
           data-breed={breed}
           data-subbreed={subBreed}
           data-averagerating={averageRating}
-          data-votes={numberOfRates}
+          data-numberofrates={numberOfRates}
+          data-myrating={myRating}
           onClick={handleCollapse}
         />
       )}

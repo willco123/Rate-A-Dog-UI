@@ -23,7 +23,7 @@ const useIntersectionObserver = ({
     return () => {
       observer.unobserve(current);
     };
-  });
+  }); //if empty dependacy array enjoy images not getting re-observed if cached
 };
 
 export default useIntersectionObserver;

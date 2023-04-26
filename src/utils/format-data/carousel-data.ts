@@ -2,8 +2,9 @@ import type { UrlRatingData, CarouselData } from "../../types.js";
 
 export function formatCarouselData(urlRatingData: UrlRatingData[]) {
   const carouselData: CarouselData[] = urlRatingData.map((element) => {
-    if (element === null) return null;
-    const { breed, subBreed, averageRating, url, numberOfRates } = element;
+    // if (element === null) return null;
+    const { breed, subBreed, averageRating, url, numberOfRates, myRating } =
+      element;
 
     return {
       breed,
@@ -11,6 +12,7 @@ export function formatCarouselData(urlRatingData: UrlRatingData[]) {
       averageRating,
       url,
       numberOfRates,
+      myRating,
       isExpanded: false,
     };
   });

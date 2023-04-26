@@ -73,6 +73,21 @@ axios.interceptors.response.use(
   },
 );
 
+export async function getDogByUrl(url: string) {
+  try {
+    const response = await axiosWithAuthHeader.post(
+      serverURL + "dogs/url",
+      { url },
+      {
+        withCredentials: true,
+      },
+    );
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
 export async function getDbDogs() {
   //ratings and votes grouped by subBreed
   try {
@@ -92,9 +107,10 @@ export async function getDbDogs() {
 
 export async function getAllDbDogs(sampleSize: number) {
   try {
+    const authHeader = sessionStorage.getItem("Authorization");
     const response = await axios.post(
       serverURL + "dogs/all",
-      { sampleSize: sampleSize },
+      { sampleSize: sampleSize, authHeader },
       {
         withCredentials: true,
       },
@@ -102,7 +118,6 @@ export async function getAllDbDogs(sampleSize: number) {
 
     return response.data;
   } catch (err: any) {
-    console.log(err);
     return false;
   }
 }
@@ -112,9 +127,14 @@ export async function getMoreDbDogs(
   currentData: UrlRatingData[],
 ) {
   try {
+    const authHeader = sessionStorage.getItem("Authorization");
     const response = await axios.post(
       serverURL + "dogs/all/more",
-      { sampleSize: sampleSize, currentlyLoadedDocuments: currentData },
+      {
+        sampleSize: sampleSize,
+        currentlyLoadedDocuments: currentData,
+        authHeader,
+      },
       {
         withCredentials: true,
       },
@@ -126,11 +146,26 @@ export async function getMoreDbDogs(
   }
 }
 
-export async function getUserDbDogs(sampleSize: number) {
+export async function getAllSorted(
+  sortOrder: "asc" | "desc" = "asc",
+  sortMode: "averageRating" | "numberOfRates" | "breed" = "averageRating",
+  currentMaxIndex: number | null = 0,
+  sampleSize: number = 50,
+  filteredBreed?: { breed: string; subBreed: string | null },
+) {
   try {
-    const response = await axiosWithAuthHeader.post(
-      serverURL + "dogs/user",
-      { sampleSize: sampleSize },
+    const authHeader = sessionStorage.getItem("Authorization");
+
+    const response = await axios.post(
+      serverURL + "dogs/all/sorted",
+      {
+        sortOrder,
+        sortMode,
+        currentMaxIndex,
+        sampleSize,
+        filteredBreed,
+        authHeader,
+      },
       {
         withCredentials: true,
       },
@@ -142,14 +177,75 @@ export async function getUserDbDogs(sampleSize: number) {
   }
 }
 
-export async function getMoreUserDbDogs(
-  sampleSize: number,
-  currentData: UrlRatingData[],
+export async function getUserDbDogs(
+  sortOrder: "asc" | "desc" = "desc",
+  sortMode:
+    | "averageRating"
+    | "numberOfRates"
+    | "myRating"
+    | "breed" = "averageRating",
+  currentMaxIndex: number = 0,
+  sampleSize = 50,
+  filteredBreed?: { breed: string; subBreed: string | null },
 ) {
   try {
     const response = await axiosWithAuthHeader.post(
-      serverURL + "dogs/user/more",
-      { sampleSize: sampleSize, currentlyLoadedDocuments: currentData },
+      serverURL + "dogs/user",
+      { sortOrder, sortMode, currentMaxIndex, filteredBreed, sampleSize },
+      {
+        withCredentials: true,
+      },
+    );
+
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+export async function getUserCount() {
+  try {
+    const response = await axiosWithAuthHeader.get(
+      serverURL + "dogs/user/maxcount",
+
+      {
+        withCredentials: true,
+      },
+    );
+
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+export async function getFilteredCount(filteredBreed: {
+  breed: string;
+  subBreed: string | null;
+}) {
+  try {
+    const response = await axios.post(
+      serverURL + "dogs/filtered/maxcount",
+      { filteredBreed },
+      {
+        withCredentials: true,
+      },
+    );
+
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+export async function getUserFilteredCount(filteredBreed: {
+  breed: string;
+  subBreed: string | null;
+}) {
+  try {
+    const response = await axiosWithAuthHeader.post(
+      serverURL + "dogs/user/filtered/maxcount",
+      { filteredBreed },
       {
         withCredentials: true,
       },
@@ -255,7 +351,7 @@ export async function postDogs(
       },
     );
 
-    return response;
+    return response.data;
   } catch (err: any) {
     return err.response;
   }

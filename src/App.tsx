@@ -6,7 +6,7 @@ import Navbar from "./components/navbar/Navbar.js";
 import LoginModal from "./pages/login/LoginModal.js";
 import Register from "./pages/register/Register.js";
 import MyRatings from "./pages/my-ratings/MyRatings.js";
-import AllRatings from "./pages/all-ratings/AllRatings.js";
+// import AllRatings from "./pages/all-ratings/AllRatings.js";
 import Logout from "./pages/logout/Logout";
 import { getRefresh } from "./services/backend";
 
@@ -28,7 +28,7 @@ export default function App() {
       <Routes location={background || location}>
         <Route path="/" element={<LayoutsWithNavbar isLoggedIn={isLoggedIn} />}>
           <Route index element={<Home />} />
-          <Route path="/dogs" element={<AllRatings />} />
+          {/* <Route path="/dogs" element={<AllRatings />} /> */}
 
           {isLoggedIn && (
             <>

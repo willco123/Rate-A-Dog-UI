@@ -76,7 +76,8 @@ export type UrlRatingData = {
   subBreed: string | null;
   url: string;
   numberOfRates: number;
-  userRatingData: UrlUserRatingData[];
+  myRating: number | null;
+  // userRatingData: UrlUserRatingData[];
   averageRating: number | null;
 };
 
@@ -91,11 +92,14 @@ export type CarouselData = {
   url: string;
   numberOfRates: number;
   averageRating: number | null;
+  myRating: number | null;
   isExpanded: boolean;
-} | null;
+};
 
 type AllUrlRatings = {
   avgRating: number | null;
   url: string;
   numberOfRates: number;
 };
+
+export type FilterData = { breed: string; subBreed: string | null };
