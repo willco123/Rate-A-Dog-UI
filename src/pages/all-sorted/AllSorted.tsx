@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import "./my-ratings.scss";
+import "./all-sorted.scss";
 import FiveStarRating from "../../components/five-star-rating/FiveStarRating.js";
 import Carousel from "../../components/carousel/Carousel.js";
 import { SortTypes } from "../../types";
 import useDetermineSelection from "../../custom-hooks/useDetermineSelection.js";
 import useImageExpansion from "../../custom-hooks/useImageExpansion.js";
-import useSetData from "../../custom-hooks/my-ratings/useSetData.js";
-import useUpdateRating from "../../custom-hooks/my-ratings/useUpdateRating.js";
+import useSetData from "../../custom-hooks/all-sorted/useSetData.js";
+import useUpdateRating from "../../custom-hooks/all-sorted/useUpdateRating.js";
 
-function MyRatings() {
+function AllSorted() {
   const [sampleSize, setSampleSize] = useState<number>(100);
   const [chosenRating, setChosenRating] = useState<number | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
@@ -19,13 +19,13 @@ function MyRatings() {
   const [sortMode, setSortMode] = useState<SortTypes>("breed");
 
   const {
-    userData,
+    sortedData,
     carouselDataFirst,
     carouselDataSecond,
     skipCount,
     maxSamples,
-    mutateUserData,
-    setUserData,
+    mutateSortedData,
+    setSortedData,
     setCarouselDataFirst,
     setCarouselDataSecond,
   } = useSetData({
@@ -54,14 +54,14 @@ function MyRatings() {
     selectedBreed,
     selectedSubBreed,
     chosenRating,
-    userData,
+    sortedData,
     selectedMyRating,
     sortOrder,
     sortMode,
     skipCount,
     sampleSize,
     filteredBreed,
-    setUserData,
+    setSortedData,
     setSelectedMyRating,
     setSelectedAverageRating,
   });
@@ -125,12 +125,12 @@ function MyRatings() {
       </div>
 
       <Carousel
-        key={"sorted" + userData.length}
+        key={"sorted" + sortedData.length}
         carouselDataFirst={carouselDataFirst}
         carouselDataSecond={carouselDataSecond}
         selectedImageHTML={selectedImageHTML}
         isAnImageExpanded={isAnImageExpanded}
-        mutateArrayData={mutateUserData}
+        mutateArrayData={mutateSortedData}
         setSelectedImageHTML={setSelectedImageHTML}
         setIsAnImageExpanded={setIsAnImageExpanded}
         maxSamples={maxSamples}
@@ -141,4 +141,30 @@ function MyRatings() {
   );
 }
 
-export default MyRatings;
+export default AllSorted;
+
+// function addOneToFirst() {
+//   const firstSlice = homeData.slice(0, sliceIndex);
+//   const currentArrayLength = firstArrayData.length;
+//   const newFirstArrayData = firstSlice.slice(0, currentArrayLength + 20);
+//   setFirstArrayData(newFirstArrayData);
+// }
+
+// function addOneToSecond() {
+//   const secondSlice = homeData.slice(sliceIndex);
+//   const currentArrayLength = secondArrayData.length;
+//   const newSecondArrayData = secondSlice.slice(0, currentArrayLength + 20);
+//   setSecondArrayData(newSecondArrayData);
+// }
+
+// function removeOneFromFirst() {
+//   const firstArrayDataClone = [...firstArrayData];
+
+//   setFirstArrayData(firstArrayDataClone.slice(0, 30));
+// }
+
+// function removeOneFromsecond() {
+//   const secondArrayDataClone = [...secondArrayData];
+
+//   setSecondArrayData(secondArrayDataClone.slice(0, 30));
+// }

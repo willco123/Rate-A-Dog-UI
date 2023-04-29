@@ -1,22 +1,22 @@
 import React, { useState, useRef } from "react";
 import useIntersectionObserver from "../../custom-hooks/useIntersectionObserver";
 import classnames from "classnames";
-import type { CarouselData } from "../../types";
+import type { CarouselData, ImageExpansion } from "../../types";
 
 export default function CarouselImageContaniner({
   carouselData,
-  isAnImageExpanded,
-  handleCollapse,
   index,
-  handleBoundary,
   parentContainer,
+  isAnImageExpanded,
+  setIsImageExpanded,
+  setIndex,
 }: {
   carouselData: CarouselData;
-  isAnImageExpanded: boolean;
-  handleCollapse: ((e: React.MouseEvent<HTMLDivElement>) => void) | undefined;
   index: number;
-  handleBoundary: (index: number) => void;
   parentContainer: "first" | "second";
+  isAnImageExpanded: boolean;
+  setIsImageExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+  setIndex: React.Dispatch<React.SetStateAction<number | null>>;
 }) {
   if (carouselData === null) {
     return (
@@ -32,25 +32,19 @@ export default function CarouselImageContaniner({
 
   useIntersectionObserver({
     target: imageRef,
-    onIntersect: ([entry], observerElement) => {
+    onIntersect: ([entry]) => {
       if (entry.isIntersecting) {
         const dataIndex = entry.target.getAttribute("data-index");
         if (dataIndex === null) throw new Error("data-index is null");
         const currentCarouselDataIndex = parseInt(dataIndex);
-
-        handleBoundary(currentCarouselDataIndex);
-
+        setIndex(currentCarouselDataIndex);
         if (dataIndex !== index.toString()) return;
         setIsVisible(true);
-        // if (!imageRef.current) throw new Error("Image container is undefined");
-        // observerElement.unobserve(imageRef.current);
       } else if (entry.isIntersecting === false) {
         setIsVisible(false);
       }
     },
   });
-
-  if (!isAnImageExpanded) handleCollapse = undefined;
 
   const {
     breed,
@@ -61,6 +55,7 @@ export default function CarouselImageContaniner({
     url,
     isExpanded,
   } = carouselData;
+
   let isAnImageExpandedCopy = isAnImageExpanded;
   if (isExpanded) isAnImageExpandedCopy = false;
 
@@ -85,7 +80,7 @@ export default function CarouselImageContaniner({
           data-averagerating={averageRating}
           data-numberofrates={numberOfRates}
           data-myrating={myRating}
-          onClick={handleCollapse}
+          onClick={() => setIsImageExpanded(false)}
         />
       )}
     </div>

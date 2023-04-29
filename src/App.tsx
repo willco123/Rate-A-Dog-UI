@@ -3,6 +3,7 @@ import { Outlet, Routes, Route, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./App.scss";
 import Home from "./pages/home/Home.js";
+import AllSorted from "./pages/all-sorted/AllSorted";
 import Navbar from "./components/navbar/Navbar.js";
 import LoginModal from "./pages/login/LoginModal.js";
 import Register from "./pages/register/Register.js";
@@ -30,6 +31,7 @@ export default function App() {
       <Routes location={background || location}>
         <Route path="/" element={<LayoutsWithNavbar isLoggedIn={isLoggedIn} />}>
           <Route index element={<Home />} />
+          <Route path="/sorted" element={<AllSorted />} />
           {isLoggedIn && (
             <>
               <Route path="/myratings" element={<MyRatings />} />

@@ -64,3 +64,50 @@ export type RegisterData = {
   password: string;
   email: string;
 };
+
+export type SetSelectedImageData = (
+  selectedBreed: string | undefined,
+  selectedSubBreed: string | null | undefined,
+  averageRating: number | null | undefined,
+  url: string | undefined,
+  myRating: number | null | undefined,
+  selectedCarousel: "first" | "second" | null,
+  selectedCarouselIndex: number | null,
+) => void;
+
+export type ImageExpansion =
+  | ((
+      selectedImageHTML: HTMLImageElement | undefined,
+      carouselDataFirst: CarouselData[],
+      carouselDataSecond: CarouselData[],
+      setCarouselDataFirst: React.Dispatch<
+        React.SetStateAction<CarouselData[]>
+      >,
+      setCarouselDataSecond: React.Dispatch<
+        React.SetStateAction<CarouselData[]>
+      >,
+      setIsAnImageExpanded: React.Dispatch<React.SetStateAction<boolean>>,
+    ) => void)
+  | undefined;
+
+export type MutateArrayData = (
+  targetArray: "first" | "second",
+  carousel: HTMLDivElement,
+  direction: "left" | "right",
+) => void;
+
+export type MutateHomeData = (
+  targetArray: "first" | "second",
+  carousel: HTMLDivElement,
+) => void;
+
+export type SortTypes = "averageRating" | "breed" | "numberOfRates";
+
+// export interface ImageExpansion extends React.MouseEventHandler {
+//   selectedImageHTML: HTMLImageElement | null;
+//   carouselDataFirst: CarouselData[];
+//   carouselDataSecond: CarouselData[];
+//   setCarouselDataFirst: React.Dispatch<React.SetStateAction<CarouselData[]>>;
+//   setCarouselDataSecond: React.Dispatch<React.SetStateAction<CarouselData[]>>;
+//   setIsAnImageExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+// }

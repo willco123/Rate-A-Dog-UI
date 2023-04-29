@@ -9,14 +9,15 @@ export async function postDogs(
   rating?: number,
 ) {
   try {
-    await axiosWithAuthHeader.post(
+    const response = await axiosWithAuthHeader.post(
       serverURL + "dogs",
       { breed, subBreed, url, rating },
       {
         withCredentials: true,
       },
     );
-    return;
+    console.log(response);
+    return response;
   } catch (err: any) {
     throw new Error(err);
   }
@@ -81,7 +82,7 @@ export async function getMoreDbDogs(
 export async function getAllSorted(
   sortOrder: "asc" | "desc" = "asc",
   sortMode: "averageRating" | "numberOfRates" | "breed" = "averageRating",
-  currentMaxIndex: number | null = 0,
+  skipCount: number | null = 0,
   sampleSize: number = 50,
   filteredBreed?: { breed: string; subBreed: string | null },
 ) {
@@ -92,7 +93,7 @@ export async function getAllSorted(
       {
         sortOrder,
         sortMode,
-        currentMaxIndex,
+        skipCount,
         sampleSize,
         filteredBreed,
         authHeader,
@@ -115,20 +116,36 @@ export async function getUserDbDogs(
     | "numberOfRates"
     | "myRating"
     | "breed" = "averageRating",
-  currentMaxIndex: number = 0,
+  skipCount: number = 0,
   sampleSize = 50,
   filteredBreed?: { breed: string; subBreed: string | null },
 ) {
   try {
     const response = await axiosWithAuthHeader.post(
       serverURL + "dogs/user",
-      { sortOrder, sortMode, currentMaxIndex, filteredBreed, sampleSize },
+      { sortOrder, sortMode, skipCount, filteredBreed, sampleSize },
       {
         withCredentials: true,
       },
     );
 
     return response.data as UrlRatingData[];
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+export async function getCount() {
+  try {
+    const response = await axios.get(
+      serverURL + "dogs/maxcount",
+
+      {
+        withCredentials: true,
+      },
+    );
+
+    return response.data.count as number;
   } catch (error: any) {
     throw new Error(error);
   }
@@ -144,7 +161,7 @@ export async function getUserCount() {
       },
     );
 
-    return response.data as number;
+    return response.data.count as number;
   } catch (error: any) {
     throw new Error(error);
   }
@@ -163,7 +180,7 @@ export async function getFilteredCount(filteredBreed: {
       },
     );
 
-    return response.data as number;
+    return response.data.count as number;
   } catch (error: any) {
     throw new Error(error);
   }
@@ -181,7 +198,7 @@ export async function getUserFilteredCount(filteredBreed: {
         withCredentials: true,
       },
     );
-    return response.data as number;
+    return response.data.count as number;
   } catch (error: any) {
     throw new Error(error);
   }
