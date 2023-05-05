@@ -1,5 +1,18 @@
 export type TableData = {
   breed: string;
+  subBreed: string | null;
+  averageRating: number | null;
+  numberOfRates: number;
+};
+
+export type HandleDropDownChange = (
+  e: React.ChangeEvent<HTMLSelectElement>,
+  tableRowId: string,
+  breedDataRowIndex: number,
+) => void;
+
+export type TableDataGrouped = {
+  breed: string;
   subBreed: (string | null)[];
   averageRating: (number | null)[];
   numberOfRates: number[];
@@ -92,9 +105,8 @@ export type ImageExpansion =
 
 export type MutateArrayData = (
   targetArray: "first" | "second",
-  carousel: HTMLDivElement,
   direction: "left" | "right",
-) => void;
+) => Promise<number>;
 
 export type MutateHomeData = (
   targetArray: "first" | "second",

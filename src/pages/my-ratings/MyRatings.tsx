@@ -7,6 +7,8 @@ import useDetermineSelection from "../../custom-hooks/useDetermineSelection.js";
 import useImageExpansion from "../../custom-hooks/useImageExpansion.js";
 import useSetData from "../../custom-hooks/my-ratings/useSetData.js";
 import useUpdateRating from "../../custom-hooks/my-ratings/useUpdateRating.js";
+import ExpandableDiv from "../../components/expandable-div/ExpandableDiv";
+import { getUserTableData } from "../../services/backend/dogs";
 
 function MyRatings() {
   const [sampleSize, setSampleSize] = useState<number>(100);
@@ -80,31 +82,26 @@ function MyRatings() {
     setChosenRating(selectedRatingAsNumber);
   }
 
-  function handleFilter(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === "Enter") {
-      const searchInput = e.target as HTMLInputElement;
-      const breed = searchInput.value;
-      setFilteredBreed({ breed, subBreed: "american" });
-      // setFilteredBreed({ breed: "wolfhound", subBreed: "irish" });
-    }
-  }
-
   return (
-    <div className="home-wrapper">
-      <button onClick={() => setSortMode("breed")}>breed</button>
-      <button onClick={() => setSortMode("averageRating")}>
-        averageRating
+    <div className="all-sorted-wrapper">
+      <button
+        className={sortMode === "breed" ? "glow" : ""}
+        onClick={() => setSortMode("breed")}
+      >
+        Breed
       </button>
-      <button onClick={() => setSortMode("numberOfRates")}>
-        numberOfRates
+      <button
+        className={sortMode === "averageRating" ? "glow" : ""}
+        onClick={() => setSortMode("averageRating")}
+      >
+        Rating
       </button>
-      <input
-        type="text"
-        name="filter-breed"
-        id="filter-breed"
-        placeholder="Filter Breed"
-        onKeyDown={handleFilter}
-      />
+      <button
+        className={sortMode === "numberOfRates" ? "glow" : ""}
+        onClick={() => setSortMode("numberOfRates")}
+      >
+        Votes
+      </button>
 
       <div className="image-data">
         <span>Breed: {selectedBreed}</span>
@@ -114,7 +111,7 @@ function MyRatings() {
           <span>AvgRating: {selectedAverageRating}</span>
           <span>MyRating: {selectedMyRating}</span>
         </div>
-        <div className="chosen-image-home"></div>
+        <div className="chosen-image-all-sorted"></div>
         <FiveStarRating onChange={handleRatingChange} />
         <button
           onClick={() => setIsClicked(!isClicked)}
@@ -136,6 +133,11 @@ function MyRatings() {
         maxSamples={maxSamples}
         skipCount={skipCount}
         sampleSize={sampleSize}
+      />
+      <ExpandableDiv
+        getTableData={getUserTableData}
+        filteredBreed={filteredBreed}
+        setFilteredBreed={setFilteredBreed}
       />
     </div>
   );

@@ -63,8 +63,8 @@ export default function TwoWayCarousel({
         />
       </div>
       <div
-        key="carousel-container"
-        className="carousel-container"
+        key="two-way-carousel-container"
+        className="two-way-carousel-container"
         style={{
           transform: `translate(${mouseX}px, 35%)`,
         }}

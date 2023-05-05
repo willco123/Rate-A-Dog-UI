@@ -5,9 +5,26 @@ body {
   line-height: 1.8;
   font-size: 18px;
   margin: 0;
-
   background: rgb(73, 73, 73);
-  overflow: hidden;
+  color: rgb(182, 182, 182);
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+button {
+  background-color: #647a9c;
+  border-radius: 5px;
+  border: none;
+  color: rgb(182, 182, 182);
+  font-family: karla, monospace;
+  font-size: 16px;
+  cursor: pointer;
+  &:active {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  &.glow {
+    border: 3px solid #969c64;
+  }
 }
 
 ol,
@@ -15,17 +32,8 @@ ul {
   padding-left: 0px;
 }
 
-// .main-wrapper {
-//   margin-left: 20vw;
-// }
-
-// @media screen and (max-width: 700px) {
-//   .main-wrapper {
-//     margin-left: 0;
-//     padding-top: 50px;
+// @media screen and (min-width: 700px) {
+//   body {
+//     overflow: hidden;
 //   }
-// }
-
-// h1.title {
-//   margin-bottom: 100px;
 // }

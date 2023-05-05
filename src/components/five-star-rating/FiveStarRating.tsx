@@ -51,7 +51,6 @@ export default function FiveStarRating({
           value="1"
           id="1"
           onChange={onChange}
-          checked
         />
         <label htmlFor="1" aria-label="input-1" />
         {/* <input

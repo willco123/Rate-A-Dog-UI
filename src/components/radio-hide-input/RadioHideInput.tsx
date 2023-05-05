@@ -18,7 +18,7 @@ export default function RadioHideInput({
         type="radio"
         value={item}
         id={item}
-        name={radioGroup}
+        name={"table-" + radioGroup}
         onChange={onChange}
         key={item}
       />

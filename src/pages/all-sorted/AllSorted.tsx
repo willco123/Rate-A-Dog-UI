@@ -7,6 +7,8 @@ import useDetermineSelection from "../../custom-hooks/useDetermineSelection.js";
 import useImageExpansion from "../../custom-hooks/useImageExpansion.js";
 import useSetData from "../../custom-hooks/all-sorted/useSetData.js";
 import useUpdateRating from "../../custom-hooks/all-sorted/useUpdateRating.js";
+import ExpandableDiv from "../../components/expandable-div/ExpandableDiv";
+import { getTableData } from "../../services/backend/dogs";
 
 function AllSorted() {
   const [sampleSize, setSampleSize] = useState<number>(100);
@@ -44,6 +46,7 @@ function AllSorted() {
     selectedMyRating,
     selectedUrl,
     selectedImageHTML,
+
     setSelectedImageHTML,
     setSelectedMyRating,
     setSelectedAverageRating,
@@ -54,6 +57,7 @@ function AllSorted() {
     selectedBreed,
     selectedSubBreed,
     chosenRating,
+
     sortedData,
     selectedMyRating,
     sortOrder,
@@ -80,41 +84,38 @@ function AllSorted() {
     setChosenRating(selectedRatingAsNumber);
   }
 
-  function handleFilter(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === "Enter") {
-      const searchInput = e.target as HTMLInputElement;
-      const breed = searchInput.value;
-      setFilteredBreed({ breed, subBreed: "american" });
-      // setFilteredBreed({ breed: "wolfhound", subBreed: "irish" });
-    }
-  }
-
   return (
-    <div className="home-wrapper">
-      <button onClick={() => setSortMode("breed")}>breed</button>
-      <button onClick={() => setSortMode("averageRating")}>
-        averageRating
+    <div className="all-sorted-wrapper">
+      <button
+        className={sortMode === "breed" ? "glow" : ""}
+        onClick={() => setSortMode("breed")}
+      >
+        Breed
       </button>
-      <button onClick={() => setSortMode("numberOfRates")}>
-        numberOfRates
+      <button
+        className={sortMode === "averageRating" ? "glow" : ""}
+        onClick={() => setSortMode("averageRating")}
+      >
+        Rating
       </button>
-      <input
-        type="text"
-        name="filter-breed"
-        id="filter-breed"
-        placeholder="Filter Breed"
-        onKeyDown={handleFilter}
-      />
+      <button
+        className={sortMode === "numberOfRates" ? "glow" : ""}
+        onClick={() => setSortMode("numberOfRates")}
+      >
+        Votes
+      </button>
+      <button></button>
+      <button></button>
 
       <div className="image-data">
         <span>Breed: {selectedBreed}</span>
-        <span>Sub-Breed : {selectedSubBreed}</span>
+        <span>Sub-Breed: {selectedSubBreed}</span>
 
         <div>
-          <span>AvgRating: {selectedAverageRating}</span>
-          <span>MyRating: {selectedMyRating}</span>
+          <span>Average Rating: {selectedAverageRating} </span>
+          <span> My Rating: {selectedMyRating}</span>
         </div>
-        <div className="chosen-image-home"></div>
+        <div className="chosen-image-all-sorted"></div>
         <FiveStarRating onChange={handleRatingChange} />
         <button
           onClick={() => setIsClicked(!isClicked)}
@@ -125,7 +126,7 @@ function AllSorted() {
       </div>
 
       <Carousel
-        key={"sorted" + sortedData.length}
+        key={"sorted" + filteredBreed + filteredBreed?.breed + sortMode}
         carouselDataFirst={carouselDataFirst}
         carouselDataSecond={carouselDataSecond}
         selectedImageHTML={selectedImageHTML}
@@ -136,6 +137,12 @@ function AllSorted() {
         maxSamples={maxSamples}
         skipCount={skipCount}
         sampleSize={sampleSize}
+      />
+
+      <ExpandableDiv
+        getTableData={getTableData}
+        filteredBreed={filteredBreed}
+        setFilteredBreed={setFilteredBreed}
       />
     </div>
   );

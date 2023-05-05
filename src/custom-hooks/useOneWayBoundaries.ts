@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import getCarouselDistance from "../utils/get-carousel-distance";
+import { getCarouselDistance } from "../utils/get-carousel-distance";
 import type { MutateArrayData } from "../types";
 const useOneWayBoundaries = ({
+  parentCarousel,
   firstCarousel,
   secondCarousel,
   mutateArrayData,
@@ -9,6 +10,7 @@ const useOneWayBoundaries = ({
   sampleSize,
   maxSamples,
 }: {
+  parentCarousel: HTMLDivElement | null;
   firstCarousel: HTMLDivElement | null;
   secondCarousel: HTMLDivElement | null;
   mutateArrayData: MutateArrayData;
@@ -37,53 +39,68 @@ const useOneWayBoundaries = ({
   }, [secondCarouselIndex]);
 
   async function handleFirstBoundary() {
+    if (parentCarousel === null) return;
     if (firstCarousel === null) return;
     if (secondCarousel === null) return;
     if (firstCarouselIndex === null) return;
 
     if (firstCarouselIndex > 40 && arrayPosition[1] === "first") {
-      if (skipCount >= maxSamples) return;
+      if (skipCount + 50 >= maxSamples) return;
       setArrayPosition(["first", "second"]);
+      const secondContainerWidth = await mutateArrayData("second", "right");
       const distance = getCarouselDistance(firstCarousel, secondCarousel);
-      mutateArrayData("second", secondCarousel, "right");
-      setSecondShiftX(secondShiftX + distance + 15);
-      secondCarousel.style.justifyContent = "left";
+      const newShiftDistance = distance + secondContainerWidth;
+      setSecondShiftX(secondShiftX + newShiftDistance);
+
       //Moving second array to the right
     }
     if (firstCarouselIndex < 10 && arrayPosition[0] === "first") {
-      if (skipCount <= sampleSize) return;
+      if (skipCount + 50 <= sampleSize) return;
       setArrayPosition(["second", "first"]);
+      const secondContainerWidth = await mutateArrayData("second", "left");
       const distance = getCarouselDistance(firstCarousel, secondCarousel);
-
-      mutateArrayData("second", secondCarousel, "left");
-      setSecondShiftX(secondShiftX + (distance + 15) * -1);
-      secondCarousel.style.justifyContent = "right";
+      const newShiftDistance = distance + secondContainerWidth;
+      setSecondShiftX(secondShiftX + newShiftDistance * -1);
       //moving second array to the left
     }
   }
 
-  function handleSecondBoundary() {
+  async function handleSecondBoundary() {
     if (firstCarousel === null) return;
     if (secondCarousel === null) return;
+    if (parentCarousel === null) return;
     if (secondCarouselIndex === null) return;
 
     if (secondCarouselIndex > 40 && arrayPosition[1] === "second") {
-      if (skipCount >= maxSamples)
-        //moving first array to the right
-        setArrayPosition(["second", "first"]);
+      if (skipCount + 50 >= maxSamples) return;
+      //moving first array to the right
+      setArrayPosition(["second", "first"]);
+      const firstContainerWidth = await mutateArrayData("first", "right");
       const distance = getCarouselDistance(firstCarousel, secondCarousel);
-      mutateArrayData("first", firstCarousel, "right");
-      setFirstShiftX(firstShiftX + distance + 15);
-      firstCarousel.style.justifyContent = "left";
+      const newShiftDistance = distance + firstContainerWidth;
+      setFirstShiftX(firstShiftX + newShiftDistance);
     }
     if (secondCarouselIndex < 10 && arrayPosition[0] === "second") {
       //moving first array to the left
       setArrayPosition(["first", "second"]);
+      const firstContainerWidth = await mutateArrayData("first", "left");
       const distance = getCarouselDistance(firstCarousel, secondCarousel);
-      mutateArrayData("first", firstCarousel, "left");
-      setFirstShiftX(firstShiftX + (distance + 15) * -1);
-      firstCarousel.style.justifyContent = "right";
+      const newShiftDistance = distance + firstContainerWidth;
+      setFirstShiftX(firstShiftX + newShiftDistance * -1);
     }
+  }
+
+  function firstLeft() {
+    setFirstShiftX(firstShiftX - 1000);
+  }
+  function firstRight() {
+    setFirstShiftX(firstShiftX + 1000);
+  }
+  function secondLeft() {
+    setSecondShiftX(secondShiftX - 1000);
+  }
+  function secondRight() {
+    setSecondShiftX(secondShiftX + 1000);
   }
 
   return {
@@ -91,6 +108,10 @@ const useOneWayBoundaries = ({
     secondShiftX,
     setFirstCarouselIndex,
     setSecondCarouselIndex,
+    firstLeft,
+    firstRight,
+    secondLeft,
+    secondRight,
   };
 };
 

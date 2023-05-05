@@ -4,53 +4,59 @@
   height: 50px;
   overflow-y: hidden;
   width: 100%;
-  background-color: rgb(219, 216, 216);
-  display: block flex;
-  justify-content: center;
-  // position: absolute;
+  background-color: #647a9c;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   margin-top: -8;
+  .brand {
+    height: 50px;
+  }
   .brand-name {
     text-decoration: none;
-    color: black;
-    font-size: 36px;
-    position: absolute;
-    left: 0;
+    display: flex;
+    margin-right: auto;
+    align-items: center;
+    justify-content: left;
+    font-size: 18px;
+    color: inherit;
   }
   .navigation-menu {
-    & ul {
+    margin-right: auto;
+    margin-left: auto;
+
+    > ul {
       margin-top: 1rem;
       text-align: left;
       display: flex;
-      gap: 100px;
-    }
-    & li {
-      list-style-type: none;
-      & a {
-        text-decoration: none;
-        display: block;
-        width: 100%;
-        color: black;
-        &:hover {
-          color: #2642af;
+      gap: 75px;
+      > li {
+        list-style-type: none;
+        > a {
+          text-decoration: none;
+          // display: block;
+          width: 100%;
+          color: inherit;
+
+          &:hover {
+            color: #2642af;
+          }
         }
       }
     }
   }
-}
+  .contact-nav {
+    margin-left: auto;
 
-.contact-nav {
-  margin-top: 100px;
-  border-top: 2px solid;
-  /* width: 50%; */
-}
-
-.contact-nav a {
-  text-decoration: none;
-  color: inherit;
-}
-
-.contact-nav a:hover {
-  color: #2642af;
+    a {
+      text-decoration: none;
+      color: inherit;
+      &:hover {
+        color: #2642af;
+      }
+    }
+  }
 }
 
 .hamburger {
@@ -72,60 +78,71 @@
 
 .fixScrollToggle--on {
   overflow: hidden;
-  background-color: #c00;
+  // background-color: #c00;
 }
 
-// @media screen and (max-width: 700px) {
-//   .hamburger {
-//     display: block;
-//   }
-//   .navigation {
-//     overflow-y: visible;
-//     overflow-x: unset;
-//     height: 50px;
-//     width: 100%;
-//     flex-direction: row;
-//     justify-content: center;
-//     position: absolute;
-//   }
-//   .brand {
-//     transform: scale(0.2);
-//     margin-top: 0;
-//   }
+@media screen and (max-width: 700px) {
+  .hamburger {
+    display: block;
+  }
+  .navigation {
+    overflow-y: visible;
+    overflow-x: unset;
+    height: 50px;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    position: absolute;
+  }
 
-//   .brand-name {
-//     font-size: 18px;
-//     margin-top: 0;
-//   }
+  .brand-name {
+    font-size: 18px;
+    margin-top: 0;
+  }
 
-//   .navigation-menu {
-//     z-index: 300;
-//     position: absolute;
-//     top: 50px;
-//     left: 0;
-//     flex-direction: column;
-//     width: 100%;
-//     height: calc(100vh - 50px);
-//     background-color: white;
-//     align-items: center;
-//     display: none;
-//     margin: 0;
-//   }
-//   .navigation-menu li {
-//     text-align: center;
-//     margin: 0;
-//   }
-//   .navigation-menu li a {
-//     color: black;
-//     width: 100%;
-//     padding: 1.5rem 0;
-//   }
-//   .navigation-menu li:hover {
-//     background-color: #eee;
-//   }
-//   .navigation-menu.expanded {
-//     display: flex block;
-//     z-index: 3000;
-//     position: absolute;
-//   }
-// }
+  .navigation-menu {
+    z-index: 300;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100vh - 50px);
+    background-color: white;
+    align-items: center;
+    display: none;
+    margin: 0;
+    & ul {
+      flex-direction: column;
+      gap: 0;
+      width: 100%;
+      margin: 0;
+    }
+  }
+  .navigation-menu li {
+    text-align: center;
+    margin: 0;
+  }
+  .navigation-menu li a {
+    color: black;
+    width: 100%;
+    padding: 1.5rem 0;
+  }
+  .navigation-menu li:hover {
+    background-color: #eee;
+  }
+  .navigation-menu.expanded {
+    background: rgb(73, 73, 73);
+    display: flex block;
+    flex-direction: column;
+    z-index: 3000;
+    position: absolute;
+  }
+  .contact-nav {
+    display: none;
+    &.expanded {
+      display: block;
+      position: absolute;
+    }
+  }
+}

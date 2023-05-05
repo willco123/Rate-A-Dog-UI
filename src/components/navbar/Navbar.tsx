@@ -1,28 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./navbar.scss";
-// import dogSVG from "../../assets/dog-api-logo.svg";
+import dogSVG from "../../assets/dog-api-logo.svg";
 import hamburgerSVG from "../../assets/hamburger-icon.svg";
 
 function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
   2;
   const location = useLocation();
-
+  // useEffect(() => {
+  //   isNavExpanded
+  //     ? (document.body.style.overflow = "hidden")
+  //     : (document.body.style.overflow = "hidden");
+  // }, [isNavExpanded]);
   function handleClick() {
     setIsNavExpanded(!isNavExpanded);
-    isNavExpanded
-      ? (document.body.style.overflow = "visible")
-      : (document.body.style.overflow = "hidden");
+  }
+
+  function handleLinkClick() {
+    setIsNavExpanded(false);
   }
   return (
     <>
       <nav className="navigation">
-        {/* <img src={dogSVG} alt="Dog SVG" className="brand" /> */}
-        <Link to="/" className="brand-name">
-          Rate A Dog
-        </Link>
+        <a
+          className="brand-name"
+          href="https://dog.ceo/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img src={dogSVG} alt="Dog SVG" className="brand" />
+          Powered by Dog Ceo!
+        </a>
         <button
+          type="button"
           className="hamburger"
           onClick={() => {
             handleClick();
@@ -37,42 +48,61 @@ function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
         >
           <ul>
             <li>
-              <Link to="/">All Ratings</Link>
+              <Link to="/" onClick={handleLinkClick}>
+                Random
+              </Link>
+            </li>
+            <li>
+              <Link to="/sorted" onClick={handleLinkClick}>
+                All Ratings
+              </Link>
             </li>
             {isLoggedIn && (
               <li>
-                <Link to="/myratings">My Ratings</Link>
+                <Link to="/myratings" onClick={handleLinkClick}>
+                  My Ratings
+                </Link>
               </li>
             )}
             {!isLoggedIn && (
               <li>
-                <Link to="/login" state={{ background: location }}>
+                <Link
+                  to="/login"
+                  onClick={handleLinkClick}
+                  state={{ background: location }}
+                >
                   Login
                 </Link>
               </li>
             )}
             {!isLoggedIn && (
               <li>
-                <Link to="/register" state={{ background: location }}>
+                <Link
+                  to="/register"
+                  onClick={handleLinkClick}
+                  state={{ background: location }}
+                >
                   Sign Up
                 </Link>
               </li>
             )}
             {isLoggedIn && (
               <li>
-                <Link to="/logout">Logout</Link>
+                <Link to="/logout" onClick={handleLinkClick}>
+                  Logout
+                </Link>
               </li>
             )}
           </ul>
-          <div className="contact-nav">
-            <a
-              href="https://github.com/willco123/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Github Code
-            </a>
-          </div>
+        </div>
+        <div className={isNavExpanded ? "contact-nav expanded" : "contact-nav"}>
+          <a
+            href="https://github.com/willco123/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Github
+          </a>
         </div>
       </nav>
     </>

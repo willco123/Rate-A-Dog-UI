@@ -1,0 +1,96 @@
+.expandable-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: calc(100vh - 70px);
+  width: 100vw;
+
+  flex: 1;
+
+  .widget {
+    width: 75px;
+    height: 25px;
+    margin-bottom: 0px;
+    border-radius: 25px 25px 0 0;
+    background-color: #647a9c;
+
+    z-index: 100;
+    .dots-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      grid-column-gap: 8px;
+      grid-row-gap: 2px;
+      height: 22px;
+      width: 22px;
+      margin-left: 18px;
+
+      .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: #000000;
+        overflow: hidden;
+      }
+    }
+  }
+
+  .content {
+    overflow-y: scroll;
+    width: 100%;
+
+    background-color: rgb(73, 73, 73);
+    margin-bottom: 10px;
+    z-index: 100;
+    transition: height 0.3s ease;
+    &.expanded {
+      transition: none;
+    }
+    .resize-drag {
+      background-color: #647a9c;
+      height: 20px;
+      position: sticky;
+      top: 0;
+    }
+  }
+}
+
+.table-wrapper {
+  color: rgb(182, 182, 182);
+  background-color: rgb(73, 73, 73);
+}
+
+.table-wrapper .table-container {
+  max-width: 600px;
+  position: relative;
+}
+
+.table-wrapper .table-component {
+  --tableWidth: 600px;
+  --numberOfColumns: 4;
+  background-color: unset;
+  table-layout: fixed;
+  width: var(--tableWidth);
+  margin-left: 25%;
+}
+
+.table-wrapper .table-component tbody {
+  overflow-y: auto;
+}
+
+.table-wrapper .table-component td {
+  overflow: hidden;
+  text-align: left;
+  width: calc((var(--tableWidth) / var(--numberOfColumns)));
+}
+
+.table-wrapper .table-component td:hover {
+  background-color: #f9f9f9;
+}
+
+@media screen and (max-width: 700px) {
+  .expandable-div {
+    height: calc(100vh - 20px);
+  }
+}

@@ -67,7 +67,7 @@ function Home() {
     <div className="home-wrapper">
       <div className="image-data">
         <span>Breed: {selectedBreed}</span>
-        <span>Sub-Breed : {selectedSubBreed}</span>
+        <span>Sub-Breed: {selectedSubBreed}</span>
 
         <div>
           <span>AvgRating: {selectedAverageRating}</span>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import getCarouselDistance from "../utils/get-carousel-distance";
+import { getCarouselWidth } from "../utils/get-carousel-distance";
 import type { MutateHomeData } from "../types";
 const useTwoWayBoundaries = ({
   firstCarousel,
@@ -37,7 +37,7 @@ const useTwoWayBoundaries = ({
 
     if (firstCarouselIndex > 40 && arrayPosition[1] === "first") {
       setArrayPosition(["first", "second"]);
-      const distance = getCarouselDistance(firstCarousel, secondCarousel);
+      const distance = getCarouselWidth(firstCarousel, secondCarousel);
       mutateHomeData("second", secondCarousel);
       setSecondShiftX(secondShiftX + distance + 15);
       secondCarousel.style.justifyContent = "left";
@@ -45,7 +45,7 @@ const useTwoWayBoundaries = ({
     }
     if (firstCarouselIndex < 10 && arrayPosition[0] === "first") {
       setArrayPosition(["second", "first"]);
-      const distance = getCarouselDistance(firstCarousel, secondCarousel);
+      const distance = getCarouselWidth(firstCarousel, secondCarousel);
 
       mutateHomeData("second", secondCarousel);
       setSecondShiftX(secondShiftX + (distance + 15) * -1);
@@ -62,7 +62,7 @@ const useTwoWayBoundaries = ({
     if (secondCarouselIndex > 40 && arrayPosition[1] === "second") {
       //moving first array to the right
       setArrayPosition(["second", "first"]);
-      const distance = getCarouselDistance(firstCarousel, secondCarousel);
+      const distance = getCarouselWidth(firstCarousel, secondCarousel);
       mutateHomeData("first", firstCarousel);
       setFirstShiftX(firstShiftX + distance + 15);
       firstCarousel.style.justifyContent = "left";
@@ -70,7 +70,7 @@ const useTwoWayBoundaries = ({
     if (secondCarouselIndex < 10 && arrayPosition[0] === "second") {
       //moving first array to the left
       setArrayPosition(["first", "second"]);
-      const distance = getCarouselDistance(firstCarousel, secondCarousel);
+      const distance = getCarouselWidth(firstCarousel, secondCarousel);
       mutateHomeData("first", firstCarousel);
       setFirstShiftX(firstShiftX + (distance + 15) * -1);
       firstCarousel.style.justifyContent = "right";

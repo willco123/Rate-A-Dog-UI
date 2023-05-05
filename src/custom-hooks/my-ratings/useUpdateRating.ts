@@ -63,7 +63,7 @@ const useUpdateRating = ({
     const updatedData: UrlRatingData[] = await getUserDbDogs(
       sortOrder,
       sortMode,
-      skipCount - 100,
+      skipCount - 50,
       sampleSize,
       filteredBreed,
     );

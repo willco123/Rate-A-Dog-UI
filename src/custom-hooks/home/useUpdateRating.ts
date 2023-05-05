@@ -42,11 +42,11 @@ const useUpdateRating = ({
 
   async function handleRateClick() {
     if (
-      !chosenRating ||
-      !selectedUrl ||
-      !selectedBreed ||
-      !selectedCarousel ||
-      !selectedCarouselIndex
+      chosenRating === null ||
+      selectedUrl === null ||
+      selectedBreed === null ||
+      selectedCarousel === null ||
+      selectedCarouselIndex === null
     )
       return;
     const response = await postDogs(

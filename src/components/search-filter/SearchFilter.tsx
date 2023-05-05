@@ -1,62 +1,86 @@
-// import React, { useRef } from "react";
-// import "./search-filter.scss";
-// import { BreedData } from "../../types.js";
+import React, { useRef, useState, useEffect } from "react";
+import "./search-filter.scss";
+import { TableDataGrouped } from "../../types.js";
+import filterArrayOfObjects from "../../utils/filter-array";
 
-// type SearchFilterProps = {
-//   filterTable: (filterValue: string, breedData: BreedData[]) => void;
-//   breedData: BreedData[] | [];
-//   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-//   reInitTableData: (breedData: BreedData[]) => void;
-// };
+export default function SearchFilter({
+  tableDataGrouped,
+  setTableDataGrouped,
+  setCurrentPage,
+}: {
+  tableDataGrouped: TableDataGrouped[];
+  setTableDataGrouped: React.Dispatch<React.SetStateAction<TableDataGrouped[]>>;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+}) {
+  const [initialTableDataGrouped, setInitialTableDataGrouped] = useState<
+    TableDataGrouped[]
+  >([]);
+  const inputRefObject = useRef<HTMLInputElement>(null);
+  const isTableData = tableDataGrouped.length > 0;
+  // const searchInputRef = inputRefObject.current //isnt recognised in jest tests
+  //maybe undef on init render but defined on re-render
 
-// export default function SearchFilter({
-//   filterTable,
-//   breedData,
-//   setCurrentPage,
-//   reInitTableData,
-// }: SearchFilterProps) {
-//   const inputRefObject = useRef<HTMLInputElement>(null);
-//   const isbreedData = breedData.length > 0;
-//   // const searchInputRef = inputRefObject.current //isnt recognised in jest tests
-//   //maybe undef on init render but defined on re-render
-//   function clearInput() {
-//     const searchInputRef = inputRefObject.current;
-//     reInitTableData(breedData);
-//     if (searchInputRef) searchInputRef.value = "";
-//     setCurrentPage(1);
-//   }
+  useEffect(() => {
+    if (initialTableDataGrouped.length === 0)
+      setInitialTableDataGrouped(tableDataGrouped);
+  }, [tableDataGrouped]);
 
-//   function handleClick() {
-//     const searchInputRef = inputRefObject.current;
+  function clearInput() {
+    const searchInputRef = inputRefObject.current;
+    reInitTableData(initialTableDataGrouped);
+    if (searchInputRef) searchInputRef.value = "";
+    setCurrentPage(1);
+  }
 
-//     if (searchInputRef!.value && isbreedData) {
-//       filterTable(searchInputRef!.value, breedData);
-//     }
-//   }
+  function filterTable(
+    filterValue: string,
+    initialTableDataGrouped: TableDataGrouped[],
+  ) {
+    const filteredArray = filterArrayOfObjects<TableDataGrouped>(
+      initialTableDataGrouped,
+      filterValue,
+    );
+    filteredArray.length != 0
+      ? setTableDataGrouped(filteredArray)
+      : reInitTableData(initialTableDataGrouped);
+    setCurrentPage(1);
+  }
 
-//   function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
-//     if (e.key === "Enter") {
-//       const searchInput = e.target as HTMLInputElement;
-//       if (isbreedData) filterTable(searchInput.value, breedData);
-//     }
-//   }
+  function reInitTableData(initialTableDataGrouped: TableDataGrouped[]) {
+    setTableDataGrouped(initialTableDataGrouped);
+  }
 
-//   return (
-//     <div className="search-filter-container">
-//       <div className="search-filter-items">
-//         <input
-//           type="text"
-//           name="search-filter"
-//           id="search-filter"
-//           placeholder="Filter Breed"
-//           onKeyDown={handleKeyPress}
-//           ref={inputRefObject}
-//         />
-//         <label htmlFor="search-filter" onClick={handleClick} role={"button"} />
-//         <span onClick={clearInput} role={"button"}>
-//           Clear
-//         </span>
-//       </div>
-//     </div>
-//   );
-// }
+  function handleClick() {
+    const searchInputRef = inputRefObject.current;
+
+    if (searchInputRef!.value && isTableData) {
+      filterTable(searchInputRef!.value, initialTableDataGrouped);
+    }
+  }
+
+  function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter") {
+      const searchInput = e.target as HTMLInputElement;
+      if (isTableData) filterTable(searchInput.value, initialTableDataGrouped);
+    }
+  }
+
+  return (
+    <div className="search-filter-container">
+      <div className="search-filter-items">
+        <input
+          type="text"
+          name="search-filter"
+          id="search-filter"
+          placeholder="Filter Breed"
+          onKeyDown={handleKeyPress}
+          ref={inputRefObject}
+        />
+        <label htmlFor="search-filter" onClick={handleClick} role={"button"} />
+        <span onClick={clearInput} role={"button"}>
+          Clear
+        </span>
+      </div>
+    </div>
+  );
+}

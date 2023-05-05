@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Outlet, Routes, Route, useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import {
+  Outlet,
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import "./App.scss";
 import Home from "./pages/home/Home.js";
 import AllSorted from "./pages/all-sorted/AllSorted";
@@ -19,10 +24,12 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
+      const homeOrSorted =
+        location.pathname === "/" || location.pathname === "/sorted";
       const isAuthenticated = await getRefresh();
       if (isAuthenticated) setIsLoggedIn(true);
       if (!isAuthenticated && isLoggedIn) setIsLoggedIn(false);
-      if (!isAuthenticated) navigate("/");
+      if (!isAuthenticated && !homeOrSorted) navigate("/");
     })();
   }, []);
 
@@ -59,6 +66,7 @@ function LayoutsWithNavbar({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (
     <>
       <Navbar isLoggedIn={isLoggedIn} />
+
       <div className="main-wrapper">
         <Outlet />
       </div>

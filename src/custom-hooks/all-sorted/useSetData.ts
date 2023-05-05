@@ -33,7 +33,11 @@ const useSetData = ({
   >([]);
   const [maxSamples, setMaxSamples] = useState<number>(0);
   const [skipCount, setSkipCount] = useState<number>(0);
-  const sliceIndex = Math.floor(sampleSize / 2);
+  const [sliceIndex, setSliceIndex] = useState<number>(
+    Math.floor(sampleSize / 2),
+  );
+  const [firstContainerWidth, setFirstContainerWidth] = useState<number>(0);
+  const [secondContainerWidth, setSecondContainerWidth] = useState<number>(0);
 
   useEffect(() => {
     (async () => {
@@ -44,7 +48,7 @@ const useSetData = ({
         const currentCount = await getCount();
         setMaxSamples(currentCount);
       }
-      setSkipCount(sampleSize);
+      setSkipCount(sampleSize / 2);
       const dbDogs = await getAllSorted(
         sortOrder,
         sortMode,
@@ -66,19 +70,29 @@ const useSetData = ({
   useEffect(() => {
     const carouselData = formatCarouselData(firstArrayData);
     setCarouselDataFirst(carouselData);
+    setFirstContainerWidth(calcContainerWidth(carouselData.length, 5, 300));
   }, [firstArrayData]);
 
   useEffect(() => {
     const carouselData = formatCarouselData(secondArrayData);
     setCarouselDataSecond(carouselData);
+    setSecondContainerWidth(calcContainerWidth(carouselData.length, 5, 300));
   }, [secondArrayData]);
+
+  function calcContainerWidth(
+    numberOfImages: number,
+    gapSize: number,
+    imageWidth: number,
+  ) {
+    const totalGapSize = numberOfImages * gapSize;
+    const totalImageWidth = numberOfImages * imageWidth;
+    return totalGapSize + totalImageWidth;
+  }
 
   async function mutateSortedData(
     targetArray: "first" | "second",
-    carousel: HTMLDivElement,
     direction: "left" | "right",
   ) {
-    if (skipCount === null) return;
     let newSkipCount: number = 0;
     if (direction === "left" && scrollDir === "left")
       newSkipCount = skipCount - 50;
@@ -99,19 +113,21 @@ const useSetData = ({
     );
     setScrollDir(direction);
     setSkipCount(newSkipCount);
+    const containerLength = calcContainerWidth(moreDogs.length, 5, 300);
 
     if (targetArray === "first") {
       const sortedDataClone = [...moreDogs, ...sortedData.slice(sliceIndex)];
+      setSliceIndex(moreDogs.length);
       setSortedData(sortedDataClone);
-    }
-    if (targetArray === "second") {
+      setFirstContainerWidth(containerLength);
+      return secondContainerWidth;
+    } else {
       const sortedDataClone = [...sortedData.slice(0, sliceIndex), ...moreDogs];
+      setSliceIndex(100 - moreDogs.length);
       setSortedData(sortedDataClone);
+      setSecondContainerWidth(containerLength);
+      return firstContainerWidth;
     }
-
-    const totalImageLength = moreDogs.length * 300;
-    const gapLength = (moreDogs.length - 1) * 5;
-    carousel.style.width = `${totalImageLength + gapLength}px`;
   }
   return {
     sortedData,

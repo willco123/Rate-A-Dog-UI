@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { SortTypes, UrlRatingData } from "../../types";
-import { postDogs, getAllSorted } from "../../services/backend/dogs";
+import { postDogs, getDogByUrl } from "../../services/backend/dogs";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const useUpdateRating = ({
@@ -9,11 +9,6 @@ const useUpdateRating = ({
   selectedSubBreed,
   chosenRating,
   sortedData,
-  sortOrder,
-  sortMode,
-  skipCount,
-  sampleSize,
-  filteredBreed,
   setSortedData,
   setSelectedMyRating,
   setSelectedAverageRating,
@@ -60,14 +55,19 @@ const useUpdateRating = ({
       const redirectValue = myHeader.next().value;
       return navigate(redirectValue, { state: { background: location } });
     }
-    const updatedData: UrlRatingData[] = await getAllSorted(
-      sortOrder,
-      sortMode,
-      skipCount - 100,
-      sampleSize,
-      filteredBreed,
+    const updatedUrl = await getDogByUrl(selectedUrl);
+    const sortedDataClone = [...sortedData];
+    const newAverageRating = updatedUrl.averageRating;
+    const newMyRating = updatedUrl.myRating;
+    const newNumberOfRates = updatedUrl.numberOfRates;
+    const targetImage = sortedDataClone.find(
+      (item) => item.url === selectedUrl,
     );
-    setSortedData(updatedData);
+    if (!targetImage) return;
+    targetImage.averageRating = newAverageRating;
+    targetImage.myRating = newMyRating;
+    targetImage.numberOfRates = newNumberOfRates;
+    setSortedData(sortedDataClone);
   }
   return { isClicked, setIsClicked };
 };

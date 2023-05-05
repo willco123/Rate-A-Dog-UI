@@ -1,6 +1,6 @@
 import axios from "axios";
 import { serverURL, axiosWithAuthHeader } from "./config";
-import type { UrlRatingData, SingleUrlOnRate } from "../../types";
+import type { UrlRatingData, SingleUrlOnRate, TableData } from "../../types";
 
 export async function postDogs(
   url: string,
@@ -16,7 +16,6 @@ export async function postDogs(
         withCredentials: true,
       },
     );
-    console.log(response);
     return response;
   } catch (err: any) {
     throw new Error(err);
@@ -199,6 +198,32 @@ export async function getUserFilteredCount(filteredBreed: {
       },
     );
     return response.data.count as number;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+export async function getTableData() {
+  try {
+    const response = await axios.get(serverURL + "dogs/table", {
+      withCredentials: true,
+    });
+    return response.data as TableData[];
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+export async function getUserTableData() {
+  try {
+    const response = await axiosWithAuthHeader.get(
+      serverURL + "dogs/user/table",
+      {
+        withCredentials: true,
+      },
+    );
+
+    return response.data as TableData[];
   } catch (error: any) {
     throw new Error(error);
   }
