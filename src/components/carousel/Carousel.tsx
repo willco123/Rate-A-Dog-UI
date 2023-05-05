@@ -40,7 +40,7 @@ export default function Carousel({
   const secondCarousel = secondCarouselRef.current;
   const snapArea = snapAreaRef.current;
 
-  const { mouseX, handleMouseDown, jumpLeft, jumpRight } = useDragCarousel({
+  const { mouseX, handleMouseDown } = useDragCarousel({
     parentCarousel,
     firstCarousel,
     secondCarousel,
@@ -54,10 +54,6 @@ export default function Carousel({
     secondShiftX,
     setFirstCarouselIndex,
     setSecondCarouselIndex,
-    firstLeft,
-    firstRight,
-    secondLeft,
-    secondRight,
   } = useOneWayBoundaries({
     parentCarousel,
     firstCarousel,
@@ -70,52 +66,6 @@ export default function Carousel({
 
   return (
     <div>
-      <button
-        style={{ position: "absolute", top: "200px", zIndex: 1000 }}
-        onClick={jumpLeft}
-      >
-        Left
-      </button>
-      <button
-        onClick={jumpRight}
-        style={{ position: "absolute", top: "300px", zIndex: 1000 }}
-      >
-        Right
-      </button>
-      <button
-        style={{ position: "absolute", top: "100px", zIndex: 1000 }}
-        onClick={firstLeft}
-      >
-        firstLeft
-      </button>
-      <button
-        onClick={firstRight}
-        style={{
-          position: "absolute",
-          top: "100px",
-          left: "100px",
-          zIndex: 1000,
-        }}
-      >
-        firstRight
-      </button>
-      <button
-        style={{ position: "absolute", top: "150px", zIndex: 1000 }}
-        onClick={secondLeft}
-      >
-        secondLeft
-      </button>
-      <button
-        onClick={secondRight}
-        style={{
-          position: "absolute",
-          top: "150px",
-          left: "100px",
-          zIndex: 1000,
-        }}
-      >
-        secondRight
-      </button>
       <div className="chosen-image" ref={snapAreaRef}>
         <div
           className={classnames("expand-image", {

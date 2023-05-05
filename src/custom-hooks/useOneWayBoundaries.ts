@@ -90,28 +90,11 @@ const useOneWayBoundaries = ({
     }
   }
 
-  function firstLeft() {
-    setFirstShiftX(firstShiftX - 1000);
-  }
-  function firstRight() {
-    setFirstShiftX(firstShiftX + 1000);
-  }
-  function secondLeft() {
-    setSecondShiftX(secondShiftX - 1000);
-  }
-  function secondRight() {
-    setSecondShiftX(secondShiftX + 1000);
-  }
-
   return {
     firstShiftX,
     secondShiftX,
     setFirstCarouselIndex,
     setSecondCarouselIndex,
-    firstLeft,
-    firstRight,
-    secondLeft,
-    secondRight,
   };
 };
 

@@ -4,7 +4,7 @@
 .carousel-container {
   position: absolute;
   background-color: green;
-  top: 300px;
+  top: 250px;
   margin: 0;
 
   .slider-image-container {
@@ -14,11 +14,11 @@
     -webkit-user-drag: none;
     cursor: grab;
     &.first {
-      background-color: red;
+      // background-color: red;
     }
     &.second {
       left: 15250px;
-      background-color: blue;
+      // background-color: blue;
     }
     .slider-image {
       width: 300px;
@@ -62,7 +62,7 @@
   transform: translateX(-50%);
   .expand-image::before {
     position: absolute;
-    top: 105%;
+    top: 90%;
     left: 90%;
     font-family: FontAwesome;
     height: 100px;

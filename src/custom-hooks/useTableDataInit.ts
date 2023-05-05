@@ -47,12 +47,14 @@ export const useTableDataInit = ({
       const tableDataDb = await getTableData();
       if (!tableDataDb) return;
       const tableDataDbTwoDp = setFloatsToTwoDp(tableDataDb);
+
       setTableData(tableDataDbTwoDp);
     })();
   }, []);
 
   useEffect(() => {
     const tableDataDictionary = _.groupBy(tableData, "breed");
+    console.log(tableDataDictionary);
     const groupedTableData = groupTableData(tableDataDictionary);
     const sortedTableData = sortTableDataGrouped(groupedTableData);
 

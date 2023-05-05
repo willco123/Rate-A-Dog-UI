@@ -70,13 +70,6 @@ const useDragCarousel = ({
     setMouseX(mouseX + diff);
   }
 
-  function jumpLeft() {
-    setMouseX(mouseX - 1000);
-  }
-  function jumpRight() {
-    setMouseX(mouseX + 1000);
-  }
-
   function getNearestImage() {
     if (snapArea === null) return;
     const selectedImageArea = snapArea.getBoundingClientRect();
@@ -108,7 +101,7 @@ const useDragCarousel = ({
     }
     return selectedImage;
   }
-  return { mouseX, handleMouseDown, jumpLeft, jumpRight };
+  return { mouseX, handleMouseDown };
 };
 
 export default useDragCarousel;

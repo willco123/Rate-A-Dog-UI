@@ -52,9 +52,9 @@ export default function TwoWayCarousel({
 
   return (
     <div>
-      <div className="chosen-image" ref={snapAreaRef}>
+      <div className="two-way-chosen-image" ref={snapAreaRef}>
         <div
-          className={classnames("expand-image", {
+          className={classnames("two-way-expand-image", {
             expanded:
               (isAnImageExpanded && selectedImageHTML) ||
               (!isAnImageExpanded && !selectedImageHTML),

@@ -29,8 +29,12 @@ export default function Register() {
     const data = new FormData(target);
 
     const registerData = Object.fromEntries(data) as RegisterData;
-
-    const registerDataWithoutConfirm = _.omit(registerData, "confirmPassword");
+    if (registerData.password !== registerData.confirmPassword)
+      return setBadDetails("Passwords do not match");
+    const registerDataWithoutConfirm = _.omit(
+      registerData,
+      "confirmPassword",
+    ) as Omit<RegisterData, "confirmPassword">;
     const response = await postRegister(registerDataWithoutConfirm);
 
     if (response === 200) {

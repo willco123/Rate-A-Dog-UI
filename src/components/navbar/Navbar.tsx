@@ -11,8 +11,9 @@ function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
   // useEffect(() => {
   //   isNavExpanded
   //     ? (document.body.style.overflow = "hidden")
-  //     : (document.body.style.overflow = "hidden");
+  //     : (document.body.style.overflow = "visible");
   // }, [isNavExpanded]);
+
   function handleClick() {
     setIsNavExpanded(!isNavExpanded);
   }

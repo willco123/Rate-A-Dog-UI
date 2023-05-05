@@ -14,7 +14,9 @@ export async function postLogin(loginData: LoginData) {
   }
 }
 
-export async function postRegister(registerData: RegisterData) {
+export async function postRegister(
+  registerData: Omit<RegisterData, "confirmPassword">,
+) {
   try {
     const response = await axios.post(serverURL + "register", registerData, {
       withCredentials: true,

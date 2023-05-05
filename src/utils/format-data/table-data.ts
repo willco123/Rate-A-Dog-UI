@@ -70,11 +70,12 @@ export function tableDataToJSX(
     const breedJSX = setAsRadioJSX(breed, "breed", handleRadioChange, index);
     const breedTdJSX = wrapWithTdJSX(breedJSX, breed, breed);
     const activeSubBreed = activeSubBreeds[breed];
-
-    const activeIndex = subBreed.findIndex((el) => {
-      if (el === null) return 0;
+    // console.log(activeSubBreed, breed, subBreed);
+    let activeIndex = subBreed.findIndex((el) => {
       return el === activeSubBreed;
     });
+
+    if (activeIndex === -1) activeIndex = 0;
 
     let subBreedElement: JSX.Element | string | null;
     if (subBreed.length > 1) {

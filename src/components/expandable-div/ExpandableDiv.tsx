@@ -56,8 +56,15 @@ export default function ExpandableDiv({
   }
 
   return (
-    <div className="expandable-div">
-      <div onClick={() => setIsExpanded(!isExpanded)} className="widget">
+    <div
+      className={classnames("expandable-div", {
+        expanded: isExpanded,
+      })}
+    >
+      <div
+        onClick={() => setIsExpanded(!isExpanded)}
+        className={classnames("widget", { expanded: isExpanded })}
+      >
         <div className="dots-container">
           <div className="dot"></div>
           <div className="dot"></div>

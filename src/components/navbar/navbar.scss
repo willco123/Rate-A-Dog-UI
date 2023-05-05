@@ -3,12 +3,12 @@
 .navigation {
   height: 50px;
   overflow-y: hidden;
+  overflow-x: hidden;
   width: 100%;
   background-color: #647a9c;
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   margin-top: -8;
   .brand {
     height: 50px;
@@ -23,8 +23,7 @@
     color: inherit;
   }
   .navigation-menu {
-    margin-right: auto;
-    margin-left: auto;
+    margin-right: 150px;
 
     > ul {
       margin-top: 1rem;
@@ -48,6 +47,7 @@
   }
   .contact-nav {
     margin-left: auto;
+    margin-right: 20px;
 
     a {
       text-decoration: none;
@@ -92,7 +92,6 @@
     width: 100%;
     flex-direction: row;
     justify-content: center;
-    position: absolute;
   }
 
   .brand-name {
@@ -107,7 +106,7 @@
     left: 0;
     flex-direction: column;
     width: 100%;
-    height: calc(100vh - 50px);
+    height: 110%;
     background-color: white;
     align-items: center;
     display: none;
@@ -133,7 +132,7 @@
   }
   .navigation-menu.expanded {
     background: rgb(73, 73, 73);
-    display: flex block;
+    display: flex;
     flex-direction: column;
     z-index: 3000;
     position: absolute;
