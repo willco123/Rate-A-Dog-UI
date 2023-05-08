@@ -78,7 +78,12 @@ const Config = {
   plugins: [
     new ReactRefreshWebpackPlugin(),
     new ForkTsCheckerWebpackPlugin(),
-    new HtmlWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      // injects bundle.js to our new index.html
+      inject: true,
+      // copys the content of the existing index.html to the new /build index.html
+      template: path.resolve("./public/index.html"),
+    }),
   ].filter(Boolean),
 };
 
