@@ -8,7 +8,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 const Config = {
-  entry: path.resolve(process.cwd(), "./src/index.tsx"),
+  entry: isDevelopment
+    ? path.resolve(process.cwd(), "./dist/index.js")
+    : path.resolve(process.cwd(), "./src/index.tsx"),
   mode: isDevelopment ? "development" : "production",
   module: {
     rules: [

@@ -7,7 +7,8 @@
     "start": "webpack-dev-server --mode development",
     "test": "Jest --runInBand --watchAll --verbose --coverage",
     "argument": "echo \"The value %npm_config_doo% of --foo is '%npm_config_foo%'\"",
-    "isolatedFile": "node --loader=ts-node/esm --loader ./css-loader.mjs %INIT_CWD%\\%npm_config_file%"
+    "isolatedFile": "node --loader=ts-node/esm --loader ./css-loader.mjs %INIT_CWD%\\%npm_config_file%",
+    "build": "webpack -p"
   },
   "author": "",
   "license": "ISC",
@@ -49,7 +50,6 @@
     "ts-jest": "^29.0.5",
     "ts-loader": "^9.4.2",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.5",
     "typescript-plugin-css-modules": "^4.2.2",
     "webpack": "^5.74.0",
     "webpack-cli": "^5.0.1",
@@ -66,6 +66,7 @@
     "react-router": "^6.11.1",
     "react-router-dom": "^6.11.1",
     "sass": "^1.60.0",
+    "typescript": "^5.0.4",
     "web-vitals": "^3.0.3"
   },
   "browser": {
