@@ -2,6 +2,7 @@ import path from "path";
 import ReactRefreshTypeScript from "react-refresh-typescript";
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import HtmlWebpackPlugin from "html-webpack-plugin";
 import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -77,6 +78,7 @@ const Config = {
   plugins: [
     new ReactRefreshWebpackPlugin(),
     new ForkTsCheckerWebpackPlugin(),
+    new HtmlWebpackPlugin(),
   ].filter(Boolean),
 };
 
