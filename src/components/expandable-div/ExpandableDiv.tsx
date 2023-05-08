@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import TableAndFilters from "../table-and-filters/TableAndFilters";
-import { TableData } from "../../types";
+import TableAndFilters from "../table-and-filters/TableAndFilters.js";
+import { TableData } from "../../types.js";
 import classnames from "classnames";
 import "./expandable-div.scss";
 

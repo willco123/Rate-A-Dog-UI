@@ -17,22 +17,3 @@ export function formatCarouselData(urlRatingData: UrlRatingData[]) {
   });
   return carouselData;
 }
-
-// export function formatCarouselDataUpper(
-//   urlRatingData: UrlRatingData[],
-//   newUrlRatingData: UrlRatingData[],
-// ) {
-//   const carouselData: CarouselData[] = urlRatingData.map((element) => {
-//     const { breed, subBreed, averageRating, url, numberOfRates } = element;
-
-//     return {
-//       breed,
-//       subBreed,
-//       averageRating,
-//       url,
-//       numberOfRates,
-//       isExpanded: false,
-//     };
-//   });
-//   return carouselData;
-// }

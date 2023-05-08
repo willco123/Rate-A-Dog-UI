@@ -2,30 +2,29 @@
   padding-top: 34.4px;
   position: relative;
   width: 95%;
-}
-
-.search-filter-items > input {
-  outline: none;
-  width: 40%;
-  padding: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  position: absolute;
-  bottom: 5px;
-}
-
-.search-filter-items > label::before {
-  font-family: FontAwesome;
-  content: "\f002";
-  position: absolute;
-  right: 30%;
-  top: 3px;
-  cursor: pointer;
-}
-
-.search-filter-items > span {
-  position: absolute;
-  right: 20%;
-  top: 3px;
-  cursor: pointer;
+  .search-filter-items {
+    > input {
+      outline: none;
+      width: 40%;
+      padding: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      position: absolute;
+      bottom: 5px;
+    }
+    > label::before {
+      font-family: FontAwesome;
+      content: "\f002";
+      position: absolute;
+      right: 30%;
+      top: 3px;
+      cursor: pointer;
+    }
+    > span {
+      position: absolute;
+      right: 20%;
+      top: 3px;
+      cursor: pointer;
+    }
+  }
 }

@@ -1,39 +1,35 @@
-// .content.disabled {
-//   max-height: 0;
-// }
+.collapsible {
+  width: 300px;
+  .content {
+    height: 50px;
+    max-height: 200px;
+    transition: max-height 0.1s ease-in-out 0s;
+    overflow: hidden;
+    &.disabled {
+      max-height: 0;
+    }
+  }
+  .content-header:hover {
+    color: #2642af;
+    cursor: pointer;
+  }
+}
 
-// .content {
-//   height: 50px;
-//   max-height: 200px;
-//   transition: max-height 0.1s ease-in-out 0s;
-//   overflow: hidden;
-// }
-
-// .collapsible {
-//   width: 300px;
-// }
-
-// .content-header:hover {
-//   color: #2642af;
-//   cursor: pointer;
-// }
-
-// .rotating-arrow {
-//   position: relative;
-//   content: "";
-//   display: inline-block;
-//   width: 0.4em;
-//   height: 0.4em;
-//   border-right: 0.12em solid rgba(0, 0, 0, 0.87);
-//   border-top: 0.12em solid rgba(0, 0, 0, 0.87);
-//   transform: rotate(45deg);
-//   transition: transform 150ms;
-// }
-
-// .rotating-arrow:hover {
-//   cursor: pointer;
-// }
-// .rotating-arrow.active {
-//   transform: rotate(135deg) translateX(-2px);
-//   transition: transform 150ms;
-// }
+.rotating-arrow {
+  position: relative;
+  content: "";
+  display: inline-block;
+  width: 0.4em;
+  height: 0.4em;
+  border-right: 0.12em solid rgba(0, 0, 0, 0.87);
+  border-top: 0.12em solid rgba(0, 0, 0, 0.87);
+  transform: rotate(45deg);
+  transition: transform 150ms;
+  &.active {
+    transform: rotate(135deg) translateX(-2px);
+    transition: transform 150ms;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}

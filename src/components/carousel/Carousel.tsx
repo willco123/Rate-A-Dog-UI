@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useRef } from "react";
 import classnames from "classnames";
-import CarouselImageContaniner from "../carousel-image-container/CarouselImageContainer";
+import CarouselImageContaniner from "../carousel-image-container/CarouselImageContainer.js";
 import type { CarouselData, MutateArrayData } from "../../types.js";
 import "./carousel.scss";
-import useDragCarousel from "../../custom-hooks/useDragCarousel";
-import useOneWayBoundaries from "../../custom-hooks/useOneWayBoundaries";
+import useDragCarousel from "../../custom-hooks/useDragCarousel.js";
+import useOneWayBoundaries from "../../custom-hooks/useOneWayBoundaries.js";
 
 export default function Carousel({
   carouselDataFirst,
@@ -129,7 +129,7 @@ export default function Carousel({
               <CarouselImageContaniner
                 carouselData={element}
                 index={index}
-                parentContainer="first"
+                parentContainer="second"
                 isAnImageExpanded={isAnImageExpanded}
                 setIndex={setSecondCarouselIndex}
                 setIsImageExpanded={setIsAnImageExpanded}

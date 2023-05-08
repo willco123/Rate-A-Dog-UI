@@ -163,29 +163,3 @@ function AllSorted() {
 }
 
 export default AllSorted;
-
-// function addOneToFirst() {
-//   const firstSlice = homeData.slice(0, sliceIndex);
-//   const currentArrayLength = firstArrayData.length;
-//   const newFirstArrayData = firstSlice.slice(0, currentArrayLength + 20);
-//   setFirstArrayData(newFirstArrayData);
-// }
-
-// function addOneToSecond() {
-//   const secondSlice = homeData.slice(sliceIndex);
-//   const currentArrayLength = secondArrayData.length;
-//   const newSecondArrayData = secondSlice.slice(0, currentArrayLength + 20);
-//   setSecondArrayData(newSecondArrayData);
-// }
-
-// function removeOneFromFirst() {
-//   const firstArrayDataClone = [...firstArrayData];
-
-//   setFirstArrayData(firstArrayDataClone.slice(0, 30));
-// }
-
-// function removeOneFromsecond() {
-//   const secondArrayDataClone = [...secondArrayData];
-
-//   setSecondArrayData(secondArrayDataClone.slice(0, 30));
-// }

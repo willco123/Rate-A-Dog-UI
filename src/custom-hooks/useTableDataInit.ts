@@ -54,7 +54,6 @@ export const useTableDataInit = ({
 
   useEffect(() => {
     const tableDataDictionary = _.groupBy(tableData, "breed");
-    console.log(tableDataDictionary);
     const groupedTableData = groupTableData(tableDataDictionary);
     const sortedTableData = sortTableDataGrouped(groupedTableData);
 

@@ -30,7 +30,6 @@ const useImageExpansion = ({
     const carousel = imageContainer.dataset.carousel as "first" | "second";
     const indexString = imageContainer.dataset.index as string;
     const index = parseStringToNumber(indexString);
-
     if (carousel === "first") {
       const carouselDataFirstClone = [...carouselDataFirst];
       carouselDataFirstClone[index].isExpanded = true;

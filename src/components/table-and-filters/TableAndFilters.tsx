@@ -1,4 +1,3 @@
-import "./table-and-filters.scss";
 import React, { memo, useState, useMemo } from "react";
 import TableComponent from "../table-component/TableComponent";
 import useTableDataInit from "../../custom-hooks/useTableDataInit";

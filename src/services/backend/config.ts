@@ -40,7 +40,6 @@ axios.interceptors.response.use(
   },
   (error) => {
     return Promise.reject(error);
-    // throw new Error(error);
   },
 );
 

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
-import useIntersectionObserver from "../../custom-hooks/useIntersectionObserver";
+import useIntersectionObserver from "../../custom-hooks/useIntersectionObserver.js";
 import classnames from "classnames";
-import type { CarouselData, ImageExpansion } from "../../types";
+import type { CarouselData } from "../../types.js";
 
 export default function CarouselImageContaniner({
   carouselData,
