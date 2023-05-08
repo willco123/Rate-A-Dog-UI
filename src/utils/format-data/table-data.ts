@@ -1,12 +1,15 @@
-import { setAsDropDownJSX, setAsRadioJSX, wrapWithTdJSX } from "./format-data";
+import {
+  setAsDropDownJSX,
+  setAsRadioJSX,
+  wrapWithTdJSX,
+} from "./format-data.js";
 import type {
   TableData,
   TableDataGrouped,
   TableDataJSX,
-  ActiveSubBreeds,
   HandleDropDownChange,
-} from "../../types";
-import type { HandleRadioChange } from "./format-data";
+} from "../../types.js";
+import type { HandleRadioChange } from "./format-data.js";
 import _ from "lodash";
 
 export function groupTableData(tableData: _.Dictionary<TableData[]> | []) {

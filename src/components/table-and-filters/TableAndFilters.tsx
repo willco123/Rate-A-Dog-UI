@@ -1,9 +1,9 @@
 import React, { memo, useState, useMemo } from "react";
-import TableComponent from "../table-component/TableComponent";
-import useTableDataInit from "../../custom-hooks/useTableDataInit";
-import Pagination from "../pagination/Pagination";
+import TableComponent from "../table-component/TableComponent.js";
+import useTableDataInit from "../../custom-hooks/useTableDataInit.js";
+import Pagination from "../pagination/Pagination.js";
 import SearchFilter from "../search-filter/SearchFilter.js";
-import { TableData } from "../../types";
+import { TableData } from "../../types.js";
 
 function TableAndFilters({
   setFilteredBreed,

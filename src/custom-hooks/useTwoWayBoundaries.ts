@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { getCarouselWidth } from "../utils/get-carousel-distance";
-import type { MutateHomeData } from "../types";
+import { getCarouselWidth } from "../utils/get-carousel-distance.js";
+import type { MutateHomeData } from "../types.js";
 const useTwoWayBoundaries = ({
   firstCarousel,
   secondCarousel,

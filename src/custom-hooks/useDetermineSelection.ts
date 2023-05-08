@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import parseStringToNumber from "../utils/parseStringToNumber";
+import parseStringToNumber from "../utils/parseStringToNumber.js";
 
 const useDetermineSelection = () => {
   const [selectedBreed, setSelectedBreed] = useState<string | null>(null);

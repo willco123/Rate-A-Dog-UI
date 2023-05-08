@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import type { CarouselData, UrlRatingData } from "../../types";
-import { formatCarouselData } from "../../utils/format-data/carousel-data";
-import { getAllDbDogs, getMoreDbDogs } from "../../services/backend/dogs";
+import type { CarouselData, UrlRatingData } from "../../types.js";
+import { formatCarouselData } from "../../utils/format-data/carousel-data.js";
+import { getAllDbDogs, getMoreDbDogs } from "../../services/backend/dogs.js";
 
 const useSetData = ({ sampleSize }: { sampleSize: number }) => {
   const [homeData, setHomeData] = useState<UrlRatingData[]>([]);

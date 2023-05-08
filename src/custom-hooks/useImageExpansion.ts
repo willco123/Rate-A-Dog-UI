@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import parseStringToNumber from "../utils/parseStringToNumber";
-import type { CarouselData } from "../types";
+import parseStringToNumber from "../utils/parseStringToNumber.js";
+import type { CarouselData } from "../types.js";
 
 const useImageExpansion = ({
   selectedImageHTML,

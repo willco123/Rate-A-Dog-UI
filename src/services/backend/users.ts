@@ -1,6 +1,6 @@
 import axios from "axios";
-import type { LoginData, RegisterData } from "../../types";
-import { serverURL, axiosWithAuthHeader } from "./config";
+import type { LoginData, RegisterData } from "../../types.js";
+import { serverURL, axiosWithAuthHeader } from "./config.js";
 
 export async function postLogin(loginData: LoginData) {
   try {

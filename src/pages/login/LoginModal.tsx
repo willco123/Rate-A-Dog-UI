@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./login-modal.scss";
 import dogSVG from "../../assets/dog-api-logo.svg";
 import { postLogin } from "../../services/backend/users.js";
-import type { LoginData } from "../../types";
+import type { LoginData } from "../../types.js";
 
 export default function LoginModal({
   setIsLoggedIn,

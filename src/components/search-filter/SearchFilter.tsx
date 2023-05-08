@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import "./search-filter.scss";
 import { TableDataGrouped } from "../../types.js";
-import filterArrayOfObjects from "../../utils/filter-array";
+import filterArrayOfObjects from "../../utils/filter-array.js";
 
 export default function SearchFilter({
   tableDataGrouped,

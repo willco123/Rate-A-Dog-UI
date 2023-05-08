@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { SortTypes, UrlRatingData } from "../../types";
-import { postDogs, getDogByUrl } from "../../services/backend/dogs";
+import { SortTypes, UrlRatingData } from "../../types.js";
+import { postDogs, getDogByUrl } from "../../services/backend/dogs.js";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const useUpdateRating = ({

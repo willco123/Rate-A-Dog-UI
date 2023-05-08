@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import type { CarouselData, UrlRatingData, SortTypes } from "../../types";
-import { formatCarouselData } from "../../utils/format-data/carousel-data";
+import type { CarouselData, UrlRatingData, SortTypes } from "../../types.js";
+import { formatCarouselData } from "../../utils/format-data/carousel-data.js";
 import {
   getUserFilteredCount,
   getUserDbDogs,
   getUserCount,
-} from "../../services/backend/dogs";
+} from "../../services/backend/dogs.js";
 
 const useSetData = ({
   sampleSize,

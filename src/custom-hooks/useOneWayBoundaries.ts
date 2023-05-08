@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { getCarouselDistance } from "../utils/get-carousel-distance";
-import type { MutateArrayData } from "../types";
+import { getCarouselDistance } from "../utils/get-carousel-distance.js";
+import type { MutateArrayData } from "../types.js";
 const useOneWayBoundaries = ({
   parentCarousel,
   firstCarousel,

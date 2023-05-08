@@ -1,6 +1,6 @@
 import axios from "axios";
-import { serverURL, axiosWithAuthHeader } from "./config";
-import type { UrlRatingData, SingleUrlOnRate, TableData } from "../../types";
+import { serverURL, axiosWithAuthHeader } from "./config.js";
+import type { UrlRatingData, SingleUrlOnRate, TableData } from "../../types.js";
 
 export async function postDogs(
   url: string,

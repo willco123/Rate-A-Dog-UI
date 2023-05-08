@@ -4,7 +4,7 @@ import _ from "lodash";
 import { postRegister } from "../../services/backend/users.js";
 import "./register.scss";
 import dogSVG from "../../assets/dog-api-logo.svg";
-import type { RegisterData } from "../../types";
+import type { RegisterData } from "../../types.js";
 
 export default function Register() {
   const [badDetails, setBadDetails] = useState<string>("");
@@ -50,8 +50,6 @@ export default function Register() {
 
   return (
     <div className="darkBG">
-      {isRegistered && <span>Registration Successful!</span>}
-
       <form onSubmit={handleClick} className="register-container">
         <img src={dogSVG} alt="Dog SVG" className="brandTwo" />
         {!isRegistered && (

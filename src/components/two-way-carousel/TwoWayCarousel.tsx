@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useRef } from "react";
 
 import classnames from "classnames";
-import CarouselImageContaniner from "../carousel-image-container/CarouselImageContainer";
+import CarouselImageContaniner from "../carousel-image-container/CarouselImageContainer.js";
 import type { CarouselData, MutateHomeData } from "../../types.js";
 import "./two-way-carousel.scss";
-import useDragCarousel from "../../custom-hooks/useDragCarousel";
-import useTwoWayBoundaries from "../../custom-hooks/useTwoWayBoundaries";
+import useDragCarousel from "../../custom-hooks/useDragCarousel.js";
+import useTwoWayBoundaries from "../../custom-hooks/useTwoWayBoundaries.js";
 
 export default function TwoWayCarousel({
   carouselDataFirst,

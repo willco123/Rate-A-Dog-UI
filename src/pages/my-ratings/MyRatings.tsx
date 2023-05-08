@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import "./my-ratings.scss";
 import FiveStarRating from "../../components/five-star-rating/FiveStarRating.js";
 import Carousel from "../../components/carousel/Carousel.js";
-import { SortTypes } from "../../types";
+import { SortTypes } from "../../types.js";
 import useDetermineSelection from "../../custom-hooks/useDetermineSelection.js";
 import useImageExpansion from "../../custom-hooks/useImageExpansion.js";
 import useSetData from "../../custom-hooks/my-ratings/useSetData.js";
 import useUpdateRating from "../../custom-hooks/my-ratings/useUpdateRating.js";
-import ExpandableDiv from "../../components/expandable-div/ExpandableDiv";
-import { getUserTableData } from "../../services/backend/dogs";
+import ExpandableDiv from "../../components/expandable-div/ExpandableDiv.js";
+import { getUserTableData } from "../../services/backend/dogs.js";
 
 function MyRatings() {
   const [sampleSize, setSampleSize] = useState<number>(100);

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { TableData, TableDataJSX, TableDataGrouped } from "../types";
+import type { TableData, TableDataJSX, TableDataGrouped } from "../types.js";
 import {
   groupTableData,
   sortTableDataGrouped,
