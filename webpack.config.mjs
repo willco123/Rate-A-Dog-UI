@@ -19,7 +19,7 @@ const Config = {
           {
             loader: "file-loader",
             options: {
-              name: "images/[hash]-[name].[ext]",
+              name: "./[hash]-[name].[ext]",
             },
           },
         ],
