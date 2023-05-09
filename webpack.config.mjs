@@ -66,7 +66,7 @@ const Config = {
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, "public/"),
+      directory: path.join(__dirname, "dist/"),
     },
     port: 3000,
     devMiddleware: {
@@ -79,9 +79,7 @@ const Config = {
     new ReactRefreshWebpackPlugin(),
     new ForkTsCheckerWebpackPlugin(),
     new HtmlWebpackPlugin({
-      // injects bundle.js to our new index.html
       inject: true,
-      // copys the content of the existing index.html to the new /build index.html
       template: path.resolve("./public/index.html"),
     }),
   ].filter(Boolean),

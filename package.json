@@ -5,7 +5,6 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development",
-    "starto": "webpack",
     "test": "Jest --runInBand --watchAll --verbose --coverage",
     "argument": "echo \"The value %npm_config_doo% of --foo is '%npm_config_foo%'\"",
     "isolatedFile": "node --loader=ts-node/esm --loader ./css-loader.mjs %INIT_CWD%\\%npm_config_file%",
