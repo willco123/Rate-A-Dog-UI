@@ -82,8 +82,7 @@ const Config = {
       inject: true,
       template: path.resolve("./public/index.html"),
       publicPath: "./",
-      // favicon: path.resolve("./public/favicon.ico"),
-      favicon: "./public/favicon.ico",
+      favicon: path.resolve("./public/favicon.ico"),
     }),
   ].filter(Boolean),
 };
