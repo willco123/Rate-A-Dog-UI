@@ -81,6 +81,7 @@ const Config = {
     new HtmlWebpackPlugin({
       inject: true,
       template: path.resolve("./public/index.html"),
+      publicPath: "./",
     }),
   ].filter(Boolean),
 };
