@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const isDevelopment = process.env.NODE_ENV !== "production";
+const publicPath = isDevelopment ? "dist/" : "";
 
 const Config = {
   entry: path.resolve(process.cwd(), "./src/index.tsx"),
@@ -61,7 +62,7 @@ const Config = {
   },
   output: {
     path: path.resolve(__dirname, "dist/"),
-    publicPath: "",
+    publicPath,
     filename: "bundle.js",
   },
   devServer: {
