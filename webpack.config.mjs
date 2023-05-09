@@ -11,7 +11,9 @@ let publicPath = "";
 if (process.env.NODE_ENV !== "production") {
   publicPath = "dist/";
 }
-
+if (process.env.NODE_ENV === undefined) {
+  publicPath = "";
+}
 console.log(publicPath);
 const Config = {
   entry: path.resolve(process.cwd(), "./src/index.tsx"),
