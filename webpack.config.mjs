@@ -81,7 +81,7 @@ const Config = {
     new HtmlWebpackPlugin({
       inject: true,
       template: path.resolve("./publicProd/index.html"),
-      publicPath: "./",
+      publicPath: "",
       favicon: path.resolve("./publicProd/favicon.ico"),
     }),
   ].filter(Boolean),
