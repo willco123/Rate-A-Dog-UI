@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const isDevelopment = process.env.NODE_ENV !== "production";
+console.log(process.env.NODE_ENV);
 const publicPath = isDevelopment ? "dist/" : "";
 console.log(publicPath);
 const Config = {
