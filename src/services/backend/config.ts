@@ -6,6 +6,8 @@ export const serverURL = isDevelopment
   ? "http://localhost:3005/"
   : "https://rateadog.onrender.com/";
 
+console.log("serverURL", serverURL);
+
 export const axiosWithAuthHeader = axios.create({
   headers: {
     Authorization: sessionStorage.getItem("Authorization"),
