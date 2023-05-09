@@ -18,9 +18,9 @@ const Config = {
         use: [
           {
             loader: "file-loader",
-            // options: {
-            //   name: "images/[hash]-[name].[ext]",
-            // },
+            options: {
+              name: "images/[hash]-[name].[ext]",
+            },
           },
         ],
       },
