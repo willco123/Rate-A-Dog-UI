@@ -66,7 +66,7 @@ const Config = {
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, "dist/"),
+      directory: path.join(__dirname, "public/"),
     },
     port: 3000,
     devMiddleware: {
@@ -80,9 +80,9 @@ const Config = {
     new ForkTsCheckerWebpackPlugin(),
     new HtmlWebpackPlugin({
       inject: true,
-      template: path.resolve("./public/index.html"),
+      template: path.resolve("./publicProd/index.html"),
       publicPath: "./",
-      favicon: path.resolve("./public/favicon.ico"),
+      favicon: path.resolve("./publicProd/favicon.ico"),
     }),
   ].filter(Boolean),
 };
