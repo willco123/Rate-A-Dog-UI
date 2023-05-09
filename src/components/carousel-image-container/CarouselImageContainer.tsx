@@ -27,7 +27,7 @@ export default function CarouselImageContaniner({
     );
   }
 
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
   const imageRef = useRef<HTMLDivElement>(null);
 
   useIntersectionObserver({
