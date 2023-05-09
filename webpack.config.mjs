@@ -7,8 +7,11 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const isDevelopment = process.env.NODE_ENV !== "production";
-console.log(process.env.NODE_ENV);
-const publicPath = isDevelopment ? "dist/" : "";
+let publicPath = "";
+if (process.env.NODE_ENV !== "production") {
+  publicPath = "dist/";
+}
+
 console.log(publicPath);
 const Config = {
   entry: path.resolve(process.cwd(), "./src/index.tsx"),
