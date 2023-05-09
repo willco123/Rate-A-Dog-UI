@@ -2,10 +2,11 @@ import axios from "axios";
 import { redirect } from "react-router-dom";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
+
 export const serverURL = isDevelopment
   ? "http://localhost:3005/"
   : "https://rateadog.onrender.com/";
-
+console.log(serverURL);
 export const axiosWithAuthHeader = axios.create({
   headers: {
     Authorization: sessionStorage.getItem("Authorization"),
