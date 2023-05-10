@@ -62,7 +62,7 @@ const Config = {
   },
   output: {
     path: path.resolve(__dirname, "dist/"),
-    // publicPath: "/",
+    // publicPath: "/",//not specifying this allows it to be dynamically assigned
     filename: "bundle.js",
   },
   devServer: {
