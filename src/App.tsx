@@ -15,7 +15,7 @@ import Register from "./pages/register/Register.js";
 import MyRatings from "./pages/my-ratings/MyRatings.js";
 import Logout from "./pages/logout/Logout.js";
 import { getRefresh } from "./services/backend/users.js";
-console.log(process.env.NODE_ENV);
+
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const location = useLocation();
@@ -30,6 +30,7 @@ export default function App() {
       if (isAuthenticated) setIsLoggedIn(true);
       if (!isAuthenticated && isLoggedIn) setIsLoggedIn(false);
       if (!isAuthenticated && !homeOrSorted) navigate("/");
+      console.log(process.env.NODE_ENV);
     })();
   }, []);
 
