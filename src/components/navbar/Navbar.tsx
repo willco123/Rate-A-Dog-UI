@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import "./navbar.scss";
 import dogSVG from "../../assets/dog-api-logo.svg";
 import hamburgerSVG from "../../assets/hamburger-icon.svg";
+import classnames from "classnames";
 
 function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
@@ -23,7 +24,7 @@ function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
   }
   return (
     <>
-      <nav className="navigation">
+      <nav className={classnames("navigation", { expanded: isNavExpanded })}>
         <a
           className="brand-name"
           href="https://dog.ceo/"

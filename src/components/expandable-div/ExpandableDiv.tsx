@@ -88,22 +88,6 @@ export default function ExpandableDiv({
           height: isExpanded ? `${divHeight}px` : 0,
         }}
       >
-        {/* <div
-          onClick={() => setIsExpanded(!isExpanded)}
-          className={classnames("widget", { expanded: isExpanded })}
-        >
-          <div className="dots-container">
-            <div className="dot"></div>
-            <div className="dot"></div>
-            <div className="dot"></div>
-            <div className="dot"></div>
-            <div className="dot"></div>
-            <div className="dot"></div>
-            <div className="dot"></div>
-            <div className="dot"></div>
-            <div className="dot"></div>
-          </div>
-        </div> */}
         <div className="resize-drag" onMouseDown={handleMouseDown} />
         <div className="table-wrapper">
           <TableAndFilters
