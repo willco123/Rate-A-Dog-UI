@@ -35,11 +35,18 @@ ul {
   padding-left: 0px;
 }
 
-@media screen and (max-width: 700px) {
-  .main-wrapper {
-    overflow-x: hidden;
-    height: 100vh;
-    width: 100vw;
-    position: relative;
-  }
+.main-wrapper {
+  overflow-x: hidden;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
 }
+
+// @media screen and (max-width: 700px) {
+//   .main-wrapper {
+//     overflow-x: hidden;
+//     height: 100vh;
+//     width: 100vw;
+//     position: relative;
+//   }
+// }
