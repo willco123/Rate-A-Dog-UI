@@ -139,6 +139,7 @@ function AllSorted() {
         >
           Rate the Dog!
         </button>
+        <div className="empty-space">{}</div>
       </div>
 
       <Carousel
