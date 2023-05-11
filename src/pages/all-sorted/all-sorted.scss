@@ -4,6 +4,12 @@
     top: 50px;
     z-index: 9;
   }
+  .button-menu {
+    display: none;
+    position: fixed;
+    top: 50px;
+    z-index: 9;
+  }
   .image-data {
     display: flex;
     position: absolute;
@@ -38,6 +44,12 @@
 
 @media screen and (max-width: 700px) {
   .all-sorted-wrapper {
+    .button-container {
+      display: none;
+    }
+    .button-menu {
+      display: block;
+    }
     .chosen-image-all-sorted {
       height: 400px;
       min-height: 400px;

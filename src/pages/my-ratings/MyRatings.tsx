@@ -9,6 +9,8 @@ import useSetData from "../../custom-hooks/my-ratings/useSetData.js";
 import useUpdateRating from "../../custom-hooks/my-ratings/useUpdateRating.js";
 import ExpandableDiv from "../../components/expandable-div/ExpandableDiv.js";
 import { getUserTableData } from "../../services/backend/dogs.js";
+import CollapsibleSpan from "../../components/collapsible-span/CollapsibleSpan";
+import SortingButtons from "../../components/sorting-buttons/SortingButtons";
 
 function MyRatings() {
   const [sampleSize, setSampleSize] = useState<number>(100);
@@ -84,39 +86,26 @@ function MyRatings() {
 
   return (
     <div className="all-sorted-wrapper">
-      <div>
-        <button
-          className={sortMode === "breed" ? "glow" : ""}
-          onClick={() => setSortMode("breed")}
-        >
-          Breed
-        </button>
-        <button
-          className={sortMode === "averageRating" ? "glow" : ""}
-          onClick={() => setSortMode("averageRating")}
-        >
-          Rating
-        </button>
-        <button
-          className={sortMode === "numberOfRates" ? "glow" : ""}
-          onClick={() => setSortMode("numberOfRates")}
-        >
-          Votes
-        </button>
+      <div className="button-menu">
+        <CollapsibleSpan
+          displayedText="Sort"
+          WrappedComponent={
+            <SortingButtons
+              sortMode={sortMode}
+              sortOrder={sortOrder}
+              setSortMode={setSortMode}
+              setSortOrder={setSortOrder}
+            />
+          }
+        />
       </div>
-      <div>
-        <button
-          className={sortOrder === "asc" ? "glow" : ""}
-          onClick={() => setSortOrder("asc")}
-        >
-          Ascending
-        </button>
-        <button
-          className={sortOrder === "desc" ? "glow" : ""}
-          onClick={() => setSortOrder("desc")}
-        >
-          Descending
-        </button>
+      <div className="button-container">
+        <SortingButtons
+          sortMode={sortMode}
+          sortOrder={sortOrder}
+          setSortMode={setSortMode}
+          setSortOrder={setSortOrder}
+        />
       </div>
 
       <div className="image-data">
@@ -135,6 +124,7 @@ function MyRatings() {
         >
           Rate the Dog!
         </button>
+        <div className="empty-space">{}</div>
       </div>
 
       <Carousel
