@@ -66,7 +66,7 @@ const useDragCarouselTouch = ({
   }
 
   function handleTouchMove(e: TouchEvent) {
-    const diff = (initialMousePos - e.touches[0].clientX) * -1;
+    const diff = (initialMousePos - e.touches[0].clientX) * -2;
     setTouchX(touchX + diff);
   }
 

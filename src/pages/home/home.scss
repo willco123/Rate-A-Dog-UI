@@ -22,7 +22,8 @@
 @media screen and (max-width: 700px) {
   .home-wrapper {
     overflow-x: hidden;
-    position: relative;
+    // position: absolute;
+    // top: 0%;
     .chosen-image-home {
       height: 400px;
       min-height: 400px;
