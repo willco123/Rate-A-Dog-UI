@@ -32,7 +32,7 @@ function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
           rel="noreferrer"
         >
           <img src={dogSVG} alt="Dog SVG" className="brand" />
-          Powered by Dog Ceo!
+          {!isNavExpanded && `Powered by Dog Ceo!`}
         </a>
         <button
           type="button"
