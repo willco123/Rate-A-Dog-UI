@@ -10,7 +10,7 @@ body {
   background: rgb(73, 73, 73);
   color: rgb(182, 182, 182);
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: scroll;
 }
 
 button {
@@ -33,10 +33,4 @@ button {
 ol,
 ul {
   padding-left: 0px;
-}
-
-@media screen and (max-width: 700px) {
-  body {
-    overflow-x: hidden;
-  }
 }

@@ -6,6 +6,7 @@ import type { CarouselData, MutateHomeData } from "../../types.js";
 import "./two-way-carousel.scss";
 import useDragCarousel from "../../custom-hooks/useDragCarousel.js";
 import useTwoWayBoundaries from "../../custom-hooks/useTwoWayBoundaries.js";
+import useDragCarouselTouch from "../../custom-hooks/useDragCarouselTouch.js";
 
 export default function TwoWayCarousel({
   carouselDataFirst,
@@ -43,6 +44,16 @@ export default function TwoWayCarousel({
     isAnImageExpanded,
     setSelectedImageHTML,
   });
+
+  const { touchX, handleTouchStart } = useDragCarouselTouch({
+    parentCarousel,
+    firstCarousel,
+    secondCarousel,
+    snapArea,
+    isAnImageExpanded,
+    setSelectedImageHTML,
+  });
+
   const {
     firstShiftX,
     secondShiftX,
@@ -67,7 +78,7 @@ export default function TwoWayCarousel({
         key="two-way-carousel-container"
         className="two-way-carousel-container"
         style={{
-          transform: `translate(${mouseX}px, 35%)`,
+          transform: `translate(${mouseX + touchX}px, 35%)`,
         }}
         ref={parentCarouselRef}
       >
@@ -81,6 +92,7 @@ export default function TwoWayCarousel({
           style={{
             transform: `translate(${firstShiftX}px, 0%)`,
           }}
+          onTouchStart={handleTouchStart}
           onMouseDown={handleMouseDown}
         >
           {carouselDataFirst.map((element, index) => {
@@ -110,6 +122,7 @@ export default function TwoWayCarousel({
             transform: `translate(${secondShiftX}px, 0%)`,
           }}
           onMouseDown={handleMouseDown}
+          onTouchStart={handleTouchStart}
         >
           {carouselDataSecond.map((element, index) => {
             const key = element ? element.url : index + "null";
