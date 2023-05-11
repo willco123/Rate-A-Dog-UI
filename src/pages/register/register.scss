@@ -93,3 +93,12 @@
   top: 40%;
   color: rgb(255, 255, 255);
 }
+
+@media screen and (max-width: 700px) {
+  .register-container {
+    width: 300px;
+  }
+  .brandTwo {
+    transform: scale(0.5) translateY(50%);
+  }
+}

@@ -99,3 +99,12 @@ $login-bad-color: rgb(245, 66, 66);
 .login-bad {
   color: $login-bad-color;
 }
+
+@media screen and (max-width: 700px) {
+  .login-container {
+    width: 300px;
+  }
+  .brandTwo {
+    transform: scale(0.5) translateY(50%);
+  }
+}
