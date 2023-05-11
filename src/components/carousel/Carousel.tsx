@@ -5,6 +5,7 @@ import type { CarouselData, MutateArrayData } from "../../types.js";
 import "./carousel.scss";
 import useDragCarousel from "../../custom-hooks/useDragCarousel.js";
 import useOneWayBoundaries from "../../custom-hooks/useOneWayBoundaries.js";
+import useDragCarouselTouch from "../../custom-hooks/useDragCarouselTouch.js";
 
 export default function Carousel({
   carouselDataFirst,
@@ -49,6 +50,15 @@ export default function Carousel({
     setSelectedImageHTML,
   });
 
+  const { touchX, handleTouchStart } = useDragCarouselTouch({
+    parentCarousel,
+    firstCarousel,
+    secondCarousel,
+    snapArea,
+    isAnImageExpanded,
+    setSelectedImageHTML,
+  });
+
   const {
     firstShiftX,
     secondShiftX,
@@ -81,7 +91,8 @@ export default function Carousel({
         className="carousel-container"
         draggable={false}
         style={{
-          transform: `translate(${mouseX}px, 35%)`,
+          transform: `translate(${mouseX + touchX}px, 35%)`,
+
           // right: isSorted ? `0%` : `50%`,
         }}
         ref={parentCarouselRef}
@@ -97,6 +108,7 @@ export default function Carousel({
             transform: `translate(${firstShiftX}px, 0%)`,
           }}
           onMouseDown={handleMouseDown}
+          onTouchStart={handleTouchStart}
         >
           {carouselDataFirst.map((element, index) => {
             const key = element ? element.url : index + "null";
@@ -125,6 +137,7 @@ export default function Carousel({
             transform: `translate(${secondShiftX}px, 0%)`,
           }}
           onMouseDown={handleMouseDown}
+          onTouchStart={handleTouchStart}
         >
           {carouselDataSecond.map((element, index) => {
             const key = element ? element.url : index + "null";
