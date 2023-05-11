@@ -71,7 +71,7 @@ function Home() {
 
         <div>
           <span>AvgRating: {selectedAverageRating}</span>
-          <span>MyRating: {selectedMyRating}</span>
+          <span> MyRating: {selectedMyRating}</span>
         </div>
         <div className="chosen-image-home"></div>
         <FiveStarRating onChange={handleRatingChange} />

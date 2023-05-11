@@ -57,12 +57,12 @@
   height: 500px;
   pointer-events: none;
   position: absolute;
-  top: 300px;
+  top: 250px;
   left: 50%;
   transform: translateX(-50%);
   .expand-image::before {
     position: absolute;
-    top: 90%;
+    top: 100%;
     left: 90%;
     font-family: FontAwesome;
     height: 100px;
@@ -75,7 +75,18 @@
   }
 }
 
-// @media screen and (max-width: 700px) {
-//   .carousel-container {}
-
-// }
+@media screen and (max-width: 700px) {
+  .carousel-container {
+    .slider-image-container {
+      .slider-image {
+        height: 400px;
+        img {
+          height: 400px;
+        }
+      }
+    }
+  }
+  .chosen-image {
+    height: 400px;
+  }
+}

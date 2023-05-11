@@ -63,6 +63,7 @@ export default function TwoWayCarousel({
         />
       </div>
       <div
+        draggable={false}
         key="two-way-carousel-container"
         className="two-way-carousel-container"
         style={{
@@ -72,6 +73,7 @@ export default function TwoWayCarousel({
       >
         <div
           key="first-carousel"
+          draggable={false}
           ref={firstCarouselRef}
           className={classnames("slider-image-container first", {
             expanded: isAnImageExpanded,
@@ -98,6 +100,7 @@ export default function TwoWayCarousel({
         </div>
 
         <div
+          draggable={false}
           key="second-carousel123"
           ref={secondCarouselRef}
           className={classnames("slider-image-container second", {

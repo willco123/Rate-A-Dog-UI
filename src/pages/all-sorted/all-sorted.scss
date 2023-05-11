@@ -30,3 +30,12 @@
     pointer-events: none;
   }
 }
+
+@media screen and (max-width: 700px) {
+  .all-sorted-wrapper {
+    .chosen-image-all-sorted {
+      height: 400px;
+      min-height: 400px;
+    }
+  }
+}

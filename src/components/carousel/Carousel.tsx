@@ -79,6 +79,7 @@ export default function Carousel({
       <div
         key="carousel-container"
         className="carousel-container"
+        draggable={false}
         style={{
           transform: `translate(${mouseX}px, 35%)`,
           // right: isSorted ? `0%` : `50%`,
@@ -87,6 +88,7 @@ export default function Carousel({
       >
         <div
           key="first-carousel"
+          draggable={false}
           ref={firstCarouselRef}
           className={classnames("slider-image-container first", {
             expanded: isAnImageExpanded,
@@ -114,6 +116,7 @@ export default function Carousel({
 
         <div
           key="second-carousel"
+          draggable={false}
           ref={secondCarouselRef}
           className={classnames("slider-image-container second", {
             expanded: isAnImageExpanded,
