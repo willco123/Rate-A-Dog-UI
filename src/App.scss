@@ -9,6 +9,8 @@ body {
   color: rgb(182, 182, 182);
   overflow-x: hidden;
   overflow-y: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
 }
 
 button {
