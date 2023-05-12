@@ -6,7 +6,7 @@ import {
   tableDataToJSX,
 } from "../utils/format-data/table-data.js";
 import { setFloatsToTwoDp } from "../utils/format-data/format-data.js";
-import groupBy from "lodash/groupby";
+import groupBy from "lodash/groupBy";
 import { Dictionary } from "lodash";
 
 export const useTableDataInit = ({
