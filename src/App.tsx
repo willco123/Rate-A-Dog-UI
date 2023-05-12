@@ -7,14 +7,39 @@ import {
   useNavigate,
 } from "react-router-dom";
 import "./App.scss";
-import Home from "./pages/home/Home.js";
-import AllSorted from "./pages/all-sorted/AllSorted.js";
-import Navbar from "./components/navbar/Navbar.js";
-import LoginModal from "./pages/login/LoginModal.js";
-import Register from "./pages/register/Register.js";
-import MyRatings from "./pages/my-ratings/MyRatings.js";
-import Logout from "./pages/logout/Logout.js";
+import loadable from "@loadable/component";
 import { getRefresh } from "./services/backend/users.js";
+
+const Home = loadable(
+  () => import(/* webpackChunkName: "Home" */ "./pages/home/Home.js"),
+);
+const AllSorted = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "AllSorted" */ "./pages/all-sorted/AllSorted.js"
+    ),
+);
+const Navbar = loadable(
+  () =>
+    import(/* webpackChunkName: "Navbar" */ "./components/navbar/Navbar.js"),
+);
+const LoginModal = loadable(
+  () =>
+    import(/* webpackChunkName: "LoginModal" */ "./pages/login/LoginModal.js"),
+);
+const Register = loadable(
+  () =>
+    import(/* webpackChunkName: "Register" */ "./pages/register/Register.js"),
+);
+const MyRatings = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "MyRatings" */ "./pages/my-ratings/MyRatings.js"
+    ),
+);
+const Logout = loadable(
+  () => import(/* webpackChunkName: "Logout" */ "./pages/logout/Logout.js"),
+);
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -30,7 +55,6 @@ export default function App() {
       if (isAuthenticated) setIsLoggedIn(true);
       if (!isAuthenticated && isLoggedIn) setIsLoggedIn(false);
       if (!isAuthenticated && !homeOrSorted) navigate("/");
-      console.log(process.env.NODE_ENV);
     })();
   }, []);
 

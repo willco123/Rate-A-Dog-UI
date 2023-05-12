@@ -11,13 +11,6 @@ const Config = {
     main: {
       import: path.resolve(__dirname, "./src/index.tsx"),
     },
-    home: {
-      import: path.resolve(__dirname, "./src/pages/home/Home.tsx"),
-    },
-    allSorted: path.resolve(__dirname, "./src/pages/all-sorted/AllSorted.tsx"),
-    myRatings: path.resolve(__dirname, "./src/pages/my-ratings/MyRatings.tsx"),
-    login: path.resolve(__dirname, "./src/pages/login/LoginModal.tsx"),
-    register: path.resolve(__dirname, "./src/pages/register/Register.tsx"),
   },
   module: {
     rules: [
@@ -80,8 +73,7 @@ const Config = {
       template: path.resolve("./publicProd/index.html"),
       publicPath: "",
       favicon: path.resolve("./publicProd/favicon.ico"),
-      // chunks: ["vendors", "main"],
-      chunks: ["main", "home", "allSorted", "myRatings", "login", "register"],
+      chunks: ["vendors", "main"],
       chunksSortMode: "manual",
     }),
     // new BundleAnalyzerPlugin(),
