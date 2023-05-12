@@ -6,10 +6,9 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const isDevelopment = process.env.NODE_ENV !== "production";
 const Config = {
   entry: path.resolve(process.cwd(), "./src/index.tsx"),
-  mode: isDevelopment ? "development" : "production",
+  mode: "development",
   module: {
     rules: [
       {
@@ -36,9 +35,7 @@ const Config = {
             loader: "ts-loader",
             options: {
               getCustomTransformers: () => ({
-                before: [isDevelopment && ReactRefreshTypeScript()].filter(
-                  Boolean,
-                ),
+                before: [ReactRefreshTypeScript()].filter(Boolean),
               }),
               // transpileOnly: isDevelopment,
             },

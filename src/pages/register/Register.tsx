@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { omit } from "lodash";
+import omit from "lodash/omit";
 import { postRegister } from "../../services/backend/users.js";
 import "./register.scss";
 import dogSVG from "../../assets/dog-api-logo.svg";

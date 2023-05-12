@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { range } from "lodash";
+import range from "lodash/range";
 
 export type PageHook = {
   dataLength: number;

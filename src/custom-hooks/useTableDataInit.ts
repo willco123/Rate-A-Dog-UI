@@ -6,7 +6,8 @@ import {
   tableDataToJSX,
 } from "../utils/format-data/table-data.js";
 import { setFloatsToTwoDp } from "../utils/format-data/format-data.js";
-import { groupBy, Dictionary } from "lodash";
+import groupBy from "lodash/groupby";
+import { Dictionary } from "lodash";
 
 export const useTableDataInit = ({
   filteredBreed,

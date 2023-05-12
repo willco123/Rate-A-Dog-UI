@@ -33,7 +33,6 @@ const Config = {
         test: /\.(ts|tsx)$/,
         exclude: /(node_modules|bower_components)/,
         loader: "ts-loader",
-        // options: {},
       },
     ],
   },
@@ -45,6 +44,7 @@ const Config = {
       ".mjs": [".mts", ".mjs"],
     },
   },
+
   output: {
     path: path.resolve(__dirname, "dist/"),
     // publicPath: "/",//not specifying this allows it to be dynamically assigned
@@ -53,6 +53,7 @@ const Config = {
     chunkFilename: "[name].[chunkhash:8].js",
   },
   optimization: {
+    minimize: true,
     runtimeChunk: "single",
     splitChunks: {
       chunks: "all",
