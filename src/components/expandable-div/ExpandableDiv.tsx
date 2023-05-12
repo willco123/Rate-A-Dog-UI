@@ -28,6 +28,7 @@ export default function ExpandableDiv({
 }) {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
+  const [isTouchStart, setIsTouchStart] = useState<boolean>(false);
   const [divHeight, setDivHeight] = useState<number>(300);
   const [initialMousePos, setInitialMousePos] = useState(0);
 
@@ -39,6 +40,15 @@ export default function ExpandableDiv({
       document.onmouseup = null;
     }
   }, [isMouseDown]);
+
+  useEffect(() => {
+    if (isMouseDown) {
+      document.ontouchmove = handleTouchResize;
+    } else {
+      document.ontouchmove = null;
+      document.ontouchend = null;
+    }
+  }, [isTouchStart]);
 
   function handleResize(e: MouseEvent) {
     const diff = initialMousePos - e.clientY;
@@ -53,6 +63,21 @@ export default function ExpandableDiv({
 
   function mouseUpHelper() {
     setIsMouseDown(false);
+  }
+
+  function handleTouchResize(e: TouchEvent) {
+    const diff = initialMousePos - e.touches[0].clientY;
+    setDivHeight(divHeight + diff);
+  }
+
+  function handleTouchStart(e: React.TouchEvent<HTMLDivElement>) {
+    setIsTouchStart(true);
+    setInitialMousePos(e.touches[0].clientY);
+    document.ontouchend = touchEndHelper;
+  }
+
+  function touchEndHelper() {
+    setIsTouchStart(false);
   }
 
   return (
@@ -88,7 +113,11 @@ export default function ExpandableDiv({
           height: isExpanded ? `${divHeight}px` : 0,
         }}
       >
-        <div className="resize-drag" onMouseDown={handleMouseDown} />
+        <div
+          className="resize-drag"
+          onMouseDown={handleMouseDown}
+          onTouchStart={handleTouchStart}
+        />
         <div className="table-wrapper">
           <TableAndFilters
             filteredBreed={filteredBreed}
