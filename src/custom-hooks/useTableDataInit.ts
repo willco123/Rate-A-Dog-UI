@@ -6,7 +6,7 @@ import {
   tableDataToJSX,
 } from "../utils/format-data/table-data.js";
 import { setFloatsToTwoDp } from "../utils/format-data/format-data.js";
-import _ from "lodash";
+import { groupBy, Dictionary } from "lodash";
 
 export const useTableDataInit = ({
   filteredBreed,
@@ -31,7 +31,7 @@ export const useTableDataInit = ({
   getTableData: () => Promise<TableData[] | undefined>;
 }) => {
   const [tableData, setTableData] = useState<TableData[] | []>([]);
-  const [tableDataDict, setTableDataDict] = useState<_.Dictionary<TableData[]>>(
+  const [tableDataDict, setTableDataDict] = useState<Dictionary<TableData[]>>(
     Object.create(null),
   );
   const [tableDataGrouped, setTableDataGrouped] = useState<TableDataGrouped[]>(
@@ -53,7 +53,7 @@ export const useTableDataInit = ({
   }, []);
 
   useEffect(() => {
-    const tableDataDictionary = _.groupBy(tableData, "breed");
+    const tableDataDictionary = groupBy(tableData, "breed");
     const groupedTableData = groupTableData(tableDataDictionary);
     const sortedTableData = sortTableDataGrouped(groupedTableData);
 

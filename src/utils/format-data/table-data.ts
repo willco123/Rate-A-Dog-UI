@@ -10,9 +10,9 @@ import type {
   HandleDropDownChange,
 } from "../../types.js";
 import type { HandleRadioChange } from "./format-data.js";
-import _ from "lodash";
+import { Dictionary } from "lodash";
 
-export function groupTableData(tableData: _.Dictionary<TableData[]> | []) {
+export function groupTableData(tableData: Dictionary<TableData[]> | []) {
   const tableDataGrouped = Object.values(tableData).map((el) => {
     const output: TableDataGrouped = {
       breed: el[0].breed,

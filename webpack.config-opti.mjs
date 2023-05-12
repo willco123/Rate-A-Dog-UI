@@ -1,19 +1,30 @@
 import path from "path";
-import ReactRefreshTypeScript from "react-refresh-typescript";
-import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
-import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+// import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const isDevelopment = process.env.NODE_ENV !== "production";
-console.log(process.env.NODE_ENV);
 const Config = {
-  entry: path.resolve(process.cwd(), "./src/index.tsx"),
-  mode: isDevelopment ? "development" : "production",
+  mode: "production",
+  entry: {
+    main: {
+      import: path.resolve(__dirname, "./src/index.tsx"),
+    },
+    home: {
+      import: path.resolve(__dirname, "./src/pages/home/Home.tsx"),
+    },
+    allSorted: path.resolve(__dirname, "./src/pages/all-sorted/AllSorted.tsx"),
+    myRatings: path.resolve(__dirname, "./src/pages/my-ratings/MyRatings.tsx"),
+    login: path.resolve(__dirname, "./src/pages/login/LoginModal.tsx"),
+    register: path.resolve(__dirname, "./src/pages/register/Register.tsx"),
+  },
   module: {
     rules: [
+      {
+        test: /\.s[ac]ss$/i,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+      },
       {
         test: /\.(png|jp(e*)g|svg|gif)$/,
         use: [
@@ -31,25 +42,6 @@ const Config = {
         loader: "ts-loader",
         // options: {},
       },
-      {
-        test: /\.s[ac]ss$/i,
-        use: [
-          {
-            loader: "ts-loader",
-            options: {
-              getCustomTransformers: () => ({
-                before: [isDevelopment && ReactRefreshTypeScript()].filter(
-                  Boolean,
-                ),
-              }),
-              // transpileOnly: isDevelopment,
-            },
-          },
-          "style-loader",
-          "css-loader",
-          "sass-loader",
-        ],
-      },
     ],
   },
 
@@ -64,46 +56,36 @@ const Config = {
     path: path.resolve(__dirname, "dist/"),
     // publicPath: "/",//not specifying this allows it to be dynamically assigned
     filename: "[name].[fullhash:8].js",
-    sourceMapFilename: "[name].[fullhash:8].map",
+    // sourceMapFilename: "[name].[fullhash:8].map",
     chunkFilename: "[name].[chunkhash:8].js",
   },
-  devServer: {
-    static: {
-      directory: path.join(__dirname, "public/"),
+  optimization: {
+    runtimeChunk: "single",
+    splitChunks: {
+      chunks: "all",
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
+          chunks: "all",
+          enforce: true,
+        },
+      },
     },
-    port: 3000,
-    devMiddleware: {
-      publicPath: "https://localhost:3000/dist/",
-    },
-    hot: "only",
-    historyApiFallback: true,
   },
   plugins: [
-    new ReactRefreshWebpackPlugin(),
-    new ForkTsCheckerWebpackPlugin(),
+    new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       inject: true,
       template: path.resolve("./publicProd/index.html"),
       publicPath: "",
       favicon: path.resolve("./publicProd/favicon.ico"),
-      chunks: ["vendors", "main"],
+      // chunks: ["vendors", "main"],
+      chunks: ["main", "home", "allSorted", "myRatings", "login", "register"],
       chunksSortMode: "manual",
     }),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ].filter(Boolean),
-  optimization: {
-    splitChunks: {
-      chunks: "all",
-      cacheGroups: {
-        defaultVendors: {
-          test: /[\\/]node_modules[\\/]/,
-          name: "vendors",
-          chunks: "all",
-        },
-      },
-    },
-  },
 };
 
 export default Config;
-// test

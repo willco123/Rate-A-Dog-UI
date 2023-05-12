@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import _ from "lodash";
+import { range } from "lodash";
 
 export type PageHook = {
   dataLength: number;
@@ -19,7 +19,7 @@ export default function usePagination({
     const numberOfPages = Math.ceil(dataLength / itemsPerPage);
     const displayedPages = siblingCount + 5;
 
-    if (displayedPages >= numberOfPages) return _.range(1, numberOfPages + 1);
+    if (displayedPages >= numberOfPages) return range(1, numberOfPages + 1);
 
     const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
     const rightSiblingIndex = Math.min(
@@ -35,14 +35,14 @@ export default function usePagination({
 
     if (!shouldShowLeftDots && shouldShowRightDots) {
       let leftItemCount = 3 + 2 * siblingCount;
-      let leftRange = _.range(1, leftItemCount + 1);
+      let leftRange = range(1, leftItemCount + 1);
 
       return [...leftRange, dots, numberOfPages];
     }
 
     if (shouldShowLeftDots && !shouldShowRightDots) {
       let rightItemCount = 3 + 2 * siblingCount;
-      let rightRange = _.range(
+      let rightRange = range(
         numberOfPages - rightItemCount + 1,
         numberOfPages + 1,
       );
@@ -50,7 +50,7 @@ export default function usePagination({
     }
 
     if (shouldShowLeftDots && shouldShowRightDots) {
-      let middleRange = _.range(leftSiblingIndex, rightSiblingIndex + 1);
+      let middleRange = range(leftSiblingIndex, rightSiblingIndex + 1);
       return [firstPageIndex, dots, ...middleRange, dots, lastPageIndex];
     }
     return [];
