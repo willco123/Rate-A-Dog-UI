@@ -34,7 +34,7 @@ function TableAndFilters({
     setTableDataGrouped,
     clearSelection,
   } = useTableDataInit({ getTableData, setFilteredBreed, filteredBreed });
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
   const tableDataLength = tableDataJSX.length;
 
   const currentTableDataJSX = useMemo(() => {

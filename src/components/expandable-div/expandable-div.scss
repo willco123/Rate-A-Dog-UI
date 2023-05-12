@@ -57,7 +57,7 @@
     .resize-drag {
       background-color: #647a9c;
       height: 20px;
-      width: 100%;
+      width: 100vw;
       position: sticky;
       top: 0;
     }
@@ -67,6 +67,7 @@
 .table-wrapper {
   color: rgb(182, 182, 182);
   background-color: rgb(73, 73, 73);
+
   .table-container {
     max-width: 600px;
     position: relative;
