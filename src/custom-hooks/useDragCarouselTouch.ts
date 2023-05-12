@@ -24,6 +24,7 @@ const useDragCarouselTouch = ({
   const [touchX, setTouchX] = useState(0);
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [initialMousePos, setInitialMousePos] = useState(0);
+  const ScrollSpeed = 1.5;
   useEffect(() => {
     if (
       snapArea === null ||
@@ -66,7 +67,7 @@ const useDragCarouselTouch = ({
   }
 
   function handleTouchMove(e: TouchEvent) {
-    const diff = (initialMousePos - e.touches[0].clientX) * -2;
+    const diff = (initialMousePos - e.touches[0].clientX) * -ScrollSpeed;
     setTouchX(touchX + diff);
   }
 
