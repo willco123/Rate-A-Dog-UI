@@ -42,7 +42,7 @@ export default function ExpandableDiv({
   }, [isMouseDown]);
 
   useEffect(() => {
-    if (isMouseDown) {
+    if (isTouchStart) {
       document.ontouchmove = handleTouchResize;
     } else {
       document.ontouchmove = null;
