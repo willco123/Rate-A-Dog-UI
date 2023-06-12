@@ -2,7 +2,7 @@ import * as React from "react";
 import { screen } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import Navbar from "../navbar/Navbar.js";
-import BasicApp from "../../test-helpers/BasicApp.js";
+import BasicApp, { resizeScreenSize } from "../../test-helpers/BasicApp.js";
 import {
   renderWithRouter,
   renderWithMemoryRouter,
@@ -23,12 +23,12 @@ describe("Navbar", () => {
     );
     const { user } = renderWithMemoryRouter(myComponents, ["/"]);
     const links = screen.getAllByRole("link");
-    const favourites = links[2];
-    await user.click(favourites);
-    expect(screen.getByText("This is the Favourites page")).toBeInTheDocument();
-    const allRatings = links[1];
-    await user.click(allRatings);
-    expect(screen.getByTestId("location-display")).toHaveTextContent("/dogs");
+    const sorted = links[2];
+    await user.click(sorted);
+    expect(screen.getByTestId("location-display")).toHaveTextContent("/sorted");
+    const random = links[1];
+    await user.click(random);
+    expect(screen.getByTestId("location-display")).toHaveTextContent("/");
   });
   it("Using Create Memory History", async () => {
     const history = createMemoryHistory();
@@ -37,18 +37,41 @@ describe("Navbar", () => {
       history,
     );
     const links = screen.getAllByRole("link");
-    const favourites = links[2];
+    const sorted = links[2];
 
     expect(history.location.pathname).toBe("/");
-    await user.click(favourites);
-    expect(history.location.pathname).toBe("/favourites");
+    await user.click(sorted);
+    expect(history.location.pathname).toBe("/sorted");
+    const myRatings = links[3];
+    const logout = links[4];
+    await user.click(myRatings);
+    expect(history.location.pathname).toBe("/myratings");
+    await user.click(logout);
+    expect(history.location.pathname).toBe("/logout");
   });
   it("Expands hamburger menu", async () => {
+    resizeScreenSize(700);
     const { user } = renderWithRouter(<Navbar isLoggedIn={true} />);
     const hamburgerButton = screen.getByRole("button");
     await user.click(hamburgerButton);
-    expect(document.body).toHaveStyle("overflow: hidden");
+    const navbarDiv = screen.getByRole("navigation");
+    expect(navbarDiv).toHaveClass("navigation expanded");
     await user.click(hamburgerButton);
-    expect(document.body).not.toHaveStyle("overflow: hidden");
+    expect(navbarDiv).toHaveClass("navigation");
+  });
+  test("not logged in", async () => {
+    const history = createMemoryHistory();
+    const { user } = renderWithRouterAndHistory(
+      <Navbar isLoggedIn={false} />,
+      history,
+    );
+    const links = screen.getAllByRole("link");
+    const login = links[3];
+    const signup = links[4];
+    expect(history.location.pathname).toBe("/");
+    await user.click(login);
+    expect(history.location.pathname).toBe("/login");
+    await user.click(signup);
+    expect(history.location.pathname).toBe("/register");
   });
 });

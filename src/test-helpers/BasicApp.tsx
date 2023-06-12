@@ -1,5 +1,25 @@
 import React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
+import mediaQuery from "css-mediaquery";
+
+function createMatchMedia(width: number) {
+  return (query: string) => {
+    return {
+      matches: mediaQuery.match(query, { width }),
+      media: "",
+      addListener: () => {},
+      removeListener: () => {},
+      onchange: () => {},
+      addEventListener: () => {},
+      removeEventListener: () => {},
+      dispatchEvent: () => true,
+    };
+  };
+}
+
+export function resizeScreenSize(width: number) {
+  window.matchMedia = createMatchMedia(width);
+}
 
 const Home = (currentLocation: string) => (
   <>
@@ -38,8 +58,8 @@ const BasicApp = () => {
     <>
       <Routes location={location}>
         <Route path="/" element={Home(location.pathname)} />
-        <Route path="/dogs" element={AllRatings(location.pathname)} />
-        <Route path="/favourites" element={MyRatings(location.pathname)} />
+        <Route path="/sorted" element={AllRatings(location.pathname)} />
+        <Route path="/myratings" element={MyRatings(location.pathname)} />
         <Route path="/login" element={Login(location.pathname)} />
         <Route path="/register" element={Register(location.pathname)} />
       </Routes>

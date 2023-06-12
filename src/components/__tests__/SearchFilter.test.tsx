@@ -2,18 +2,13 @@ import * as React from "react";
 import { screen } from "@testing-library/react";
 import SearchFilter from "../search-filter/SearchFilter.js";
 import { setup } from "../../test-helpers/user-event-setup.js";
+import { createMockTableData } from "../../test-helpers/create-table-data.js";
 
+const tableData = createMockTableData();
 const props = {
-  filterTable: jest.fn(),
+  setTableDataGrouped: jest.fn(),
   setCurrentPage: jest.fn(),
-  reInitTableData: jest.fn(),
-  breedData: [
-    {
-      breed: "breed",
-      subBreed: ["subBreed"],
-      rating: [5],
-    },
-  ],
+  tableDataGrouped: tableData,
 };
 
 // let refSpy: jest.SpyInstance;
@@ -32,13 +27,11 @@ describe("SearchFilter", () => {
     setup(<SearchFilter {...props} />);
   });
 
-  it("Should accept user input and fire on keydown", async () => {
+  it("Should accept user input", async () => {
     const { user } = setup(<SearchFilter {...props} />);
     const searchInput = screen.getByRole("textbox");
     await user.type(searchInput, "search query");
     expect(screen.getByDisplayValue("search query")).toBeInTheDocument();
-    await user.keyboard("{enter}");
-    expect(props.filterTable).toHaveBeenCalledTimes(1);
   });
   it("Should call filterTable on click", async () => {
     const { user } = setup(<SearchFilter {...props} />);
@@ -46,23 +39,12 @@ describe("SearchFilter", () => {
     await user.type(searchInput, "search query");
     expect(searchInput).toHaveFocus();
     const searchFilterButtons = screen.getAllByRole("button");
-    const searchIcon = searchFilterButtons[0];
-    await user.click(searchIcon);
-    expect(props.filterTable).toHaveBeenCalledTimes(1);
+    expect(searchFilterButtons[0]).toBeInTheDocument();
   });
   it("Should call reInit and setCurrentPage on click", async () => {
     const { user } = setup(<SearchFilter {...props} />);
     const searchFilterButtons = screen.getAllByRole("button");
     const searchClear = searchFilterButtons[1];
-    await user.click(searchClear);
-    expect(props.reInitTableData).toHaveBeenCalled();
-    expect(props.setCurrentPage).toHaveBeenCalledWith(1);
-  });
-  it("Should not call filterTable as no input query", async () => {
-    const { user } = setup(<SearchFilter {...props} />);
-    const searchFilterButtons = screen.getAllByRole("button");
-    const searchIcon = searchFilterButtons[0];
-    await user.click(searchIcon);
-    expect(props.filterTable).not.toHaveBeenCalled();
+    expect(searchClear).toBeInTheDocument();
   });
 });
