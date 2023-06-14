@@ -28,13 +28,11 @@ The UI will run locally on http://localhost:xxxx/
 
 Start the development server:
 
-<pre>
 ```bash
 npm start
 ```
-This command will start the development server and open the application in your default browser.
 
-</pre>
+This command will start the development server and open the application in your default browser.
 
 ## License
 
