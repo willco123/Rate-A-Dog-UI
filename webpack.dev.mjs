@@ -5,6 +5,7 @@ import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const desiredPort = 3000;
 
 const Config = {
   entry: path.resolve(process.cwd(), "./src/index.tsx"),
@@ -64,9 +65,9 @@ const Config = {
     static: {
       directory: path.join(__dirname, "public/"),
     },
-    port: 3000,
+    port: desiredPort,
     devMiddleware: {
-      publicPath: "https://localhost:3000/dist/",
+      publicPath: `https://localhost:${desiredPort}/dist/`,
     },
     hot: "only",
     historyApiFallback: true,
@@ -84,4 +85,3 @@ const Config = {
 };
 
 export default Config;
-// test
