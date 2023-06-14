@@ -1,6 +1,6 @@
 Live at: https://rateadog.netlify.app/
 
-# React User Interface for API
+# React User Interface for Rate a Dog
 
 Welcome to the React User Interface for Rate a Dog! This repository contains a web-based user interface built with React.js and written in Typescript.
 
