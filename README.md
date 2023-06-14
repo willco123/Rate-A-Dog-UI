@@ -11,6 +11,8 @@ Welcome to the React User Interface for Rate a Dog! This repository contains a w
     Seemless scrolling mechanism for browsing various dogs
     Table for viewing data aggregations with filtering options
 
+The UI features a carousel allowing users to seamlessly navigate the collection. This Carousel makes use of the Intersection Observer API to lazy load the images, along with a dynamic loading system. The loading system loads in new data and removes trailing data as the user navigates the carousel. The current sample size is set to 100 and the boundaries are at either either extremes of the carousel. If you were to lower or increase the sample size the boundaries would also need to be configured.
+
 ## Getting Started
 
 ```bash
