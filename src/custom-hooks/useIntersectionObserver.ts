@@ -16,10 +16,10 @@ const useIntersectionObserver = ({
       rootMargin,
       threshold,
     });
+
     const current = target.current;
     if (!current) return;
     observer.observe(current);
-
     return () => {
       observer.unobserve(current);
     };

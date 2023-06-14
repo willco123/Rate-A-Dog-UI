@@ -65,6 +65,7 @@ export default function CarouselImageContaniner({
       ref={imageRef}
       data-index={index}
       data-carousel={parentContainer}
+      data-testid="image-container"
     >
       {isVisible && (
         <img
@@ -80,6 +81,7 @@ export default function CarouselImageContaniner({
           data-averagerating={averageRating}
           data-numberofrates={numberOfRates}
           data-myrating={myRating}
+          data-test
           onClick={() => setIsImageExpanded(false)}
         />
       )}

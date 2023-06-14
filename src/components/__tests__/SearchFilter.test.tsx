@@ -40,6 +40,23 @@ describe("SearchFilter", () => {
     expect(searchInput).toHaveFocus();
     const searchFilterButtons = screen.getAllByRole("button");
     expect(searchFilterButtons[0]).toBeInTheDocument();
+    await user.click(searchFilterButtons[0]);
+    expect(props.setTableDataGrouped).toHaveBeenCalled();
+  });
+  it("Should not call filterTable", async () => {
+    const { user } = setup(<SearchFilter {...props} />);
+    const searchFilterButtons = screen.getAllByRole("button");
+    expect(searchFilterButtons[0]).toBeInTheDocument();
+    await user.click(searchFilterButtons[0]);
+    expect(props.setTableDataGrouped).not.toHaveBeenCalled();
+  });
+  it("Should call filterTable on keydown", async () => {
+    const { user } = setup(<SearchFilter {...props} />);
+    const searchInput = screen.getByRole("textbox");
+    await user.type(searchInput, "search query");
+    expect(searchInput).toHaveFocus();
+    await user.keyboard("{enter}");
+    expect(props.setTableDataGrouped).toHaveBeenCalled();
   });
   it("Should call reInit and setCurrentPage on click", async () => {
     const { user } = setup(<SearchFilter {...props} />);

@@ -84,6 +84,7 @@ export default function Carousel({
               (!isAnImageExpanded && !selectedImageHTML),
           })}
           onClick={() => setIsAnImageExpanded(true)}
+          data-testid="expand-image"
         />
       </div>
       <div

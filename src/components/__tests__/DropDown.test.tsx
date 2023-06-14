@@ -16,6 +16,7 @@ describe("DropDown", () => {
         items={["first", "second", null]}
         isActive={true}
         onChange={onChange}
+        value="first"
       />,
     );
     expect(screen.getByRole("combobox")).toBeInTheDocument();
@@ -29,18 +30,16 @@ describe("DropDown", () => {
         items={["first", "second", "third"]}
         isActive={true}
         onChange={onChange}
+        value="third"
       />,
     );
     const options = screen.getAllByRole("option") as HTMLOptionElement[];
-    expect(options[0].selected).toBeTruthy();
-    expect(options[1].selected).toBeFalsy();
-    expect(options[2].selected).toBeFalsy();
-
-    const select = screen.getByRole("combobox");
-    await user.selectOptions(select, "third");
     expect(options[0].selected).toBeFalsy();
     expect(options[1].selected).toBeFalsy();
     expect(options[2].selected).toBeTruthy();
+
+    const select = screen.getByRole("combobox");
+    await user.selectOptions(select, "third");
     expect(onChange).toHaveBeenCalledTimes(1);
   });
 });
