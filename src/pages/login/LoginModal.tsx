@@ -48,7 +48,9 @@ export default function LoginModal({
         <div className="login-close" onClick={() => navigate(-1)} />
         <input className="login-input" name="username" placeholder="Username" />
         <input className="login-input" name="password" placeholder="Password" />
-        <button className="login-button">Login</button>
+        <button className="login-button" aria-label="submit-login-button">
+          Login
+        </button>
         {badDetails && (
           <span className="login-bad">Incorrect Username or Password</span>
         )}

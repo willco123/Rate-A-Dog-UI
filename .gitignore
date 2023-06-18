@@ -2,3 +2,7 @@ node_modules
 dist/
 TODO.txt
 coverage/
+/test-results/
+/playwright-report/
+/playwright/.cache/
+pw-tests-examples/
